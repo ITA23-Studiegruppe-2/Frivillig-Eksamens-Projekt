@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.frivillig_eksamens_projekt.navigation.Navigation
+import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
 
@@ -25,6 +26,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    LoginScreen(
+                        onSuccessLogin = {}
+                    )
                     BottomNavigationBar(
                         onSearchClick = { /*TODO*/ },
                         onCalenderClick = { /*TODO*/ },
