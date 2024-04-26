@@ -1,4 +1,4 @@
-package com.example.frivillig_eksamens_projekt.ui.registerScreen
+package com.example.frivillig_eksamens_projekt.ui.chooseScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,14 +19,19 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.services.AccountService
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 
 @Composable
-fun UserOrOrganisation (navController: NavController) {
+fun UserOrOrganisation (onSuccesUserSelection: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        val userOrOrgViewModel = UserOrOrgViewModel()
+
 
         //Titel & undertitel
         Text(text = "Opret dig her", fontSize = 28.sp)
@@ -37,14 +42,14 @@ fun UserOrOrganisation (navController: NavController) {
         Spacer(modifier = Modifier.height(20.dp))
 
 
-        Button(onClick = { navController.navigate(" ") }) {
+        Button(onClick = { onSuccesUserSelection() }) {
             Text(text = "Organisation")
         }
         Spacer(modifier = Modifier.height(4.dp))
         Text(text = "Eller")
         Spacer(modifier = Modifier.height(4.dp))
 
-        Button(onClick = { navController.navigate(" ") }) {
+        Button(onClick = { onSuccesUserSelection() }) {
             Text(text = "Bruger")
         }
 

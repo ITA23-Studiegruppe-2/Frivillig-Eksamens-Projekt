@@ -10,4 +10,7 @@ sealed class Screen (val route: String) {
 
     object Register: Screen(route = "register_screen")
 
+    object ChooseBruger: Screen(route = "userOrOrg_screen")
+
+    object ChooseOrganisation: Screen(route = "userOrOrg_screen")
 }
