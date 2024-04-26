@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.frivillig_eksamens_projekt.navigation.Navigation
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +37,10 @@ class MainActivity : ComponentActivity() {
                         onEmailClick = { /*TODO*/ }) {
                         
                     }
+
+
+
+                    Navigation()
                 }
             }
         }
