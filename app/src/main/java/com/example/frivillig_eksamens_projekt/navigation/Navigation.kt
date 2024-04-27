@@ -4,8 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
+import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 
 
 @Composable
@@ -14,39 +18,43 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = "") {
+        startDestination = Screen.Start.route) {
 
         //Home Screen
         composable(Screen.Home.route) {
-            // ADD HOMESCREEN COMPOSEABLE
+            ActivityScreen()
         }
 
         // Start Screen
         composable(Screen.Start.route) {
-            // ADD START SCREEN COMPOSABLE
+            StartScreen(
+                onLoginClick = { navController.navigate(Screen.Login.route) },
+                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route)})
         }
 
         // Login Screen
         composable(Screen.Login.route) {
             LoginScreen(
-                onSuccessLogin = {navController.navigate(Screen.Home.route)}
+                onSuccessLogin = {navController.navigate(Screen.Home.route)},
+                onFailure = { println("Error")}
             )
         }
         // Register Screen
         composable(Screen.Register.route) {
-            // ADD REGISTER SCREEN COMPOSEABLE
-        }
+            CreateUserScreen(
+                onSuccess = {navController.navigate(Screen.Home.route)},
+                // TEMP () ADD INDECATIOR - VED IKKE HVORDAN MAN STAVER TIL DET!
+                onFail = { println("Failed")})
 
-        // Choose wich account (Bruger)
-        composable(Screen.ChooseBruger.route) {
+
+        }
+        // Choose what type of account (Bruger)
+        composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
                 onSuccesUserSelection = {navController.navigate(Screen.Register.route)}
             )
         }
 
-        composable(Screen.ChooseOrganisation.route) {
-            // Tilføj side til oprettelse af organisation
-        }
 
     }
 }

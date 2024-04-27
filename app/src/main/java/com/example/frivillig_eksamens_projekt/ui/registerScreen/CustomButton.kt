@@ -12,12 +12,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomButton(text: String) {
+fun CustomButton(text: String, onClick: () -> Unit) {
     val buttonColors = ButtonDefaults.buttonColors(
         containerColor = Color(0xFF364830)
     )
     Button(
-        onClick = { },
+        onClick = onClick,
         colors = buttonColors,
         modifier = Modifier
             .width(180.dp)

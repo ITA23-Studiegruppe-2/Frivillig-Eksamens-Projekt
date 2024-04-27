@@ -35,9 +35,12 @@ import java.time.format.DateTimeFormatter
 fun InputfieldUser(
     label: String,
     icon: ImageVector,
-    isPassword: Boolean = false)
+    isPassword: Boolean = false,
+    value: String,
+    onValueChange: (String) -> Unit
+    )
 {
-    val text = remember { mutableStateOf("") }
+
 
     val textFieldColors = textFieldColors(
         containerColor = Color.White,
@@ -46,8 +49,8 @@ fun InputfieldUser(
     )
 
     TextField(
-        value = text.value,
-        onValueChange = {newText -> text.value = newText},
+        value = value,
+        onValueChange = onValueChange,
         modifier = Modifier
             .width(370.dp)
             .height(50.dp),

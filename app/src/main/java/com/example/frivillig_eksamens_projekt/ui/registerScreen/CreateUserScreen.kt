@@ -29,7 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CreateUserScreen(){
+fun CreateUserScreen(
+    onSuccess: () -> Unit,
+    onFail: () -> Unit
+){
 
     val viewModel = CreateUserViewModel()
 
@@ -50,12 +53,12 @@ fun CreateUserScreen(){
             Spacer(modifier = Modifier.height(20.dp))
 
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                InputfieldUser ("Fulde navn", icon = Icons.Outlined.Person)
-                InputfieldUser("E-mail", icon = Icons.Outlined.Email)
-                InputfieldUser("Telefonnummer", icon = Icons.Outlined.Phone)
-                InputfieldUser("Postnummer", icon = Icons.Outlined.Place)
-                InputfieldUser("Fødselsdag", icon = Icons.Outlined.DateRange )
-                InputfieldUser("Adgangskode", icon = Icons.Outlined.Lock, isPassword = true)
+                InputfieldUser ("Fulde navn", icon = Icons.Outlined.Person, value = viewModel.fullName, onValueChange = { viewModel.fullName = it})
+                InputfieldUser("E-mail", icon = Icons.Outlined.Email, value = viewModel.email, onValueChange = {viewModel.email = it})
+                InputfieldUser("Telefonnummer", icon = Icons.Outlined.Phone, value = viewModel.phoneNumber, onValueChange = {viewModel.phoneNumber = it})
+                InputfieldUser("Postnummer", icon = Icons.Outlined.Place, value = viewModel.zipCode, onValueChange = {viewModel.zipCode = it})
+                InputfieldUser("Fødselsdag", icon = Icons.Outlined.DateRange, value = viewModel.birthDate, onValueChange = {viewModel.birthDate = it})
+                InputfieldUser("Adgangskode", icon = Icons.Outlined.Lock, isPassword = true, value = viewModel.password, onValueChange = {viewModel.password = it})
 
                 Text(text = "Køn", fontSize = 16.sp, color = Color(0xFF364830))
                 GenderCheckbox()
@@ -66,8 +69,11 @@ fun CreateUserScreen(){
 
                 Box(modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center) {
-                    CustomButton(text = "Tilmeld")
-
+                    CustomButton(
+                        text = "Tilmeld",
+                        onClick = {viewModel.registerUserToDatabase(
+                            onSuccess = onSuccess, onFail = onFail
+                        ) })
                 }
                 Box(modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center) {

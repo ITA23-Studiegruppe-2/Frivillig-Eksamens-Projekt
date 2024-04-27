@@ -1,4 +1,9 @@
 package com.example.frivillig_eksamens_projekt.ui.homeScreen
 
-class qwe {
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+
+@Composable
+fun HomeScreen() {
+    Text(text = "Success!!!!!!")
 }

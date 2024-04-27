@@ -51,3 +51,7 @@ androidTestGenerated/
 /captures/
 /local.properties
 /out/
+
+# Ignore Firebase/Google services configuration file
+
+

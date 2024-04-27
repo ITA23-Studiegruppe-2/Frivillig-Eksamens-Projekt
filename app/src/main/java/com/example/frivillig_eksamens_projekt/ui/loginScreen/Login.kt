@@ -7,7 +7,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,9 +20,11 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun LoginScreen(
     onSuccessLogin: () -> Unit,
+    onFailure: () -> Unit
 ) {
-    val loginViewModel = LoginViewModel()
-
+    val loginViewModel: LoginViewModel = remember {
+        LoginViewModel()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -53,6 +57,7 @@ fun LoginScreen(
             })
 
 
+
         //Checkbox & glemt adgangskode
         Row {
             Checkbox(
@@ -73,7 +78,7 @@ fun LoginScreen(
         //Login
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = {
-            loginViewModel.login(loginViewModel.email, loginViewModel.password, onSuccessLogin, onFailure = {})
+            loginViewModel.login(loginViewModel.email, loginViewModel.password, onSuccessLogin, onFailure = onFailure)
         }) {
             Text(text = "Login")
 
