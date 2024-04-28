@@ -76,7 +76,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     implementation("com.google.firebase:firebase-analytics")
-
     implementation("com.google.firebase:firebase-firestore")
+    // ViewModelScope - Async code
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
 
 }

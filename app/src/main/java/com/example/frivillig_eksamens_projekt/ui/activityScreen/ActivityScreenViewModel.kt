@@ -5,15 +5,17 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModel
 
 import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
-
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 import com.example.frivillig_eksamens_projekt.DTO.Activity
 
 import kotlinx.coroutines.runBlocking
 
-class ActivityScreenViewModel {
+class ActivityScreenViewModel: ViewModel() {
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
 
     val activitesRepository = ActivitiesRepository()
@@ -25,7 +27,7 @@ class ActivityScreenViewModel {
     }
 
      fun getActivities() {
-         runBlocking {
+         viewModelScope.launch {
              listOfActivities = activitesRepository.getActivities()
          }
     }
