@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Email
@@ -16,15 +17,13 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Place
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -50,37 +49,49 @@ fun CreateUserScreen(
             Text(text = "Kom i gang", fontSize = 36.sp, color = Color(0xFF364830))
             Text(text = "Opret en bruger", fontSize = 17.sp, color = Color(0xFF364830))
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                InputfieldUser ("Fulde navn", icon = Icons.Outlined.Person, value = viewModel.fullName, onValueChange = { viewModel.fullName = it})
-                InputfieldUser("E-mail", icon = Icons.Outlined.Email, value = viewModel.email, onValueChange = {viewModel.email = it})
-                InputfieldUser("Telefonnummer", icon = Icons.Outlined.Phone, value = viewModel.phoneNumber, onValueChange = {viewModel.phoneNumber = it})
-                InputfieldUser("Postnummer", icon = Icons.Outlined.Place, value = viewModel.zipCode, onValueChange = {viewModel.zipCode = it})
-                InputfieldUser("Fødselsdag", icon = Icons.Outlined.DateRange, value = viewModel.birthDate, onValueChange = {viewModel.birthDate = it})
-                InputfieldUser("Adgangskode", icon = Icons.Outlined.Lock, isPassword = true, value = viewModel.password, onValueChange = {viewModel.password = it})
-
-                Text(text = "Køn", fontSize = 16.sp, color = Color(0xFF364830))
-                GenderCheckbox()
-
-                Box {
-                    TermsAndConditionsCheckbox()
-                }
+            Column(verticalArrangement = Arrangement.spacedBy(22.dp))
+            {
+                InputfieldUser(
+                    "Fulde navn",
+                    icon = Icons.Outlined.Person,
+                    value = viewModel.fullName,
+                    onValueChange = { viewModel.fullName = it })
+                InputfieldUser(
+                    "E-mail",
+                    icon = Icons.Outlined.Email,
+                    value = viewModel.email,
+                    onValueChange = { viewModel.email = it })
+                InputfieldUser(
+                    "Adgangskode",
+                    icon = Icons.Outlined.Lock,
+                    isPassword = true,
+                    value = viewModel.password,
+                    onValueChange = { viewModel.password = it })
+                InputfieldUser(
+                    "Gentag adgangskode",
+                    icon = Icons.Outlined.Lock,
+                    value = viewModel.password2,
+                    isPassword = true,
+                    onValueChange = { viewModel.password2 = it })
+            }
+            
+            Spacer(modifier = Modifier.height(30.dp))
 
                 Box(modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center) {
                     CustomButton(
-                        text = "Tilmeld",
+                        text = "Næste",
                         onClick = {viewModel.registerUserToDatabase(
                             onSuccess = onSuccess, onFail = onFail
                         ) })
                 }
-                Box(modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center) {
-                    Text(text = "Har du allerede en bruger? Login her", fontSize = 12.sp)
-                }
-
+            Row {
+                Text(text = "Har du allerede en bruger?", fontSize = 12.sp)
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "Log ind", fontSize = 12.sp, textDecoration = TextDecoration.Underline)
+            }
             }
         }
     }
-}

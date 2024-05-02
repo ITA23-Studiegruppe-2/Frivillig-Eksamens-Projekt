@@ -22,6 +22,7 @@ class CreateUserViewModel {
     var zipCode by mutableStateOf("")
     var birthDate by mutableStateOf("")
     var password by mutableStateOf("")
+    var password2 by mutableStateOf("")
 
     fun registerUserToDatabase(onSuccess: () -> Unit, onFail: () -> Unit) {
         accountService.authenticate(
