@@ -80,7 +80,7 @@ fun LoginScreen(
 
         //Login
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = {
+        Button( onClick = {
             loginViewModel.login(loginViewModel.email, loginViewModel.password, onSuccessLogin, onFailure = onFailure)
         }) {
             Text(text = "Login")

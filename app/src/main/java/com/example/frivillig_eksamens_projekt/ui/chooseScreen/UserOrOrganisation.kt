@@ -42,7 +42,7 @@ fun UserOrOrganisation (onSuccesUserSelection: () -> Unit) {
         Spacer(modifier = Modifier.height(20.dp))
 
 
-        Button(onClick = { onSuccesUserSelection() }) {
+        Button(onClick = { onSuccesUserSelection()  }) {
             Text(text = "Organisation")
         }
         Spacer(modifier = Modifier.height(4.dp))
