@@ -26,7 +26,7 @@ class CreateUserViewModel: ViewModel() {
     var birthDate by mutableStateOf("")
     var password by mutableStateOf("")
     var gender by mutableStateOf("")
-
+    var password2 by mutableStateOf("")
 
     fun registerUserToDatabase(onSuccess: () -> Unit, onFail: () -> Unit) {
 

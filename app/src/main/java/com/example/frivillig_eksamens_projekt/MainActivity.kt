@@ -14,6 +14,7 @@ import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,13 +31,13 @@ class MainActivity : ComponentActivity() {
                     Navigation()
 
 
-                    BottomNavigationBar(
+                    /*BottomNavigationBar(
                         onSearchClick = { /*TODO*/ },
                         onCalenderClick = { /*TODO*/ },
                         onHomePageClick = { /*TODO*/ },
                         onEmailClick = { /*TODO*/ }) {
                         
-                    }
+                    }*/
 
                 }
             }
