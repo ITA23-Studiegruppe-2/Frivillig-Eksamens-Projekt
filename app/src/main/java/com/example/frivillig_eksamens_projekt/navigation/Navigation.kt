@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
-import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
+import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
@@ -64,6 +64,14 @@ fun Navigation() {
             )
         }
 
-
+        // Calendar Screen
+        composable(Screen.Calendar.route) {
+                BottomNavigationBar(
+                    onSearchClick = { /*TODO*/ },
+                    onCalenderClick = { navController.navigate(Screen.Calendar.route) },
+                    onHomePageClick = { /*TODO*/ },
+                    onEmailClick = { /*TODO*/ }) {
+                }
+        }
     }
 }
