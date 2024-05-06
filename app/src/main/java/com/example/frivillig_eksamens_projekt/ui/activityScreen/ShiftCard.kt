@@ -74,6 +74,7 @@ fun ShiftCard(title: String, organization: String, date: String, time: String) {
                 )
             }
         }
+        //Change Icon for dropdown when pressed
 
         // Change text if shift is requested
         val dropdownText = if (viewModel.isRequested.value) {
