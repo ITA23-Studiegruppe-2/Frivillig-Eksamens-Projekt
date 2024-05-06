@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
+import com.example.frivillig_eksamens_projekt.navigation.Navigation
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +21,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                    LoginScreen({}, {})
+                    /*
+                    val viewModel: CalendarViewModel = CalendarViewModel()
+                    CalendarScreen({},viewModel)
+
+                     */
+
+
+                    Navigation()
 
 
                     /*BottomNavigationBar(
