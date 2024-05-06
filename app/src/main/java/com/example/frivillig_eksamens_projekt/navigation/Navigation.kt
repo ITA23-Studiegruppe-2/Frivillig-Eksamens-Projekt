@@ -57,11 +57,12 @@ fun Navigation() {
                 onFail = { println("Failed")})
 
         }
-        // Choose what type of account (Bruger)
-        composable(Screen.UserOrOrg.route) {
-            UserOrOrganisation(
-                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)}
-            )
+
+        composable(Screen.RegisterOrg.route){
+            CreateOrgScreen(
+                onSuccess = { },
+                onFail = { /*TODO*/ },
+                onClick = {navController.navigateUp()})
         }
 
 

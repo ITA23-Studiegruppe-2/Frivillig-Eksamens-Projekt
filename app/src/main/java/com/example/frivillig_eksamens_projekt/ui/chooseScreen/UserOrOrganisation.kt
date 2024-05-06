@@ -8,22 +8,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import com.example.frivillig_eksamens_projekt.services.AccountService
-import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
-import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 
 @Composable
-fun UserOrOrganisation (onSuccesUserSelection: () -> Unit) {
+fun UserOrOrganisation (
+    onSuccesUserSelection: () -> Unit,
+    onSuccesOrgSelection: () -> Unit,
+    ) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -42,7 +36,7 @@ fun UserOrOrganisation (onSuccesUserSelection: () -> Unit) {
         Spacer(modifier = Modifier.height(20.dp))
 
 
-        Button(onClick = { onSuccesUserSelection() }) {
+        Button(onClick = { onSuccesOrgSelection() }) {
             Text(text = "Organisation")
         }
         Spacer(modifier = Modifier.height(4.dp))

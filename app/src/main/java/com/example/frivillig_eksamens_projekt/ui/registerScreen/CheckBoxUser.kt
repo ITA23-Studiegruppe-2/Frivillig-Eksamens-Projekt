@@ -74,7 +74,6 @@ fun TermsAndConditionsCheckbox(checkboxViewModel: CheckboxViewModel = viewModel(
         modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Spacer(modifier = Modifier.width(34.dp))
         Checkbox(
             checked = isTermsAndConditionsChecked,
             onCheckedChange = { checkboxViewModel.setTermsAndConditionsChecked(it) },
@@ -87,5 +86,6 @@ fun TermsAndConditionsCheckbox(checkboxViewModel: CheckboxViewModel = viewModel(
             Text(text = "Ved at klikke her, accepterer du vores", fontSize = 12.sp)
             Text(text = "vilkår & betingelser", fontSize = 12.sp, textDecoration = TextDecoration.Underline)
         }
+        Spacer(modifier = Modifier.width(50.dp))
     }
 }
