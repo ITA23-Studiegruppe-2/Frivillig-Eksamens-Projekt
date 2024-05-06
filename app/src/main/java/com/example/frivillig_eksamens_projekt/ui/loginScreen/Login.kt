@@ -10,19 +10,24 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 
@@ -94,7 +99,54 @@ fun LoginScreen(
             )
         }
 
-        //Login
+
+        //Login via noget andet
+        Spacer(modifier = Modifier.height(15.dp))
+        Text(text = "Eller login med")
+
+
+        // Måske rykke over til en anden side.
+        val faceBookIcon: Painter = painterResource(id = R.drawable.facebook_logo)
+        val googleIcon: Painter = painterResource(id = R.drawable.google_logo)
+        val twitterIcon: Painter = painterResource(id = R.drawable.twitter_logo)
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer (modifier = Modifier.height(80.dp))
+
+
+                Spacer(modifier = Modifier.width(25.dp))
+                Icon(
+                    painter = faceBookIcon,
+                    contentDescription = "Facebook logo",
+                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable { /* Facebook icon clicked */ }
+                )
+
+                Spacer(modifier = Modifier.width(25.dp))
+                Icon(
+                    painter = googleIcon,
+                    contentDescription = "Google logo",
+                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable { /* Google icon clicked */ }
+                )
+
+                Spacer(modifier = Modifier.width(25.dp))
+                Icon(
+                    painter = twitterIcon,
+                    contentDescription = "Twitter logo",
+                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable { /* Twitter icon clicked */ }
+                )
+            }
+        //Login knappen
         Spacer(modifier = Modifier.height(20.dp))
         CustomButton(text = "Login") {
             loginViewModel.login(
@@ -104,11 +156,10 @@ fun LoginScreen(
                 onFailure = onFailure
             )
         }
-
-        //Login via noget andet
-        Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "Eller login med")
     }
 }
+
+
+
 
 

@@ -21,8 +21,15 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
+                    /*
+                    val viewModel: CalendarViewModel = CalendarViewModel()
+                    CalendarScreen({},viewModel)
+
+                     */
+
 
                     Navigation()
+
 
                     /*BottomNavigationBar(
                         onSearchClick = { /*TODO*/ },
