@@ -19,4 +19,6 @@ sealed class Screen (val route: String) {
     object RegisterOrg: Screen(route = "registerOrg_screen")
 
     object Logo: Screen(route = "logo_screen")
+
+    object Activity: Screen(route = "activity_screen")
 }

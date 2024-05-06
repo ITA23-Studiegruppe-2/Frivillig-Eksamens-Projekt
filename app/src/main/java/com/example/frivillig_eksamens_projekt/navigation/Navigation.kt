@@ -8,6 +8,8 @@ import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
@@ -25,16 +27,11 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Logo.route) {
+        startDestination = Screen.Home.route) {
 
         //Logo Screen
         composable(Screen.Logo.route) {
             LogoScreen(navController)
-        }
-
-        //Home Screen
-        composable(Screen.Home.route) {
-            ActivityScreen()
         }
 
         // Start Screen
@@ -81,11 +78,22 @@ fun Navigation() {
                 onClick = {navController.navigateUp()})
         }
 
+        //Register Organisation Screen
         composable(Screen.RegisterOrg.route){
             CreateOrgScreen(
                 onSuccess = { },
                 onFail = { /*TODO*/ },
                 onClick = {navController.navigateUp()})
+        }
+
+        //Home Screen
+        composable(Screen.Home.route) {
+            HomeScreen(userViewModel = UserViewModel())
+        }
+
+        //Activity Screen
+        composable(Screen.Activity.route) {
+            ActivityScreen()
         }
 
         // Calendar Screen
