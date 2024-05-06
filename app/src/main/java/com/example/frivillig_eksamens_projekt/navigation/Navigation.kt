@@ -6,10 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
-import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 
 
@@ -40,13 +40,23 @@ fun Navigation() {
                 onFailure = { println("Error")}
             )
         }
+
+        // User or Org Screen
+        composable(Screen.UserOrOrg.route) {
+            UserOrOrganisation(
+                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)},
+                onSuccesOrgSelection = {navController.navigate(Screen.RegisterOrg.route)},
+            )
+        }
+
         // Register User Screen
         composable(Screen.RegisterUser.route) {
             CreateUserScreen(
                 onSuccess = {navController.navigate(Screen.RegisterUserSecond.route)},
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")})
-
+                onFail = { println("Failed")},
+                onClick = {navController.navigateUp()}
+            )
         }
 
         // Register User Second Screen
@@ -54,8 +64,8 @@ fun Navigation() {
             CreateUserSecondScreen(
                 onSuccess = {navController.navigate(Screen.Home.route)},
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")})
-
+                onFail = { println("Failed")},
+                onClick = {navController.navigateUp()})
         }
 
         composable(Screen.RegisterOrg.route){
