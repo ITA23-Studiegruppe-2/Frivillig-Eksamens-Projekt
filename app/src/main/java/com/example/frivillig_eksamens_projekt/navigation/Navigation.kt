@@ -9,6 +9,7 @@ import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
+import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
@@ -24,7 +25,12 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Start.route) {
+        startDestination = Screen.Logo.route) {
+
+        //Logo Screen
+        composable(Screen.Logo.route) {
+            LogoScreen(navController)
+        }
 
         //Home Screen
         composable(Screen.Home.route) {

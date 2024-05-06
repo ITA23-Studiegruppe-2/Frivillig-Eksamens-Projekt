@@ -16,14 +16,14 @@ class CreateUserViewModel: ViewModel() {
         private set
 
     // variables
-    var fullName by mutableStateOf("Rasmus Planteig")
-    var email by mutableStateOf("Planteig17@hotmail.com")
+    var fullName by mutableStateOf("")
+    var email by mutableStateOf("")
     var phoneNumber by mutableStateOf("")
     var zipCode by mutableStateOf("")
     var birthDate by mutableStateOf("")
-    var password by mutableStateOf("Bassehund123")
+    var password by mutableStateOf("")
     var gender by mutableStateOf("")
-    var password2 by mutableStateOf("Bassehund123")
+    var password2 by mutableStateOf("")
 
     // Error handling
     var errorMessage by mutableStateOf("")

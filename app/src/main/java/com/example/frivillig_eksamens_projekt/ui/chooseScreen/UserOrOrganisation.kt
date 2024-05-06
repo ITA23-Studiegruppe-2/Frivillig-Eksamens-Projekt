@@ -13,12 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 
 @Composable
 fun UserOrOrganisation (
     onSuccesUserSelection: () -> Unit,
-    onSuccesOrgSelection: () -> Unit,
+    onSuccesOrgSelection: () -> Unit
     ) {
     Column(
         modifier = Modifier
@@ -41,7 +42,7 @@ fun UserOrOrganisation (
 
 
         CustomButton(text = "Organisation",
-            onClick = { onSuccesUserSelection() })
+            onClick = { onSuccesOrgSelection() })
 
         Spacer(modifier = Modifier.height(10.dp))
 

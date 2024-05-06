@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -65,8 +66,14 @@ fun ShiftCard(title: String, organization: String, date: String, time: String) {
                 }
                 Spacer(modifier = Modifier.width(40.dp))
                 Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowDown,
-                    contentDescription = "Open Dropdown",
+                    //Change Icon for dropdown when toggled
+                    imageVector =
+                    if (viewModel.isExpanded) {
+                        Icons.Outlined.KeyboardArrowUp
+                    } else {
+                        Icons.Outlined.KeyboardArrowDown
+                    },
+                    contentDescription = "Toggle Dropdown",
                     modifier = Modifier
                         .size(40.dp)
                         .clickable { viewModel.isExpanded =! viewModel.isExpanded},
@@ -74,7 +81,6 @@ fun ShiftCard(title: String, organization: String, date: String, time: String) {
                 )
             }
         }
-        //Change Icon for dropdown when pressed
 
         // Change text if shift is requested
         val dropdownText = if (viewModel.isRequested.value) {
@@ -82,6 +88,7 @@ fun ShiftCard(title: String, organization: String, date: String, time: String) {
         } else {
             "Anmod om vagt:"
         }
+
 
         // Dropdown menu that appears when the icon is clicked
         DropdownMenu(

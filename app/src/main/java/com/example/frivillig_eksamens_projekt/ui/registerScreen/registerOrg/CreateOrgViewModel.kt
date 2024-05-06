@@ -20,8 +20,8 @@ class CreateOrgViewModel {
     var password by mutableStateOf("")
     var cvrNumber by mutableStateOf("")
 
-    fun registerOrgToDatabase(onSuccess: () -> Unit, onFail: () -> Unit) {
-        accountService.authenticate(
+    fun registerOrgToDatabase(onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        accountService.registerUserAuth(
             email = email,
             password = password,
             onSuccess = onSuccess,

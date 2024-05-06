@@ -77,9 +77,8 @@ fun CreateOrgScreen(
             }
             Spacer(modifier = Modifier.height(28.dp))
 
-            Box {
-                TermsAndConditionsCheckbox()
-            }
+            TermsAndConditionsCheckbox()
+
             Spacer(modifier = Modifier.height(4.dp))
 
             Box(
@@ -90,7 +89,7 @@ fun CreateOrgScreen(
                     text = "Tilmeld",
                     onClick = {
                         viewModel.registerOrgToDatabase(
-                            onSuccess = onSuccess, onFail = onFail
+                            onSuccess = onSuccess, onFail = {}
                         )
                     })
             }
