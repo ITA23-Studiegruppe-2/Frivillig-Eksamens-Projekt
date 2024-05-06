@@ -88,10 +88,11 @@ fun CreateUserScreen(
                     contentAlignment = Alignment.Center) {
                     CustomButton(
                         text = "Næste",
-                        onClick = {viewModel.registerUserToDatabase(
-                            onSuccess = onSuccess, onFail = onFail
-                        ) })
+                        onClick = {
+                            viewModel.registerUserAuthentication(onSuccess = onSuccess, onFail = onFail)
+                        })
                 }
+
             Row {
                 Text(text = "Har du allerede en bruger?", fontSize = 12.sp)
                 Spacer(modifier = Modifier.width(4.dp))

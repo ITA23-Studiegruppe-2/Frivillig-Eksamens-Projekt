@@ -87,9 +87,7 @@ fun CreateUserSecondScreen(
                     CustomButton(
                         text = "Tilmeld",
                         onClick = {
-                            viewModel.registerUserToDatabase(
-                                onSuccess = onSuccess, onFail = onFail
-                            )
+                            viewModel.registerUserToDatabase(onSuccess = onSuccess, onFail = onFail)
                         })
                 }
             }

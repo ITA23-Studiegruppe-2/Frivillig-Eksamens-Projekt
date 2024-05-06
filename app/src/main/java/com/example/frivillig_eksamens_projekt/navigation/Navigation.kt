@@ -5,6 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
+import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
+import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
@@ -75,6 +77,12 @@ fun Navigation() {
                 onClick = {navController.navigateUp()})
         }
 
-
+        // Calendar Screen
+        composable(Screen.Calendar.route) {
+                CalendarScreen(
+                    onCalendarClick = { navController.navigate(Screen.Calendar.route) },
+                    viewModel = CalendarViewModel()
+                )
+            }
     }
 }
