@@ -7,7 +7,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 
 class AccountService {
-     fun registerUserAuth(email: String, password: String, onSuccess: () -> Unit, onFail: () -> Unit) {
+     fun registerUserAuth(email: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         Firebase.auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 //Give it the function of what to do
@@ -18,14 +18,36 @@ class AccountService {
 
             }
             .addOnFailureListener { exception ->
+
                 // Get the reason for the failure and pass it to the onFail callback
-                // - If password - Have password failure turn up.
-                val errorMessage = when (exception) {
-                    is FirebaseAuthException -> exception.message
-                    else -> "Authentication failed"
+                // - If password - Have password failure turn up. - Should be handled with regex in the viewmodel - todo
+                // Find all error codes and make a when? - todo
+
+
+                // List of Error codes
+                /*
+                auth/email-already-in-use - todo
+                auth/network-request-failed - todo
+                auth/weak-password - todo
+
+                Handle else - on unknown errors - todo
+                 */
+                var errorMessage = when (exception) {
+                    is FirebaseAuthException -> when(exception.errorCode) {
+                        "ERROR_EMAIL_ALREADY_IN_USE" -> "Email is already in use"
+                        "ERROR_NETWORK_REQUEST_FAILED" -> "Check internet"
+                        "ERROR_WEAK_PASSWORD" -> "Weak password"
+                        else -> {
+                            "An unknown error has occurred, please try again later!"
+                        }
+                    }
+                    else -> {
+                        "An unknown error has occurred"
+                    }
                 }
-                println(errorMessage)
-                onFail()
+                println(exception)
+                // Provide the errorMessages to the Composable/ViewModel and let the user know whats wrong
+                onFail(errorMessage)
             }
     }
 

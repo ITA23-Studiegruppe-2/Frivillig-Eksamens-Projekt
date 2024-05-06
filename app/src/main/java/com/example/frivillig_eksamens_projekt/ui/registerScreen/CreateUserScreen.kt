@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,10 +33,10 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 fun CreateUserScreen(
     onSuccess: () -> Unit,
     onFail: () -> Unit,
+    viewModel: CreateUserViewModel,
     onClick: () -> Unit
 ){
 
-    val viewModel = CreateUserViewModel()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -78,6 +79,13 @@ fun CreateUserScreen(
                     value = viewModel.password2,
                     isPassword = true,
                     onValueChange = { viewModel.password2 = it })
+
+                Text(
+                    text = viewModel.errorMessage,
+                    style = TextStyle(
+                        color = Color.Red
+                    )
+                )
             }
             
             Spacer(modifier = Modifier.height(30.dp))
@@ -89,7 +97,9 @@ fun CreateUserScreen(
                     CustomButton(
                         text = "Næste",
                         onClick = {
-                            viewModel.registerUserAuthentication(onSuccess = onSuccess, onFail = onFail)
+                            viewModel.registerUserAuthentication(
+                                onSuccess = onSuccess,
+                                onFail = {viewModel.errorMessage = it})
                         })
                 }
 

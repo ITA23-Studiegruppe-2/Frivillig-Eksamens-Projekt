@@ -12,12 +12,15 @@ import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    // Needs one viewmodel for both registration screens - Initialize it here
+    val registerViewModel: CreateUserViewModel = CreateUserViewModel()
 
     NavHost(
         navController = navController,
@@ -57,6 +60,7 @@ fun Navigation() {
                 onSuccess = {navController.navigate(Screen.RegisterUserSecond.route)},
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
+                viewModel = registerViewModel,
                 onClick = {navController.navigateUp()}
             )
         }
@@ -67,6 +71,7 @@ fun Navigation() {
                 onSuccess = {navController.navigate(Screen.Home.route)},
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
+                viewModel = registerViewModel,
                 onClick = {navController.navigateUp()})
         }
 
