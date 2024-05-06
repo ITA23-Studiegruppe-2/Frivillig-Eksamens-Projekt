@@ -16,33 +16,54 @@ class CreateUserViewModel: ViewModel() {
         private set
 
     // variables
-    var fullName by mutableStateOf("")
-    var email by mutableStateOf("")
+    var fullName by mutableStateOf("Rasmus Planteig")
+    var email by mutableStateOf("Planteig17@hotmail.com")
     var phoneNumber by mutableStateOf("")
     var zipCode by mutableStateOf("")
     var birthDate by mutableStateOf("")
-    var password by mutableStateOf("")
+    var password by mutableStateOf("Bassehund123")
     var gender by mutableStateOf("")
-    var password2 by mutableStateOf("")
+    var password2 by mutableStateOf("Bassehund123")
 
-    fun registerUserAuthentication(onSuccess: () -> Unit, onFail: () -> Unit) {
+    // Error handling
+    var errorMessage by mutableStateOf("")
+
+    fun registerUserAuthentication(onSuccess: () -> Unit, onFail: (String) -> Unit) {
         //Check to see if the fields are empty
         var listOfInputs: List<String> = listOf(fullName,email,password,password2)
         if (listOfInputs.all { value -> !value.isNullOrBlank() }) {
-            //Check to see if the two passwords are the same
-            if (password == password2) {
-                accountService.registerUserAuth(
-                    email = email,
-                    password = password,
-                    onSuccess = onSuccess,
-                    onFail = onFail)
+            //Check to see if the password is in a valid format
+            if (passwordRegExCheck(password)) {
+                //Check to see if the two passwords are the same
+                if (password == password2) {
+                    // All of the checks are valid - Allow the Authentication of user.
+                    accountService.registerUserAuth(
+                        email = email,
+                        password = password,
+                        onSuccess = onSuccess,
+                        onFail = onFail
+                    )
+                } else {
+                    // The two passwords are not the same -
+                    errorMessage = "Passwords do not match"
+                }
 
+            } else {
+                // The password isnt in valid format -
+                errorMessage = "Please use a stronger password"
             }
-            // The two passwords are not the same
-            }
-        // Some of the fields are null or blank
+
+        } else {
+            // Some of the fields are null or blank -
+            errorMessage = "Please fill out all fields"
         }
+    }
 
+    // RegEx to check if password is valid
+    private fun passwordRegExCheck(password: String): Boolean {
+        val regex = Regex("^(?=.*[0-9])(?=.*[A-Z]).{8,}\$")
+        return regex.matches(password)
+    }
 
     fun registerUserToDatabase(onSuccess: () -> Unit, onFail: () -> Unit) {
         accountService.createUserDB(
@@ -56,3 +77,4 @@ class CreateUserViewModel: ViewModel() {
         )
     }
 }
+

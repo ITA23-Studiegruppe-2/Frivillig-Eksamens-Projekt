@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CreateUserSecondScreen(
     onSuccess: () -> Unit,
-    onFail: () -> Unit
+    onFail: () -> Unit,
+    viewModel: CreateUserViewModel
 ) {
 
-    val viewModel = CreateUserViewModel()
 
     Surface(
         modifier = Modifier.fillMaxSize(),

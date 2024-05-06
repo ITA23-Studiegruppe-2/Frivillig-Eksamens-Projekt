@@ -11,12 +11,15 @@ import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    // Needs one viewmodel for both registration screens - Initialize it here
+    val registerViewModel: CreateUserViewModel = CreateUserViewModel()
 
     NavHost(
         navController = navController,
@@ -46,7 +49,9 @@ fun Navigation() {
             CreateUserScreen(
                 onSuccess = {navController.navigate(Screen.RegisterUserSecond.route)},
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")})
+                onFail = { println("Failed")},
+                viewModel = registerViewModel
+            )
 
         }
 
@@ -55,7 +60,9 @@ fun Navigation() {
             CreateUserSecondScreen(
                 onSuccess = {navController.navigate(Screen.Home.route)},
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")})
+                onFail = { println("Failed")},
+                viewModel = registerViewModel
+            )
 
         }
         // Choose what type of account (Bruger)
