@@ -26,7 +26,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CreateUserSecondScreen(
     onSuccess: () -> Unit,
-    onFail: () -> Unit) {
+    onFail: () -> Unit
+) {
 
     val viewModel = CreateUserViewModel()
 
@@ -82,9 +83,7 @@ fun CreateUserSecondScreen(
                     CustomButton(
                         text = "Tilmeld",
                         onClick = {
-                            viewModel.registerUserToDatabase(
-                                onSuccess = onSuccess, onFail = onFail
-                            )
+                            viewModel.registerUserToDatabase(onSuccess = onSuccess, onFail = onFail)
                         })
                 }
             }

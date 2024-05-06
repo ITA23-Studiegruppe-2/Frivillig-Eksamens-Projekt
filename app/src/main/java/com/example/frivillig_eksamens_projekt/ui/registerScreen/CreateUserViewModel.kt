@@ -5,10 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.frivillig_eksamens_projekt.services.AccountService
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class CreateUserViewModel: ViewModel() {
 
@@ -28,24 +25,34 @@ class CreateUserViewModel: ViewModel() {
     var gender by mutableStateOf("")
     var password2 by mutableStateOf("")
 
-    fun registerUserToDatabase(onSuccess: () -> Unit, onFail: () -> Unit) {
+    fun registerUserAuthentication(onSuccess: () -> Unit, onFail: () -> Unit) {
+        //Check to see if the fields are empty
+        var listOfInputs: List<String> = listOf(fullName,email,password,password2)
+        if (listOfInputs.all { value -> !value.isNullOrBlank() }) {
+            //Check to see if the two passwords are the same
+            if (password == password2) {
+                accountService.registerUserAuth(
+                    email = email,
+                    password = password,
+                    onSuccess = onSuccess,
+                    onFail = onFail)
 
-        // Im not sure if it needs to be different functions
-        runBlocking {
-            accountService.registerUser(
-                email = email,
-                password = password,
-                onSuccess = onSuccess,
-                onFail = onFail
-            )
-            accountService.createUserDB(
-                fullName = fullName,
-                phoneNumber = phoneNumber,
-                zipCode = zipCode,
-                birthDate = birthDate,
-                gender = gender,
-                onSuccess = onSuccess
-            )
+            }
+            // The two passwords are not the same
+            }
+        // Some of the fields are null or blank
         }
+
+
+    fun registerUserToDatabase(onSuccess: () -> Unit, onFail: () -> Unit) {
+        accountService.createUserDB(
+            fullName = fullName,
+            phoneNumber = phoneNumber,
+            zipCode = zipCode,
+            birthDate = birthDate,
+            gender = gender,
+            onSuccess = onSuccess,
+            onFail = onFail
+        )
     }
 }
