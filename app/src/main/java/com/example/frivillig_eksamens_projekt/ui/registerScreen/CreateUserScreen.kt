@@ -11,12 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +24,17 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 
 @Composable
 fun CreateUserScreen(
     onSuccess: () -> Unit,
     onFail: () -> Unit,
-    viewModel: CreateUserViewModel
+    viewModel: CreateUserViewModel,
+    onClick: () -> Unit
 ){
 
 
@@ -46,6 +48,7 @@ fun CreateUserScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
+            BackButton(onClick = onClick)
             Spacer(modifier = Modifier.height(50.dp))
             Text(text = "Kom i gang", fontSize = 36.sp, color = Color(0xFF364830))
             Text(text = "Opret en bruger", fontSize = 17.sp, color = Color(0xFF364830))
@@ -87,7 +90,9 @@ fun CreateUserScreen(
             
             Spacer(modifier = Modifier.height(30.dp))
 
-                Box(modifier = Modifier.fillMaxWidth(),
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
                     contentAlignment = Alignment.Center) {
                     CustomButton(
                         text = "Næste",

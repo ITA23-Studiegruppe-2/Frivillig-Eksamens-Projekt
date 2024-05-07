@@ -64,7 +64,7 @@ fun StartScreen(
                     .height(buttonHeight),
                 colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
             ) {
-                Text(text = "Register")
+                Text(text = "Opret")
             }
         }
     }

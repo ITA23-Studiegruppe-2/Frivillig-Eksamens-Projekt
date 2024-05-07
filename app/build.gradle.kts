@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
 
+
     // Add the dependency for the Firebase Authentication library
     implementation("com.google.firebase:firebase-auth")
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
