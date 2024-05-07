@@ -15,4 +15,6 @@ sealed class Screen (val route: String) {
     object UserOrOrg: Screen(route = "userOrOrg_Screen")
 
     object Calendar: Screen(route = "calendar_screen")
+
+    object Activities: Screen(route = "activities_screen")
 }

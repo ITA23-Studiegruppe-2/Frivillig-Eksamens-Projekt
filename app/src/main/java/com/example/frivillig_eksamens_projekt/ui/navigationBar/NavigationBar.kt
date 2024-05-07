@@ -27,11 +27,6 @@ fun BottomNavigationBar(
     onAccountClick: () -> Unit
 
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
-    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -44,7 +39,7 @@ fun BottomNavigationBar(
             NavigationButton(iconType = Icons.Default.AccountCircle, description = "Home", onClick = onAccountClick)
         }
 
-    }
+
 
 }
 

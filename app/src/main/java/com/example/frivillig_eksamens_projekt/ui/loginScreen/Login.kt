@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.R
@@ -35,7 +36,6 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 @Composable
 fun LoginScreen(
     onSuccessLogin: () -> Unit,
-    onFailure: () -> Unit
 ) {
     val loginViewModel: LoginViewModel = remember {
         LoginViewModel()
@@ -74,6 +74,13 @@ fun LoginScreen(
             value = loginViewModel.password,
             onValueChange = { loginViewModel.password = it },
         )
+        Text(
+            text = loginViewModel.errorMessage,
+            style = TextStyle(
+                color = Color.Red
+            )
+        )
+
 
         //Checkbox & glemt adgangskode
         Row(
@@ -153,7 +160,7 @@ fun LoginScreen(
                 loginViewModel.email,
                 loginViewModel.password,
                 onSuccessLogin,
-                onFailure = onFailure
+                onFailure = { loginViewModel.errorMessage = it}
             )
         }
     }
