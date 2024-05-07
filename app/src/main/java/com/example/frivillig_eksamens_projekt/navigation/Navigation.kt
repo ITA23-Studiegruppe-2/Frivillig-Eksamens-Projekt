@@ -8,23 +8,30 @@ import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
+import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+    // Needs one viewmodel for both registration screens - Initialize it here
+    val registerViewModel: CreateUserViewModel = CreateUserViewModel()
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Start.route) {
+        startDestination = Screen.Home.route) {
 
-        //Home Screen
-        composable(Screen.Home.route) {
-            ActivityScreen()
+        //Logo Screen
+        composable(Screen.Logo.route) {
+            LogoScreen(navController)
         }
 
         // Start Screen
@@ -41,13 +48,24 @@ fun Navigation() {
                 onFailure = { println("Error")}
             )
         }
+
+        // User or Org Screen
+        composable(Screen.UserOrOrg.route) {
+            UserOrOrganisation(
+                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)},
+                onSuccesOrgSelection = {navController.navigate(Screen.RegisterOrg.route)},
+            )
+        }
+
         // Register User Screen
         composable(Screen.RegisterUser.route) {
             CreateUserScreen(
                 onSuccess = {navController.navigate(Screen.RegisterUserSecond.route)},
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")})
-
+                onFail = { println("Failed")},
+                viewModel = registerViewModel,
+                onClick = {navController.navigateUp()}
+            )
         }
 
         // Register User Second Screen
@@ -55,14 +73,27 @@ fun Navigation() {
             CreateUserSecondScreen(
                 onSuccess = {navController.navigate(Screen.Home.route)},
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")})
-
+                onFail = { println("Failed")},
+                viewModel = registerViewModel,
+                onClick = {navController.navigateUp()})
         }
-        // Choose what type of account (Bruger)
-        composable(Screen.UserOrOrg.route) {
-            UserOrOrganisation(
-                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)}
-            )
+
+        //Register Organisation Screen
+        composable(Screen.RegisterOrg.route){
+            CreateOrgScreen(
+                onSuccess = { },
+                onFail = { /*TODO*/ },
+                onClick = {navController.navigateUp()})
+        }
+
+        //Home Screen
+        composable(Screen.Home.route) {
+            HomeScreen(userViewModel = UserViewModel())
+        }
+
+        //Activity Screen
+        composable(Screen.Activity.route) {
+            ActivityScreen()
         }
 
         // Calendar Screen
