@@ -25,12 +25,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 
 @Composable
 fun HomeScreen(userViewModel: UserViewModel) {
+
+    val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
+    val shiftsIcon: Painter = painterResource(id = R.drawable.shift)
+    val hoursIcon: Painter = painterResource(id = R.drawable.hours)
+    val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
 
     Surface (
         modifier = Modifier
@@ -68,12 +76,12 @@ fun HomeScreen(userViewModel: UserViewModel) {
                 )
                 {
                     Column {
-                        InfoCards(label = "Badges", icon = Icons.Outlined.CheckCircle) {}
-                        InfoCards(label = "Kommende vagter", icon = Icons.Outlined.Menu) {}
+                        InfoCards(label = "Badges", icon = bagdesIcon) {}
+                        InfoCards(label = "Kommende vagter", icon = shiftsIcon) {}
                     }
                     Column {
-                        InfoCards(label = "Ved ikke", icon = Icons.Outlined.Build) {}
-                        InfoCards(label = "Ved ikke", icon = Icons.Outlined.Delete) {}
+                        InfoCards(label = "Timer", icon = hoursIcon) {}
+                        InfoCards(label = "Kalender", icon = calendarIcon) {}
                     }
                 }
             }

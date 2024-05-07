@@ -19,13 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun InfoCards(
     label: String,
-    icon: ImageVector,
+    icon: Painter,
     onClick: () -> Unit
 ){
     Card(
@@ -45,10 +46,9 @@ fun InfoCards(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(imageVector = icon,
+            Icon(painter = icon,
                 contentDescription = label,
-                modifier = Modifier.size(40.dp)
-            )
+                modifier = Modifier.size(40.dp))
             Spacer(modifier = Modifier
                 .height(8.dp))
             Text(text = label)

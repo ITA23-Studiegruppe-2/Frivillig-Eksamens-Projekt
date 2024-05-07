@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
+import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
@@ -27,7 +28,7 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route) {
+        startDestination = Screen.Badges.route) {
 
         //Logo Screen
         composable(Screen.Logo.route) {
@@ -81,7 +82,7 @@ fun Navigation() {
         //Register Organisation Screen
         composable(Screen.RegisterOrg.route){
             CreateOrgScreen(
-                onSuccess = { },
+                onSuccess = {navController.navigate(Screen.Home.route)}, //Skal laves om til Org Home Screen
                 onFail = { /*TODO*/ },
                 onClick = {navController.navigateUp()})
         }
@@ -102,6 +103,11 @@ fun Navigation() {
                     onCalendarClick = { navController.navigate(Screen.Calendar.route) },
                     viewModel = CalendarViewModel()
                 )
-            }
+        }
+
+        //Badges Screen
+        composable(Screen.Badges.route) {
+            BadgesScreen({})
+        }
     }
 }
