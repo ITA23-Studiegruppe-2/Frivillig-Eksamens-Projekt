@@ -7,10 +7,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.frivillig_eksamens_projekt.services.AccountService
 
-class CreateUserViewModel: ViewModel() {
+class CreateUserViewModel : ViewModel() {
 
     // Account services - Firebase
-    val accountService = AccountService()
+    private val accountService = AccountService()
 
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
         private set
@@ -29,9 +29,10 @@ class CreateUserViewModel: ViewModel() {
     var errorMessage by mutableStateOf("")
 
     fun registerUserAuthentication(onSuccess: () -> Unit, onFail: (String) -> Unit) {
+
         //Check to see if the fields are empty
-        var listOfInputs: List<String> = listOf(fullName,email,password,password2)
-        if (listOfInputs.all { value -> !value.isNullOrBlank() }) {
+        var listOfInputs: List<String> = listOf(fullName, email, password, password2)
+        if (checkAllFieldsNotBlank(listOfInputs)) {
             //Check to see if the password is in a valid format
             if (passwordRegExCheck(password)) {
                 //Check to see if the two passwords are the same
@@ -65,16 +66,29 @@ class CreateUserViewModel: ViewModel() {
         return regex.matches(password)
     }
 
-    fun registerUserToDatabase(onSuccess: () -> Unit, onFail: () -> Unit) {
-        accountService.createUserDB(
-            fullName = fullName,
-            phoneNumber = phoneNumber,
-            zipCode = zipCode,
-            birthDate = birthDate,
-            gender = gender,
-            onSuccess = onSuccess,
-            onFail = onFail
-        )
+    // Function to check if provided list doesnt contain empty fields
+    private fun checkAllFieldsNotBlank(listOfInputs: List<String>): Boolean {
+        return listOfInputs.all { value -> !value.isNullOrBlank() }
+    }
+
+    fun registerUserToDatabase(onSuccess: () -> Unit, onFail: (String) -> Unit) {
+        //Check to see if the fields are empty - fullName has already been checked in the function before
+        // TODO ADD GENDER
+        val listOfInputs: List<String> = listOf(phoneNumber, zipCode, birthDate)
+        if (checkAllFieldsNotBlank(listOfInputs)) {
+            accountService.createUserDB(
+                fullName = fullName,
+                phoneNumber = phoneNumber,
+                zipCode = zipCode,
+                birthDate = birthDate,
+                gender = gender,
+                onSuccess = onSuccess,
+                onFail = onFail
+            )
+        } else {
+            errorMessage = "Please fill out all the fields"
+        }
+
     }
 }
 
