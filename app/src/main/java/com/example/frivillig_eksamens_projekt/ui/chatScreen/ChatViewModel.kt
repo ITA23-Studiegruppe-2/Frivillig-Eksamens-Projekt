@@ -1,42 +1,34 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen
 
-/*
-class ChatViewModel : ViewModel() {
-    private val repository = ChatRepository() // Antagelse om, at der er en repository-klasse for at håndtere Firestore-interaktioner
+import android.os.Message
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
+import kotlinx.coroutines.launch
 
-    init {
-        listenForMessages()
-    }
+// Håndterer logikken bag visningen af beskeder og søgning i chatten.
+class ChatViewModel(private val chatRepository: ChatRepository) : ViewModel() {
 
     // Tilstand for beskeder
-    private val _messages = MutableStateFlow<List<Message>>(emptyList())
-    val messages: StateFlow<List<Message>> = _messages
+    val messages: State<List<Message>> = mutableStateOf(emptyList())
 
     // Tilstand for søgequery
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery
+    val searchQuery: State<String> = mutableStateOf("")
 
-    // Funktion til at sende en besked
-    fun sendMessage(orgId: String, userId: String, message: String) {
-        viewModelScope.launch {
-            repository.sendMessage(orgId, userId, message)
-        }
-    }
 
-    // Funktion til at lytte efter nye beskeder
-    fun listenForMessages() {
+   // Funktion til at sende en besked.
+   // Den sender en besked til chatrepository og håndterer asynkron opgave med coroutines.
+    fun sendMessage(userId: String, message: String) {
         viewModelScope.launch {
-            repository.listenForMessages { messages ->
-                _messages.value = messages
-            }
+            chatRepository.sendMessage(userId, message)
         }
     }
 
     // Funktion til at opdatere søgequery
     fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
+        (searchQuery as? MutableState)?.value = query
     }
 }
-
-
- */

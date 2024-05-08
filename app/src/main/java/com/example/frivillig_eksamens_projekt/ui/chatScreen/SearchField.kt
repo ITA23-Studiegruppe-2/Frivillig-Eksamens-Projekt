@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 
+// Komponent til visning af et søgefelt med et tekstfelt og en knap.
+// Den accepterer den aktuelle søgequery "searchQuery" og en funktion "onSearchQueryChange"
+// til at opdatere søgequery, når teksten i tekstfeltet ændres.
 @Composable
 fun SearchField(searchQuery: String, onSearchQueryChange: (String) -> Unit) {
     Row(
@@ -21,7 +24,7 @@ fun SearchField(searchQuery: String, onSearchQueryChange: (String) -> Unit) {
     ) {
         TextField(
             value = searchQuery,
-            onValueChange = { query -> onSearchQueryChange(query) },
+            onValueChange = { query -> onSearchQueryChange(query) }, // Lytter til ændringer i søgeteksten
             label = { Text("Søg efter organisationer") },
             modifier = Modifier.weight(1f)
         )
