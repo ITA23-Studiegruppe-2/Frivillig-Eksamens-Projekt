@@ -12,5 +12,11 @@ class ActivitiesRepository() {
         .get()
         .await()
         .toObjects(Activity::class.java)
-}
 
+     suspend fun searchActivityTitle(title: String): MutableList<Activity> =
+         db.collection("Activites")
+             .whereEqualTo("title",title)
+             .get()
+             .await()
+             .toObjects(Activity::class.java)
+}

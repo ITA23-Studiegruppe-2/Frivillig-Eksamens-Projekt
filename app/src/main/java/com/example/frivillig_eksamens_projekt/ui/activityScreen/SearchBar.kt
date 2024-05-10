@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -27,7 +28,10 @@ import com.example.frivillig_eksamens_projekt.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar() {
+fun SearchBar(
+    onValueChange: (String) -> Unit,
+    searchBarValue: String
+) {
 
     val secondaryColor = Color(0xFF364830)
     val tuneIcon: Painter = painterResource(id = R.drawable.tune_icon)
@@ -43,8 +47,8 @@ fun SearchBar() {
             verticalAlignment = Alignment.CenterVertically
         ){
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = searchBarValue,
+                onValueChange = onValueChange,
                 modifier = Modifier,
                 label = {
                     Text(text = "Søg efter organisation", color = secondaryColor)
@@ -74,7 +78,7 @@ fun SearchBar() {
                     contentDescription = "Tune Icon",
                     modifier = Modifier
                         .size(58.dp)
-                        .clickable {  }
+                        .clickable { }
                 )
             }
         }

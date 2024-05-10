@@ -70,22 +70,32 @@ fun GenderCheckbox(checkboxViewModel : CheckboxViewModel = viewModel()) {
 @Composable
 fun TermsAndConditionsCheckbox(checkboxViewModel: CheckboxViewModel = viewModel()) {
     val isTermsAndConditionsChecked = checkboxViewModel.isTermsAndConditionsChecked.value
-    Row(
-        modifier = Modifier,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Spacer(modifier = Modifier.width(34.dp))
-        Checkbox(
-            checked = isTermsAndConditionsChecked,
-            onCheckedChange = { checkboxViewModel.setTermsAndConditionsChecked(it) },
-            modifier = Modifier.graphicsLayer(scaleX = 1.1f, scaleY = 1.1f)
-        )
-        Column(
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(),
+    )
+    {
+        Row(
             modifier = Modifier,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Text(text = "Ved at klikke her, accepterer du vores", fontSize = 12.sp)
-            Text(text = "vilkår & betingelser", fontSize = 12.sp, textDecoration = TextDecoration.Underline)
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Spacer(modifier = Modifier.width(40.dp))
+            Checkbox(
+                checked = isTermsAndConditionsChecked,
+                onCheckedChange = { checkboxViewModel.setTermsAndConditionsChecked(it) },
+                modifier = Modifier.graphicsLayer(scaleX = 1.1f, scaleY = 1.1f)
+            )
+            Column(
+                modifier = Modifier,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Ved at klikke her, accepterer du vores", fontSize = 12.sp)
+                Text(
+                    text = "vilkår & betingelser",
+                    fontSize = 12.sp,
+                    textDecoration = TextDecoration.Underline
+                )
+            }
         }
     }
 }
