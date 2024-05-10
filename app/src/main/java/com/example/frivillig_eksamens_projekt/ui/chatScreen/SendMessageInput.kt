@@ -3,9 +3,9 @@ package com.example.frivillig_eksamens_projekt.ui.chatScreen
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,16 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-
 // viser et indtastningsfelt og en knap til at sende beskeder i chatten.
 // * Komponenten accepterer en funktion "onSendMessage" for at sende beskeder, når brugeren trykker på send-knappen.
 // * Det gemmer også den aktuelle beskedtekst i et "mutableStateOf" og nulstiller den, når beskeden er sendt.
 
+
 @Composable
-fun SendMessageInput(onSendMessage: (String) -> Unit) {
+fun SendMessageInput(onSendMessage: suspend (String) -> Unit) {
     var messageText by remember { mutableStateOf("") }
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically) {
         TextField(
             value = messageText,
             onValueChange = { messageText = it },
@@ -34,7 +35,7 @@ fun SendMessageInput(onSendMessage: (String) -> Unit) {
         Spacer(modifier = Modifier.width(8.dp))
         Button(
             onClick = {
-                onSendMessage(messageText)
+                suspend { onSendMessage(messageText) }
                 messageText = ""
             }
         ) {

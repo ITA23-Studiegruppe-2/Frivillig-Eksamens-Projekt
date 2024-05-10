@@ -1,34 +1,64 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen
 
 import android.os.Message
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.frivillig_eksamens_projekt.DTO.Organization
 import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
 import kotlinx.coroutines.launch
 
+
 // Håndterer logikken bag visningen af beskeder og søgning i chatten.
-class ChatViewModel(private val chatRepository: ChatRepository) : ViewModel() {
+class ChatViewModel : ViewModel() {
+    var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
+    val chatRepository = ChatRepository()
 
     // Tilstand for beskeder
     val messages: State<List<Message>> = mutableStateOf(emptyList())
 
-    // Tilstand for søgequery
-    val searchQuery: State<String> = mutableStateOf("")
 
+    // FIND ORGANISATION
+    init {
+        getOrganizations()
+    }
 
-   // Funktion til at sende en besked.
-   // Den sender en besked til chatrepository og håndterer asynkron opgave med coroutines.
-    fun sendMessage(userId: String, message: String) {
+    // list of organisations
+    var listOfOrganization: MutableList<Organization> by mutableStateOf(mutableStateListOf())
+
+    fun getOrganizations() {
         viewModelScope.launch {
-            chatRepository.sendMessage(userId, message)
+            listOfOrganization = chatRepository.getOrganizations()
         }
     }
 
-    // Funktion til at opdatere søgequery
-    fun updateSearchQuery(query: String) {
-        (searchQuery as? MutableState)?.value = query
+    // Search bar
+    var searchBar by mutableStateOf("")
+
+    fun searchOrganisationByName() {
+        viewModelScope.launch {
+            val newListOfOrganization: MutableList<Organization> = chatRepository.searchOrganizations(searchBar)
+            println(newListOfOrganization)
+            // Update the list with the search results instead of replacing it
+            if (newListOfOrganization.isNotEmpty()) {
+                listOfOrganization.clear()
+                listOfOrganization.addAll(newListOfOrganization)
+                println("Success")
+            } else {
+                // If no results found, clear the list
+                listOfOrganization.clear()
+                println("No success")
+            }
+        }
+    }
+    // SKRIVE BESKEDER
+    // Funktion til at sende en besked
+    suspend fun sendMessage(userId: String, message: String) {
+        chatRepository.sendMessage(userId, message)
     }
 }

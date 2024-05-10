@@ -1,7 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen
 
 /*
-
 // Opretter en liste af beskeder
 @Composable
 fun MessageList(messages: List<Message>) {
@@ -14,3 +13,4 @@ fun MessageList(messages: List<Message>) {
 }
 
  */
+
