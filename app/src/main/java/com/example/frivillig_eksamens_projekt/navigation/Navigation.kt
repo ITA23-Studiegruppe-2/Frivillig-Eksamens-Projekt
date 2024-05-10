@@ -40,17 +40,18 @@ fun Navigation() {
         Screen.RegisterUserSecond.route,
         Screen.UserOrOrg.route
     )
-    // Store the current route
-    var currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
+    // Store the current route - Should only be Start route, but just to make sure we get the current destination
+    val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
     Scaffold(
         bottomBar = {
             // If the currentRoute (Screen) isnt in the list of screensWithNoBottomNavigation render the navigation bar
+            // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
                     onSearchClick = { navController.navigate(Screen.Activities.route)},
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
-                    onEmailClick = { /*TODO*/ },
+                    onChatPageClick = { /*TODO*/ },
                     onAccountClick = { /*Todo*/ }
                 )
 
@@ -93,7 +94,8 @@ fun Navigation() {
                 onSuccess = {navController.navigate(Screen.RegisterUserSecond.route)},
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
-                viewModel = registerViewModel
+                viewModel = registerViewModel,
+                onClick = {}
             )
             currentRoute.value = Screen.RegisterUser.route
 
@@ -105,7 +107,8 @@ fun Navigation() {
                 onSuccess = {navController.navigate(Screen.Home.route)},
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
-                viewModel = registerViewModel
+                viewModel = registerViewModel,
+                onClick = {}
             )
             currentRoute.value = Screen.RegisterUserSecond.route
 
@@ -113,7 +116,8 @@ fun Navigation() {
         // Choose what type of account (Bruger)
         composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
-                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)}
+                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)},
+                onSuccesOrgSelection = {}
             )
             currentRoute.value = Screen.UserOrOrg.route
         }
