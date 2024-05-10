@@ -1,26 +1,20 @@
 package com.example.frivillig_eksamens_projekt.ui.MyProfile
-
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,15 +22,39 @@ fun ProfileScreen() {
     Scaffold(
         topBar = {
             SmallTopAppBar(
-                title = { Text("Din profil: Anders Keller", color = Color.Black) }, // Light Green text color
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = Color.White // White color for the top bar
-                )
+                title = {
+                    Column {
+                        Text("Din profil:",
+                            color = Color.Black,
+                            modifier = Modifier.padding(top = 20.dp))  // Add some spacing between the lines
+                        Text("Anders Keller",
+                            color = Color.Black)
+                    }
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.White),
+                modifier = Modifier
+                    .height(90.dp)
+                    .border(1.dp, Color.Black),
+                actions = {
+                    // Settings icon button
+                    IconButton(onClick = { /* Handle settings click here */ }) {
+                        Icon(
+                            imageVector = Icons.Filled.Settings,
+                            modifier = Modifier
+                                .size(50.dp)
+                                .padding(top = 10.dp),
+                            contentDescription = "Settings",
+                            tint = Color.Black  // Specify the icon tint color if needed
+
+                        )
+                    }
+                }
             )
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = Color.White, // White color for the bottom bar
+                containerColor = Color(0xFFC8D5B9),
+                modifier = Modifier.border(1.dp, Color.Black),
                 content = {}
             )
         }
@@ -55,43 +73,51 @@ fun ProfileScreen() {
                 imageVector = Icons.Default.AccountCircle,
                 contentDescription = "Profile",
                 modifier = Modifier
-                    .size(150.dp)
+                    .size(180.dp)
                     .align(Alignment.CenterHorizontally),
-                tint = Color.White// Icon color changed to white
+                tint = Color.White
             )
-
-            Spacer(modifier = Modifier.height(80.dp))
-            InputfieldUser(label = "Brugers navn: Anders Keller", icon = Icons.Default.Person, value = "", textColor = Color.Black)
+            Spacer(modifier = Modifier.height(30.dp))
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = "editer",
+                modifier = Modifier
+                    .size(30.dp)
+                    .align(Alignment.End)
+            )
+            Spacer(modifier = Modifier.height(15.dp))
+            InputfieldUser("Anders Keller", Icons.Default.Person)
+            Spacer(modifier =    Modifier.height(14.dp))
+            InputfieldUser("anders@example.com", Icons.Default.Email,)
             Spacer(modifier = Modifier.height(14.dp))
-            InputfieldUser(label = "Email: anders@example.com", icon = Icons.Default.Email, value = "", textColor = Color.Black)
+            InputfieldUser(" 01/01/1990", Icons.Default.ArrowDropDown)
             Spacer(modifier = Modifier.height(14.dp))
-            InputfieldUser(label = "Fødselsdag: 01/01/1990", icon = Icons.Default.ArrowDropDown, value = "", textColor = Color.Black)
-            Spacer(modifier = Modifier.height(14.dp))
-            InputfieldUser(label = "Postnummer: 2700", icon = Icons.Default.LocationOn, value = "", textColor = Color.Black)
+            InputfieldUser("2700", Icons.Default.LocationOn)
         }
     }
 }
 
 @Composable
-fun InputfieldUser(label: String, icon: ImageVector, value: String, textColor: Color) {
+fun InputfieldUser(label: String, mainIcon: ImageVector, value: String = "", textColor: Color = Color.Black) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .background(Color.White)
-            .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))  // Adds a border with rounded corners
-            .padding(14.dp)  // Padding inside the border
-
+            .background(Color.White, RoundedCornerShape(10.dp))
+            .border(0.6.dp, Color.Black, RoundedCornerShape(10.dp))
+            .padding(14.dp)
     ) {
         Icon(
-            imageVector = icon,
+            imageVector = mainIcon,
             contentDescription = null,
-            modifier = Modifier.size(24.dp),
-            tint = textColor // Text color for the icon
+            modifier = Modifier.size(20.dp),
+            tint = textColor
         )
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = label, color = textColor) // Text color for the label
+        Text(text = label,
+            color = textColor
+        )
     }
 }
 
