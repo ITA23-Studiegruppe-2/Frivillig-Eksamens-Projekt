@@ -23,7 +23,7 @@ fun BottomNavigationBar(
     onSearchClick: () -> Unit,
     onCalenderClick: () -> Unit,
     onHomePageClick: () -> Unit,
-    onEmailClick: () -> Unit,
+    onChatPageClick: () -> Unit,
     onAccountClick: () -> Unit
 
 ) {
@@ -32,11 +32,11 @@ fun BottomNavigationBar(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            NavigationButton(iconType = Icons.Default.Search, description = "Search", onClick = onSearchClick)
-            NavigationButton(iconType = Icons.Default.DateRange, description = "Calender", onClick = onCalenderClick)
-            NavigationButton(iconType = Icons.Default.Home, description = "Home", onClick = onHomePageClick)
-            NavigationButton(iconType = Icons.Default.Email, description = "Home", onClick = onEmailClick)
-            NavigationButton(iconType = Icons.Default.AccountCircle, description = "Home", onClick = onAccountClick)
+            NavigationButton(iconType = Icons.Default.Search, description = "Search page", onClick = onSearchClick)
+            NavigationButton(iconType = Icons.Default.DateRange, description = "Calender page", onClick = onCalenderClick)
+            NavigationButton(iconType = Icons.Default.Home, description = "Home page", onClick = onHomePageClick)
+            NavigationButton(iconType = Icons.Default.Email, description = "Chat page", onClick = onChatPageClick)
+            NavigationButton(iconType = Icons.Default.AccountCircle, description = "My profile page", onClick = onAccountClick)
         }
 
 

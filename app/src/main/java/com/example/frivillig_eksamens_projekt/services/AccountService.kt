@@ -1,6 +1,7 @@
 package com.example.frivillig_eksamens_projekt.services
 
 import com.example.frivillig_eksamens_projekt.DTO.User
+import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseError
 import com.google.firebase.auth.FirebaseAuth
@@ -79,10 +80,9 @@ class AccountService {
 
     // Store userInformation in the database
 
-    // I dont think that database should be initialized in here - Maybe add a repository to this? (Seems weird )
-    private val db = Firebase.firestore
+   private val usersRepository: UsersRepository = UsersRepository()
 
-      fun createUserDB(
+       fun createUserDB(
          fullName: String,
          phoneNumber: String,
          zipCode: String,
@@ -93,8 +93,8 @@ class AccountService {
      ) {
         // Get the Auth uID
         val userUID = Firebase.auth.currentUser?.uid
-         println("User UID INSIDE OF DB FUNCTION $userUID")
 
+           // Create the user object that we want to send
         val userToAddToDatabase: User = User(
             fullName = fullName,
             phoneNumber = phoneNumber,
@@ -104,22 +104,17 @@ class AccountService {
             userUID = userUID
         )
 
+
         // NOTE - WHY DOES IT HAVE TO BE ?
         if (userUID != null) {
-            db.collection("Users").document(userUID)
-                .set(userToAddToDatabase)
-                .addOnSuccessListener {
-                    // Send the user to home page - Successful registration
-                    onSuccess()
-
-                }
-                .addOnFailureListener {
-                    // Handle what errors we get
-                    // maybe if one of the fields are missing
-                    onFail("There was an error trying to reach the database!")
-                }
+            usersRepository.addUserToDatabase(
+                user = userToAddToDatabase,
+                userUID = userUID,
+                onSuccess = onSuccess,
+                onFail = onFail
+            )
         } else {
-            onFail("An unknown error has occurred, please try again later")
+            onFail("An unknown error has occurred, please try again later") // TODO
             // Handle errors? if the Authentication went wrong - but that should have been handled at a sooner state.
         }
 

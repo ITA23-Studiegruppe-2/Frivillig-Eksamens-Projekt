@@ -1,6 +1,25 @@
 package com.example.frivillig_eksamens_projekt.navigation
 
-/*
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
+import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
+import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
+import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
+import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
+import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
+import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
+
 
 @Composable
 fun Navigation() {
@@ -18,17 +37,18 @@ fun Navigation() {
         Screen.RegisterUserSecond.route,
         Screen.UserOrOrg.route
     )
-    // Store the current route
-    var currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
+    // Store the current route - Should only be Start route, but just to make sure we get the current destination
+    val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
     Scaffold(
         bottomBar = {
             // If the currentRoute (Screen) isnt in the list of screensWithNoBottomNavigation render the navigation bar
+            // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
                     onSearchClick = { navController.navigate(Screen.Activities.route)},
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
-                    onEmailClick = { /*TODO*/ },
+                    onChatPageClick = { /*TODO*/ },
                     onAccountClick = { /*Todo*/ }
                 )
 
@@ -71,7 +91,8 @@ fun Navigation() {
                 onSuccess = {navController.navigate(Screen.RegisterUserSecond.route)},
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
-                viewModel = registerViewModel
+                viewModel = registerViewModel,
+                onClick = {}
             )
             currentRoute.value = Screen.RegisterUser.route
 
@@ -83,7 +104,8 @@ fun Navigation() {
                 onSuccess = {navController.navigate(Screen.Home.route)},
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
-                viewModel = registerViewModel
+                viewModel = registerViewModel,
+                onClick = {}
             )
             currentRoute.value = Screen.RegisterUserSecond.route
 
@@ -91,7 +113,8 @@ fun Navigation() {
         // Choose what type of account (Bruger)
         composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
-                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)}
+                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)},
+                onSuccesOrgSelection = {}
             )
             currentRoute.value = Screen.UserOrOrg.route
         }
@@ -114,4 +137,4 @@ fun Navigation() {
 
 
 }
- */
+

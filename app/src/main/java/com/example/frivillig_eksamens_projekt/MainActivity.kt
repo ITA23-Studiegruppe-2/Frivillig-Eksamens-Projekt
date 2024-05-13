@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.frivillig_eksamens_projekt.ui.chatScreen.ChatPage
+import com.example.frivillig_eksamens_projekt.ui.chatScreen.ChatScreen
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,17 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    ChatPage(userId = "")
-
-                    /*BottomNavigationBar(
-                        onSearchClick = { /*TODO*/ },
-                        onCalenderClick = { /*TODO*/ },
-                        onHomePageClick = { /*TODO*/ },
-                        onEmailClick = { /*TODO*/ }) {
-                        
-                    }*/
-
+                    Navigation()
                 }
             }
         }
