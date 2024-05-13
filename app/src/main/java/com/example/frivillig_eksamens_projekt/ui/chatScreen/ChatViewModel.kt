@@ -1,6 +1,5 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen
 
-import android.os.Message
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -19,8 +18,9 @@ class ChatViewModel : ViewModel() {
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
     val chatRepository = ChatRepository()
 
+
     // Tilstand for beskeder
-    val messages: State<List<Message>> = mutableStateOf(emptyList())
+    val messages: State<List<com.example.frivillig_eksamens_projekt.DTO.Message>> = mutableStateOf(emptyList())
 
 
     // FIND ORGANISATION
@@ -57,8 +57,11 @@ class ChatViewModel : ViewModel() {
         }
     }
     // SKRIVE BESKEDER
+
+
     // Funktion til at sende en besked
     suspend fun sendMessage(userId: String, message: String) {
-        chatRepository.sendMessage(userId, message)
+        val newMessage = com.example.frivillig_eksamens_projekt.DTO.Message(message, userId)
+        chatRepository.sendMessage(userId, newMessage)
     }
 }
