@@ -1,6 +1,11 @@
 package com.example.frivillig_eksamens_projekt.navigation
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,10 +22,9 @@ import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
-import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
+import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
-import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
@@ -33,38 +37,64 @@ fun Navigation() {
     // Needs one viewmodel for both registration screens - Initialize it here
     val registerViewModel: CreateUserViewModel = CreateUserViewModel()
 
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Logo.route) {
 
-        //Logo Screen
-        composable(Screen.Logo.route) {
-            LogoScreen(navController)
+    /* Bottom Navigation bar */
+    // List of all the screens that shouldnt have a bottom navigation bar
+    var screensWithNoBottomNavigation: List<String> = listOf(
+        Screen.Start.route,
+        Screen.Login.route,
+        Screen.RegisterUser.route,
+        Screen.RegisterUserSecond.route,
+        Screen.UserOrOrg.route
+    )
+    // Store the current route - Should only be Start route, but just to make sure we get the current destination
+    val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
+    Scaffold(
+        bottomBar = {
+            // If the currentRoute (Screen) isnt in the list of screensWithNoBottomNavigation render the navigation bar
+            // Set the new current route each time we change it!
+            if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
+                BottomNavigationBar(
+                    onSearchClick = { navController.navigate(Screen.Activities.route)},
+                    onCalenderClick = { navController.navigate(Screen.Calendar.route) },
+                    onHomePageClick = { navController.navigate(Screen.Home.route) },
+                    onChatPageClick = { /*TODO*/ },
+                    onAccountClick = { /*Todo*/ }
+                )
+
+
+            }
+        },
+    ){
+        paddingValues -> NavHost(
+        navController = navController,
+        startDestination = Screen.Logo.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+
+        //Home Screen
+        composable(Screen.Home.route) {
+            ActivityScreen()
+            currentRoute.value = Screen.Home.route
         }
 
         // Start Screen
         composable(Screen.Start.route) {
             StartScreen(
                 onLoginClick = { navController.navigate(Screen.Login.route) },
-                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route)})
+                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route)}
+            )
+            currentRoute.value = Screen.Start.route
+
         }
 
         // Login Screen
         composable(Screen.Login.route) {
             LoginScreen(
-                onSuccessLogin = {navController.navigate(Screen.Home.route)},
-                onFailure = { println("Error")}
+                onSuccessLogin = {navController.navigate(Screen.Home.route)}
             )
+            currentRoute.value = Screen.Login.route
         }
-
-        // User or Org Screen
-        composable(Screen.UserOrOrg.route) {
-            UserOrOrganisation(
-                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)},
-                onSuccesOrgSelection = {navController.navigate(Screen.RegisterOrg.route)},
-            )
-        }
-
         // Register User Screen
         composable(Screen.RegisterUser.route) {
             CreateUserScreen(
@@ -72,7 +102,9 @@ fun Navigation() {
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
                 viewModel = registerViewModel,
-                navController)
+                onClick = {}
+            )
+            currentRoute.value = Screen.RegisterUser.route
         }
 
         // Register User Second Screen
@@ -92,23 +124,35 @@ fun Navigation() {
                 onFail = { /*TODO*/ },
                 navController)
         }
+                viewModel = registerViewModel,
+                onClick = {}
+            )
+            currentRoute.value = Screen.RegisterUserSecond.route
 
         //User Home Screen
         composable(Screen.Home.route) {
             HomeScreen(userViewModel = UserViewModel(), navController)
         }
-
-        //Activity Screen
-        composable(Screen.Activity.route) {
-            ActivityScreen()
+        // Choose what type of account (Bruger)
+        composable(Screen.UserOrOrg.route) {
+            UserOrOrganisation(
+                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)},
+                onSuccesOrgSelection = {}
+            )
+            currentRoute.value = Screen.UserOrOrg.route
         }
 
         // Calendar Screen
         composable(Screen.Calendar.route) {
-                CalendarScreen(
-                    onCalendarClick = { navController.navigate(Screen.Calendar.route) },
-                    viewModel = CalendarViewModel()
-                )
+            CalendarScreen(
+                onCalendarClick = { navController.navigate(Screen.Calendar.route) },
+                viewModel = CalendarViewModel()
+            )
+            currentRoute.value = Screen.Calendar.route
+        }
+        composable(Screen.Activities.route) {
+            ActivityScreen()
+            currentRoute.value = Screen.Activities.route
         }
 
         //Badges Screen
@@ -142,4 +186,8 @@ fun Navigation() {
         }
 
     }
+    }
+
+
 }
+

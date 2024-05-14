@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -69,6 +70,12 @@ fun CreateUserSecondScreen(
                     icon = Icons.Outlined.DateRange,
                     value = viewModel.birthDate,
                     onValueChange = { viewModel.birthDate = it })
+                Text(
+                    text = viewModel.errorMessage,
+                    style = TextStyle(
+                        color = Color.Red
+                    )
+                )
 
                 Row {
                     Spacer(modifier = Modifier.width(14.dp))
@@ -89,7 +96,7 @@ fun CreateUserSecondScreen(
                     CustomButton(
                         text = "Tilmeld",
                         onClick = {
-                            viewModel.registerUserToDatabase(onSuccess = onSuccess, onFail = onFail)
+                            viewModel.registerUserToDatabase(onSuccess = onSuccess, onFail = {})
                         })
                 }
             }

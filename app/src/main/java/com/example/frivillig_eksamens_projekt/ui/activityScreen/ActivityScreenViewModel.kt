@@ -26,15 +26,28 @@ class ActivityScreenViewModel: ViewModel() {
         getActivities()
     }
 
-     fun getActivities() {
+    fun getActivities() {
          viewModelScope.launch {
              listOfActivities = activitesRepository.getActivities()
          }
     }
 
     // Search bar
+    var searchBar by mutableStateOf("")
 
-
+    fun searchForActivitiesByTitle() {
+        viewModelScope.launch {
+            val newListOfActivites: MutableList<Activity> = activitesRepository.searchActivityTitle(searchBar)
+            // If the new list isnt empty - good request
+            if (newListOfActivites.isNotEmpty()) {
+                listOfActivities = newListOfActivites
+                println("Success")
+            } else {
+                // We didnt find anything in the database :)
+                println("No success")
+            }
+        }
+    }
 
 
 

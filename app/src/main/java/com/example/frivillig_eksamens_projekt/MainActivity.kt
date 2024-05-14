@@ -13,8 +13,8 @@ import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
+import com.example.frivillig_eksamens_projekt.ui.chatScreen.ChatScreen
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
-import org.intellij.lang.annotations.JdkConstants.CalendarMonth
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

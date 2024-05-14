@@ -33,4 +33,8 @@ sealed class Screen (val route: String) {
     object OrgHomeScreen: Screen(route = "orgHome_screen")
 
     object CreateShift: Screen(route = "create_shift_screen")
+
+    object Activities: Screen(route = "activities_screen")
+
+    object ChatPage: Screen(route = "chatPage_screen")
 }

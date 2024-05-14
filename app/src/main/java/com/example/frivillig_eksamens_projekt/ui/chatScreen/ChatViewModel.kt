@@ -1,42 +1,67 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen
 
-/*
-class ChatViewModel : ViewModel() {
-    private val repository = ChatRepository() // Antagelse om, at der er en repository-klasse for at håndtere Firestore-interaktioner
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.frivillig_eksamens_projekt.DTO.Organization
+import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
+import kotlinx.coroutines.launch
 
-    init {
-        listenForMessages()
-    }
+
+// Håndterer logikken bag visningen af beskeder og søgning i chatten.
+class ChatViewModel : ViewModel() {
+    var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
+    val chatRepository = ChatRepository()
+
 
     // Tilstand for beskeder
-    private val _messages = MutableStateFlow<List<Message>>(emptyList())
-    val messages: StateFlow<List<Message>> = _messages
+    val messages: State<List<com.example.frivillig_eksamens_projekt.DTO.Message>> = mutableStateOf(emptyList())
 
-    // Tilstand for søgequery
-    private val _searchQuery = MutableStateFlow("")
-    val searchQuery: StateFlow<String> = _searchQuery
 
-    // Funktion til at sende en besked
-    fun sendMessage(orgId: String, userId: String, message: String) {
+    // FIND ORGANISATION
+    init {
+        getOrganizations()
+    }
+
+    // list of organisations
+    var listOfOrganization: MutableList<Organization> by mutableStateOf(mutableStateListOf())
+
+    fun getOrganizations() {
         viewModelScope.launch {
-            repository.sendMessage(orgId, userId, message)
+            listOfOrganization = chatRepository.getOrganizations()
         }
     }
 
-    // Funktion til at lytte efter nye beskeder
-    fun listenForMessages() {
+    // Search bar
+    var searchBar by mutableStateOf("")
+
+    fun searchOrganisationByName() {
         viewModelScope.launch {
-            repository.listenForMessages { messages ->
-                _messages.value = messages
+            val newListOfOrganization: MutableList<Organization> = chatRepository.searchOrganizations(searchBar)
+            println(newListOfOrganization)
+            // Update the list with the search results instead of replacing it
+            if (newListOfOrganization.isNotEmpty()) {
+                listOfOrganization.clear()
+                listOfOrganization.addAll(newListOfOrganization)
+                println("Success")
+            } else {
+                // If no results found, clear the list
+                listOfOrganization.clear()
+                println("No success")
             }
         }
     }
+    // SKRIVE BESKEDER
 
-    // Funktion til at opdatere søgequery
-    fun updateSearchQuery(query: String) {
-        _searchQuery.value = query
+
+    // Funktion til at sende en besked
+    suspend fun sendMessage(userId: String, message: String) {
+        val newMessage = com.example.frivillig_eksamens_projekt.DTO.Message(message, userId)
+        chatRepository.sendMessage(userId, newMessage)
     }
 }
-
-
- */
