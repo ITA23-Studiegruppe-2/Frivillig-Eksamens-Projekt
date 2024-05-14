@@ -20,9 +20,17 @@ sealed class Screen (val route: String) {
 
     object Logo: Screen(route = "logo_screen")
 
-    object Activity: Screen(route = "activity_screen")
-
     object Badges: Screen(route = "badges_screen")
+
+    object Calendar2: Screen(route = "calendar_second_screen")
+
+    object UpcomingShifts: Screen(route = "upcoming_shifts_screen")
+
+    object Hours: Screen(route = "hours_screen")
+
+    object OrgHomeScreen: Screen(route = "orgHome_screen")
+
+    object CreateShift: Screen(route = "create_shift_screen")
 
     object Activities: Screen(route = "activities_screen")
 

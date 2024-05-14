@@ -26,12 +26,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
 fun CreateUserSecondScreen(
     onSuccess: () -> Unit,
     onFail: () -> Unit,
-    onClick: () -> Unit,
+    navController: NavController,
     viewModel: CreateUserViewModel
 ) {
 
@@ -45,7 +46,7 @@ fun CreateUserSecondScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            BackButton(onClick)
+            BackButton(onClick = {navController.popBackStack()})
             Spacer(modifier = Modifier.height(70.dp))
             Text(text = "Færdiggør din bruger", fontSize = 22.sp, color = Color(0xFF364830))
 

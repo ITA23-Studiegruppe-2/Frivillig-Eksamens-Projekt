@@ -8,8 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.frivillig_eksamens_projekt.DTO.Message
-import com.example.frivillig_eksamens_projekt.DTO.Organization
+import com.example.frivillig_eksamens_projekt.Models.Organization
 import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
 import kotlinx.coroutines.launch
 

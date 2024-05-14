@@ -1,4 +1,4 @@
-package com.example.frivillig_eksamens_projekt.DTO
+package com.example.frivillig_eksamens_projekt.Models
 
 import com.google.firebase.firestore.DocumentId
 

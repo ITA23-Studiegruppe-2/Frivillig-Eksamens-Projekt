@@ -1,15 +1,12 @@
 package com.example.frivillig_eksamens_projekt.services
 
-import com.example.frivillig_eksamens_projekt.DTO.User
+import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 import com.google.firebase.Firebase
-import com.google.firebase.FirebaseError
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.firestore
 
 class AccountService {
      fun registerUserAuth(email: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
@@ -34,17 +31,13 @@ class AccountService {
                  */
                 var errorMessage = when (exception) {
                     is FirebaseAuthException -> when(exception.errorCode) {
-                        "ERROR_EMAIL_ALREADY_IN_USE" -> "Email is already in use"
-                        "ERROR_NETWORK_REQUEST_FAILED" -> "Check internet"
-                        "ERROR_WEAK_PASSWORD" -> "Weak password"
-                        "FIRAuthErrorCodeNetworkError" -> "Check your internet"
-                        else -> {
-                            "An unknown error has occurred, please try again later!"
-                        }
+                        "ERROR_EMAIL_ALREADY_IN_USE" -> "Denne email er allerede i brug"
+                        "ERROR_WEAK_PASSWORD" -> "Brug venligst en stærkere adgangkode! Den skal mindst være 8 karaktere lang, indehold minimun et tal og et stort bogstav"
+                        else -> "Ukendt fejl, prøv venligst igen senere!"
                     }
-                    else -> {
-                        "An unknown error has occurred"
-                    }
+                    is FirebaseNetworkException -> "Netværksfejl, kontroller venligst om du har internet adgang"
+                    else -> "Ukendt fejl, prøv venligst igen senere!"
+
                 }
                 // Provide the errorMessages to the Composable/ViewModel and let the user know whats wrong
                 onFail(errorMessage)
@@ -54,24 +47,25 @@ class AccountService {
     fun login(email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                //Give it the function of what to do
+                //Send the user to home page -- Successfully login
                 onSuccess()
                 println("we success")
             }
             .addOnFailureListener { exception ->
+
+                // Get the errorCode and transform it to a readable text for the users.
                 var errorMessage = when(exception) {
                     is FirebaseAuthInvalidCredentialsException -> when(exception.errorCode) {
-                        "auth/user-not-found" -> "User not found"
-                        "ERROR_INVALID_EMAIL" -> "Invalid email"
-                        "ERROR_WRONG_PASSWORD" -> "Wrong password"
+                        "ERROR_INVALID_EMAIL" -> "Indtast venligst en gyldig e-mailadresse."
+                        "ERROR_INVALID_CREDENTIAL" -> "Forkert adgangskode og/eller e-mail adresse"
 
-                        else -> "Unknown error"
+                        else -> "Ukendt fejl, prøv venligst igen senere!"
                     }
-                    else -> "Unknown error"
+                    is FirebaseNetworkException -> "Netværksfejl, kontroller venligst om du har internet adgang"
+                    else -> "Ukendt fejl, prøv venligst igen senere!"
 
                 }
                 onFailure(errorMessage)
-                println("We didnt success")
                 // Handle the errors
 
             }
