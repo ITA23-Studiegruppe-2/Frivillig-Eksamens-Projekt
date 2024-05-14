@@ -69,7 +69,7 @@ fun Navigation() {
     ){
         paddingValues -> NavHost(
         navController = navController,
-        startDestination = Screen.Logo.route,
+        startDestination = Screen.Calendar2.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 
