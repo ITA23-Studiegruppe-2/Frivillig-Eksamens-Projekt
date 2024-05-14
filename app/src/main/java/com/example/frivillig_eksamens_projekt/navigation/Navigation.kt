@@ -188,7 +188,7 @@ fun Navigation() {
         composable(Screen.CreateShift.route) {
             CreateShift(navController, viewModel = CreateShiftViewModel())
         }
-        
+
         composable(Screen.Logo.route) {
             LogoScreen(navController = navController)
         }

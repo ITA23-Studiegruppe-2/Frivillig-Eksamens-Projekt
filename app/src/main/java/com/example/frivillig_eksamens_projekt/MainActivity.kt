@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                         onCalenderClick = { /*TODO*/ },
                         onHomePageClick = { /*TODO*/ },
                         onEmailClick = { /*TODO*/ }) {
-                        
+
                     }*/
 
                 }
