@@ -5,6 +5,6 @@ import com.google.firebase.firestore.DocumentId
 data class Message(
     @DocumentId var documentId: String? = null,
     val message: String = "",
-    val orgid: String = "",
-    val userid: String = ""
+    val userUID: String = "", // Ændret fra "userid"
+    val orgUID: String = "" // Ændret fra "orgid"
 )
