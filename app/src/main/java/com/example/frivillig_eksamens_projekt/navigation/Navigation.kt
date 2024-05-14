@@ -46,9 +46,10 @@ fun Navigation() {
         Screen.Login.route,
         Screen.RegisterUser.route,
         Screen.RegisterUserSecond.route,
-        Screen.UserOrOrg.route
+        Screen.UserOrOrg.route,
+        Screen.Logo.route
     )
-    // Store the current route - Should only be Start route, but just to make sure we get the current destination
+    // Store the current route - Should only be logo route, but just to make sure we get the current destination
     val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
     Scaffold(
         bottomBar = {
@@ -73,10 +74,10 @@ fun Navigation() {
             modifier = Modifier.padding(paddingValues)
         ) {
 
-        //Home Screen
-        composable(Screen.Home.route) {
-            ActivityScreen()
-            currentRoute.value = Screen.Home.route
+
+        // Logo Screen
+        composable(Screen.Logo.route) {
+            LogoScreen(navController = navController)
         }
 
         // Start Screen
@@ -88,7 +89,6 @@ fun Navigation() {
             currentRoute.value = Screen.Start.route
 
         }
-
         // Login Screen
         composable(Screen.Login.route) {
             LoginScreen(
@@ -111,6 +111,7 @@ fun Navigation() {
 
         // Register User Second Screen
         composable(Screen.RegisterUserSecond.route) {
+            // Its a user login -> Send it to the user homeScreen
             CreateUserSecondScreen(
                 onSuccess = { navController.navigate(Screen.Home.route) },
                 // TEMP () ADD INDICATOR
@@ -118,25 +119,27 @@ fun Navigation() {
                 navController,
                 viewModel = registerViewModel
             )
+            currentRoute.value = Screen.RegisterUserSecond.route
         }
 
         //Register Organisation Screen
         composable(Screen.RegisterOrg.route) {
-
             CreateOrgScreen(
                 onSuccess = { navController.navigate(Screen.Home.route) }, //Skal laves om til Org Home Screen
                 onFail = { /*TODO*/ },
                 navController
             )
 
-            currentRoute.value = Screen.RegisterUserSecond.route
+            currentRoute.value = Screen.RegisterOrg.route
         }
-
 
         //User Home Screen
         composable(Screen.Home.route) {
             HomeScreen(userViewModel = UserViewModel(), navController)
+
+            currentRoute.value = Screen.Home.route
         }
+
         // Choose what type of account (Bruger)
         composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
@@ -162,35 +165,43 @@ fun Navigation() {
         //Badges Screen
         composable(Screen.Badges.route) {
             BadgesScreen(navController)
+
+            currentRoute.value = Screen.Badges.route
         }
 
         // Second Calendar Screen
         composable(Screen.Calendar2.route) {
             CalendarScreen2(navController)
+
+            currentRoute.value = Screen.Calendar2.route
         }
 
         // Upcoming Shifts Screen
         composable(Screen.UpcomingShifts.route) {
             UpcomingShifts(navController)
+
+            currentRoute.value = Screen.UpcomingShifts.route
         }
 
         // Hours Screen
         composable(Screen.Hours.route) {
             HoursScreen(navController)
+
+            currentRoute.value = Screen.Hours.route
         }
 
         // Organisation Home Screen
         composable(Screen.OrgHomeScreen.route) {
             OrgHomeScreen(navController)
+
+            currentRoute.value = Screen.OrgHomeScreen.route
         }
 
         // Create Shift Screen
         composable(Screen.CreateShift.route) {
             CreateShift(navController, viewModel = CreateShiftViewModel())
-        }
-        
-        composable(Screen.Logo.route) {
-            LogoScreen(navController = navController)
+
+            currentRoute.value = Screen.CreateShift.route
         }
     }
     }
