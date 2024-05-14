@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.activityScreen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,11 +31,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @Composable
-fun ShiftCard(title: String, organization: String, date: String, time: String) {
+fun ShiftCard(title: String, organization: String, date: String, time: String, activityID: String, listOfUsers: List<String>) {
 
     val viewModel = RequestShiftViewModel()
+
+    //Check to see if the list of users applied to the activity contains the current user
+    // If it does, initialize the request to be true.
+    if (listOfUsers.contains("[${Firebase.auth.uid}]")) {
+        viewModel.setRequested(true)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +86,9 @@ fun ShiftCard(title: String, organization: String, date: String, time: String) {
                     contentDescription = "Toggle Dropdown",
                     modifier = Modifier
                         .size(40.dp)
-                        .clickable { viewModel.isExpanded =! viewModel.isExpanded},
+                        .clickable {
+                            viewModel.isExpanded = !viewModel.isExpanded
+                        },
                     tint = Color(0xFF364830)
                 )
             }
@@ -106,7 +118,8 @@ fun ShiftCard(title: String, organization: String, date: String, time: String) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         Text(text = dropdownText, fontSize = 14.sp, modifier = Modifier.padding(10.dp))
-                        RequestShiftCheckbox(viewModel)
+                        RequestShiftCheckbox(viewModel, activityID = activityID)
+
                     } },
                 onClick = { viewModel.isExpanded = false },
                 modifier = Modifier,

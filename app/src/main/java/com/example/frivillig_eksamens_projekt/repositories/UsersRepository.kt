@@ -1,7 +1,6 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
-import androidx.privacysandbox.ads.adservices.adid.AdId
-import com.example.frivillig_eksamens_projekt.DTO.User
+import com.example.frivillig_eksamens_projekt.Models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await

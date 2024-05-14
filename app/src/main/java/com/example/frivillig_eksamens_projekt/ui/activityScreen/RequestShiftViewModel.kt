@@ -6,8 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class RequestShiftViewModel: ViewModel() {
+    val activitiesRepository: ActivitiesRepository = ActivitiesRepository()
     private val _isRequested = mutableStateOf(false)
     val isRequested: State<Boolean>  get() = _isRequested
 
@@ -17,4 +21,15 @@ class RequestShiftViewModel: ViewModel() {
     }
 
     var isExpanded by mutableStateOf(false)
+
+
+    fun applyForActivity(currentActivityID: String) {
+        Firebase.auth.uid?.let {
+            activitiesRepository.applyForActivity(
+                appliedState = _isRequested.value,
+                currentActivityID = currentActivityID,
+                userID = it
+            )
+        }
+    }
 }

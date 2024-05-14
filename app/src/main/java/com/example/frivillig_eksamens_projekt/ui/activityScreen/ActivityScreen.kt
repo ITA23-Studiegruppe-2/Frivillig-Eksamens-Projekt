@@ -34,22 +34,29 @@ fun ActivityScreen() {
             ) {
                 SearchBar(
                     searchBarValue = viewModel.searchBar,
-                    onValueChange = {viewModel.searchBar = it},
+                    onValueChange = { viewModel.searchBar = it }
                 )
                 Row {
-                    Button(onClick = {viewModel.searchForActivitiesByTitle() }) {
+                    Button(onClick = { viewModel.searchForActivitiesByTitle() }) {
                         Text(text = "Search")
                     }
-                    Button(onClick = {viewModel.getActivities()}) {
+                    Button(onClick = { viewModel.getActivities() }) {
                         Text(text = "Reset")
-
                     }
                 }
 
                 LazyColumn {
-
                     items(viewModel.listOfActivities) { activity ->
-                        ShiftCard(title = activity.title, organization = activity.organization, date = activity.date, time = activity.timeStamp)
+                        activity.documentId?.let {
+                            ShiftCard(
+                                title = activity.title,
+                                organization = activity.organization,
+                                date = activity.date,
+                                time = activity.timeStamp,
+                                activityID = it,
+                                listOfUsers = activity.listOfUsersApplied
+                            )
+                        }
                     }
                 }
             }

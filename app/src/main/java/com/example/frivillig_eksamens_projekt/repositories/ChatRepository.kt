@@ -1,6 +1,6 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
-import com.example.frivillig_eksamens_projekt.DTO.Organization
+import com.example.frivillig_eksamens_projekt.Models.Organization
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
