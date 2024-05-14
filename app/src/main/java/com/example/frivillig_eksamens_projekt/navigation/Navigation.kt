@@ -22,13 +22,14 @@ import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
+import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
-import java.time.LocalDate
 
 
 @Composable
@@ -82,7 +83,7 @@ fun Navigation() {
         composable(Screen.Start.route) {
             StartScreen(
                 onLoginClick = { navController.navigate(Screen.Login.route) },
-                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route)}
+                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route) }
             )
             currentRoute.value = Screen.Start.route
 
@@ -91,18 +92,19 @@ fun Navigation() {
         // Login Screen
         composable(Screen.Login.route) {
             LoginScreen(
-                onSuccessLogin = {navController.navigate(Screen.Home.route)}
+                onSuccessLogin = { navController.navigate(Screen.Home.route) },
+                onClick = {}
             )
             currentRoute.value = Screen.Login.route
         }
         // Register User Screen
         composable(Screen.RegisterUser.route) {
             CreateUserScreen(
-                onSuccess = {navController.navigate(Screen.RegisterUserSecond.route)},
+                onSuccess = { navController.navigate(Screen.RegisterUserSecond.route) },
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")},
+                onFail = { println("Failed") },
                 viewModel = registerViewModel,
-                onClick = {}
+                onBackButtonClick = { navController.popBackStack() }
             )
             currentRoute.value = Screen.RegisterUser.route
         }
@@ -110,24 +112,26 @@ fun Navigation() {
         // Register User Second Screen
         composable(Screen.RegisterUserSecond.route) {
             CreateUserSecondScreen(
-                onSuccess = {navController.navigate(Screen.Home.route)},
+                onSuccess = { navController.navigate(Screen.Home.route) },
                 // TEMP () ADD INDICATOR
-                onFail = { println("Failed")},
+                onFail = { println("Failed") },
                 navController,
-                viewModel = registerViewModel)
+                viewModel = registerViewModel
+            )
         }
 
         //Register Organisation Screen
-        composable(Screen.RegisterOrg.route){
+        composable(Screen.RegisterOrg.route) {
+
             CreateOrgScreen(
-                onSuccess = {navController.navigate(Screen.Home.route)}, //Skal laves om til Org Home Screen
+                onSuccess = { navController.navigate(Screen.Home.route) }, //Skal laves om til Org Home Screen
                 onFail = { /*TODO*/ },
-                navController)
-        }
-                viewModel = registerViewModel,
-                onClick = {}
+                navController
             )
+
             currentRoute.value = Screen.RegisterUserSecond.route
+        }
+
 
         //User Home Screen
         composable(Screen.Home.route) {
@@ -136,7 +140,7 @@ fun Navigation() {
         // Choose what type of account (Bruger)
         composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
-                onSuccesUserSelection = {navController.navigate(Screen.RegisterUser.route)},
+                onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
                 onSuccesOrgSelection = {}
             )
             currentRoute.value = Screen.UserOrOrg.route
@@ -179,15 +183,16 @@ fun Navigation() {
         composable(Screen.OrgHomeScreen.route) {
             OrgHomeScreen(navController)
         }
-        
+
         // Create Shift Screen
         composable(Screen.CreateShift.route) {
             CreateShift(navController, viewModel = CreateShiftViewModel())
         }
-
+        
+        composable(Screen.Logo.route) {
+            LogoScreen(navController = navController)
+        }
     }
     }
-
-
 }
 

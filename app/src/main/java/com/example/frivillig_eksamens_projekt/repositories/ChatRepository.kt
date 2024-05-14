@@ -1,8 +1,7 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
+import com.example.frivillig_eksamens_projekt.DTO.Message
 import com.example.frivillig_eksamens_projekt.Models.Organization
-import com.example.frivillig_eksamens_projekt.Models.Message
-import com.google.ai.client.generativeai.Chat
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
@@ -30,7 +29,6 @@ class ChatRepository {
             .toObjects(Organization::class.java)
 
 
-
     ///---BESKEDER---///
 
     // Funktion til at sende en besked til databasen.
@@ -43,8 +41,7 @@ class ChatRepository {
     }
 
 
-
-
+    /*
     // Henter beskeder der matcher på userid
         suspend fun findChat(userId: String): MutableList<Chat> =
         db.collection("Chat")
@@ -54,3 +51,6 @@ class ChatRepository {
             .toObjects(Chat::class.java)
     }
 
+
+ */
+}

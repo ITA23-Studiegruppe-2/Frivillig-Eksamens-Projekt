@@ -1,120 +1,92 @@
+package com.example.frivillig_eksamens_projekt.ui.createShiftScreen
+
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.runtime.*
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import android.widget.Toast
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
-fun CustomOutlinedTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    modifier: Modifier = Modifier
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = Color.Black,
-            backgroundColor = Color.White,
-            cursorColor = Color.Black,
-            focusedBorderColor = Color.Gray,
-            unfocusedBorderColor = Color.Gray
-        ),
-        modifier = modifier.padding(4.dp),
-        shape = RoundedCornerShape(8.dp)
-    )
-}
+fun CreateShift(
+    navController: NavController,
+    viewModel: CreateShiftViewModel) {
 
-@Composable
-fun CreateShiftScreen() {
-    var jobTitle by remember { mutableStateOf("") }
-    var hours by remember { mutableStateOf("") }
-    var date by remember { mutableStateOf("") }
-    var contactPerson by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    val context = LocalContext.current
+    val secondaryColor = Color(0xFF364830)
 
-    Column(
+    Surface(
         modifier = Modifier
-            .background(Color(0xFFC8D5B9))
-            .fillMaxSize()
-            .padding(16.dp)
+            .fillMaxSize(),
+        color = Color(0xFFC8D5B9)
     ) {
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Opret en vagt", style = MaterialTheme.typography.h3)
-            Spacer(Modifier.weight(1f))
-            Icon(
-                imageVector = Icons.Filled.Notifications,
-                contentDescription = "Notifications Bell",
-                modifier = Modifier.size(45.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(40.dp))
-        CustomOutlinedTextField(
-            value = jobTitle,
-            onValueChange = { jobTitle = it },
-            label = "Title på stilling",
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            CustomOutlinedTextField(
-                value = hours,
-                onValueChange = { hours = it },
-                label = "Antal timer",
-                modifier = Modifier.weight(1f).padding(end = 8.dp)
-            )
-            CustomOutlinedTextField(
-                value = date,
-                onValueChange = { date = it },
-                label = "Vagtens dato",
-                modifier = Modifier.weight(1f)
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        CustomOutlinedTextField(
-            value = contactPerson,
-            onValueChange = { contactPerson = it },
-            label = "Kontakt person",
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
-        )
-        CustomOutlinedTextField(
-            value = description,
-            onValueChange = { description = it },
-            label = "Tilføj en beskrivelse",
-            modifier = Modifier.fillMaxWidth().height(170.dp)
-        )
-        Spacer(modifier = Modifier.height(80.dp))
-        Button(
-            onClick = {
-                Toast.makeText(context, "Vagt oprettet!", Toast.LENGTH_SHORT).show()
-            },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF364830)),
-            modifier = Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 50.dp),
-            shape = RoundedCornerShape(50)
-        ) {
-            Text("Done", color = Color.White)
+            Box(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(70.dp)
+                    .width(390.dp)
+                    .background(color = Color.White, shape = RoundedCornerShape(8.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                BackButton(onClick = { navController.popBackStack() })
+                Text(text = "Opret vagt", fontSize = 28.sp, color = secondaryColor)
+            }
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Column (
+                    modifier = Modifier,
+                    verticalArrangement = Arrangement.spacedBy(22.dp)
+                ){
+
+                    InputFieldShift(
+                        label = "Titel",
+                        value = viewModel.title,
+                        onValueChange = { viewModel.title = it })
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ){
+                        InputFieldShift(
+                            label = "Antal timer",
+                            value = viewModel.hours,
+                            onValueChange = { viewModel.hours = it })
+                        InputFieldShift(
+                            label = "Vagtens dato",
+                            value = viewModel.date,
+                            onValueChange = { viewModel.date = it })
+                    }
+                    InputFieldShift(
+                        label = "Kontakt persons e-mail",
+                        value = viewModel.email,
+                        onValueChange = { viewModel.email = it })
+                    InputFieldShift(
+                        label = "Beskrivelse",
+                        value = viewModel.description,
+                        onValueChange = { viewModel.description = it })
+
+            }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CreateShiftScreen()
 }
