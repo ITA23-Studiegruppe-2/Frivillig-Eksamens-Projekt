@@ -24,6 +24,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
@@ -34,7 +35,7 @@ fun CreateUserScreen(
     onSuccess: () -> Unit,
     onFail: () -> Unit,
     viewModel: CreateUserViewModel,
-    onClick: () -> Unit
+    navController: NavController
 ){
 
 
@@ -48,7 +49,7 @@ fun CreateUserScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
-            BackButton(onClick = onClick)
+            BackButton(onClick = { navController.popBackStack() })
             Spacer(modifier = Modifier.height(50.dp))
             Text(text = "Kom i gang", fontSize = 36.sp, color = Color(0xFF364830))
             Text(text = "Opret en bruger", fontSize = 17.sp, color = Color(0xFF364830))

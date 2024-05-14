@@ -10,15 +10,25 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
+import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
+import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShiftViewModel
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
+import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
+import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
+import java.time.LocalDate
 
 
 @Composable
@@ -58,7 +68,7 @@ fun Navigation() {
     ){
         paddingValues -> NavHost(
         navController = navController,
-        startDestination = Screen.Start.route,
+        startDestination = Screen.Logo.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 
@@ -95,7 +105,6 @@ fun Navigation() {
                 onClick = {}
             )
             currentRoute.value = Screen.RegisterUser.route
-
         }
 
         // Register User Second Screen
@@ -104,11 +113,25 @@ fun Navigation() {
                 onSuccess = {navController.navigate(Screen.Home.route)},
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed")},
+                navController,
+                viewModel = registerViewModel)
+        }
+
+        //Register Organisation Screen
+        composable(Screen.RegisterOrg.route){
+            CreateOrgScreen(
+                onSuccess = {navController.navigate(Screen.Home.route)}, //Skal laves om til Org Home Screen
+                onFail = { /*TODO*/ },
+                navController)
+        }
                 viewModel = registerViewModel,
                 onClick = {}
             )
             currentRoute.value = Screen.RegisterUserSecond.route
 
+        //User Home Screen
+        composable(Screen.Home.route) {
+            HomeScreen(userViewModel = UserViewModel(), navController)
         }
         // Choose what type of account (Bruger)
         composable(Screen.UserOrOrg.route) {
@@ -130,6 +153,36 @@ fun Navigation() {
         composable(Screen.Activities.route) {
             ActivityScreen()
             currentRoute.value = Screen.Activities.route
+        }
+
+        //Badges Screen
+        composable(Screen.Badges.route) {
+            BadgesScreen(navController)
+        }
+
+        // Second Calendar Screen
+        composable(Screen.Calendar2.route) {
+            CalendarScreen2(navController)
+        }
+
+        // Upcoming Shifts Screen
+        composable(Screen.UpcomingShifts.route) {
+            UpcomingShifts(navController)
+        }
+
+        // Hours Screen
+        composable(Screen.Hours.route) {
+            HoursScreen(navController)
+        }
+
+        // Organisation Home Screen
+        composable(Screen.OrgHomeScreen.route) {
+            OrgHomeScreen(navController)
+        }
+        
+        // Create Shift Screen
+        composable(Screen.CreateShift.route) {
+            CreateShift(navController, viewModel = CreateShiftViewModel())
         }
 
     }

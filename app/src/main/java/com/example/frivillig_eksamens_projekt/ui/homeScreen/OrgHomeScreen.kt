@@ -11,19 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Build
-import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,17 +27,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.navigation.Screen
-import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 
 @Composable
-fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
-
-    val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
-    val shiftsIcon: Painter = painterResource(id = R.drawable.shift)
-    val hoursIcon: Painter = painterResource(id = R.drawable.hours)
-    val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
+fun OrgHomeScreen(navController: NavController){
 
     val secondaryColor = Color(0xFF364830)
+
+    val createShiftIcon: Painter = painterResource(id = R.drawable.createshift)
+    val peopleIcon: Painter = painterResource(id = R.drawable.people)
+    val hoursIcon: Painter = painterResource(id = R.drawable.hours)
+    val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
 
     Surface (
         modifier = Modifier
@@ -65,7 +57,7 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Hej Navn Efternavn!",
+                        text = "Hej Organisation!",
                         modifier = Modifier,
                         fontSize = 23.sp,
                         color = Color.White
@@ -80,7 +72,7 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
                 }
             }
             Spacer(modifier = Modifier.height(28.dp))
-            Box() { 
+            Box() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -88,15 +80,15 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
                 )
                 {
                     Column {
-                        InfoCards(label = "Badges", icon = bagdesIcon) {
-                            navController.navigate(Screen.Badges.route)
+                        InfoCards(label = "Opret vagt", icon = createShiftIcon) {
+                            navController.navigate(Screen.CreateShift.route)
                         }
-                        InfoCards(label = "Kommende vagter", icon = shiftsIcon) {
+                        InfoCards(label = "Frivillige", icon = peopleIcon) {
                             navController.navigate(Screen.UpcomingShifts.route)
                         }
                     }
                     Column {
-                        InfoCards(label = "Timer", icon = hoursIcon) {
+                        InfoCards(label = "Vagtportal", icon = hoursIcon) {
                             navController.navigate(Screen.Hours.route)
                         }
                         InfoCards(label = "Kalender", icon = calendarIcon) {
@@ -111,8 +103,8 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
                         .fillMaxWidth()
                         .padding(12.dp)
                 ){
-                    Shortcut(onClick = { /*TODO*/ }, label = "Ledige vagter")
-                    Shortcut(onClick = { /*TODO*/ }, label = "Mine organisationer")
+                    Shortcut(onClick = { /*TODO*/ }, label = "Chat med de frivillige")
+                    Shortcut(onClick = { /*TODO*/ }, label = "Mine ??")
                 }
             Box(
                 modifier = Modifier
