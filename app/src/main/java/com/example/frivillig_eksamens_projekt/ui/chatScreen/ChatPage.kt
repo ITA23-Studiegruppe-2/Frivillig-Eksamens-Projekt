@@ -7,11 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
-
 
 
 @Composable
@@ -19,6 +16,8 @@ fun ChatPage(userId: String) {
     val viewModel = ChatViewModel()
     // Hent beskedliste fra Firebase Firestore
     val messages by viewModel.messages
+
+    val userId = "kpKfZQTfKlmOc0f3KcJH"
 
     Column {
         // Vis beskedlisten
@@ -32,12 +31,15 @@ fun ChatPage(userId: String) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .align(Alignment.CenterHorizontally)
+
         ) {
             // Inputfelt til at skrive og sende nye beskeder
             SendMessageInput(onSendMessage = { message ->
-                viewModel.sendMessage(userId, message)
+                val orgId = "gmzWl7cT2mvskWjtc47t"
+                viewModel.sendMessage(userId, message, orgId)
             })
         }
     }
 }
+
+

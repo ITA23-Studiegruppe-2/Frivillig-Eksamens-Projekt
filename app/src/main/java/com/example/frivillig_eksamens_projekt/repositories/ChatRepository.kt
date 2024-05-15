@@ -34,7 +34,7 @@ class ChatRepository {
     // Funktion til at sende en besked til databasen.
     suspend fun sendMessage(userId: String, message: Message) {
         db.collection("Chat")
-            .document(userId)
+            .document("Chat1")
             .collection("messages")
             .add(message)
             .await()

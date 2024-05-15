@@ -35,4 +35,6 @@ sealed class Screen (val route: String) {
     object Activities: Screen(route = "activities_screen")
 
     object ChatPage: Screen(route = "chatPage_screen")
+
+    object Chat: Screen(route = "chat_screen")
 }

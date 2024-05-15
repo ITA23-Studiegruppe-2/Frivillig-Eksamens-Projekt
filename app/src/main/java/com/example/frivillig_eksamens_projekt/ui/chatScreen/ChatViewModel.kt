@@ -12,6 +12,10 @@ import com.example.frivillig_eksamens_projekt.Models.Organization
 import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
 import kotlinx.coroutines.launch
 
+/*
+Firbase.auth.UID
+
+ */
 
 // Håndterer logikken bag visningen af beskeder og søgning i chatten.
 class ChatViewModel : ViewModel() {
@@ -20,7 +24,8 @@ class ChatViewModel : ViewModel() {
 
 
     // Tilstand for beskeder
-    val messages: State<List<com.example.frivillig_eksamens_projekt.DTO.Message>> = mutableStateOf(emptyList())
+    val messages: State<List<com.example.frivillig_eksamens_projekt.DTO.Message>> =
+        mutableStateOf(emptyList())
 
 
     // FIND ORGANISATION
@@ -42,7 +47,8 @@ class ChatViewModel : ViewModel() {
 
     fun searchOrganisationByName() {
         viewModelScope.launch {
-            val newListOfOrganization: MutableList<Organization> = chatRepository.searchOrganizations(searchBar)
+            val newListOfOrganization: MutableList<Organization> =
+                chatRepository.searchOrganizations(searchBar)
             println(newListOfOrganization)
             // Update the list with the search results instead of replacing it
             if (newListOfOrganization.isNotEmpty()) {
@@ -60,8 +66,8 @@ class ChatViewModel : ViewModel() {
 
 
     // Funktion til at sende en besked
-    suspend fun sendMessage(userId: String, message: String) {
-        val newMessage = com.example.frivillig_eksamens_projekt.DTO.Message(message, userId)
+    suspend fun sendMessage(userId: String, message: String, orgId: String) {
+        val newMessage = Message(message = message, userUID = userId, orgUID = orgId)
         chatRepository.sendMessage(userId, newMessage)
     }
 }
