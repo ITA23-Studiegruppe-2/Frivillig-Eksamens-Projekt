@@ -22,6 +22,8 @@ class UsersRepository() {
 
 
 
+
+
      fun addUserToDatabase(user: User, userUID: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         db.collection("Users").document(userUID)
             .set(user)

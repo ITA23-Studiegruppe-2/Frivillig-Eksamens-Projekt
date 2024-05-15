@@ -29,13 +29,6 @@ class MainActivity : ComponentActivity() {
 
                    Navigation()
 
-                    /*BottomNavigationBar(
-                        onSearchClick = { /*TODO*/ },
-                        onCalenderClick = { /*TODO*/ },
-                        onHomePageClick = { /*TODO*/ },
-                        onEmailClick = { /*TODO*/ }) {
-
-                    }*/
 
                 }
             }

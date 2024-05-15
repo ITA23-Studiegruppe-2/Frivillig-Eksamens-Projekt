@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
@@ -31,7 +30,7 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.TermsAndConditio
 fun CreateOrgScreen(
     onSuccess: () -> Unit,
     onFail: () -> Unit,
-    navController: NavController
+    onBackButtonClick: () -> Unit
 ) {
 
     val viewModel = CreateOrgViewModel()
@@ -46,7 +45,7 @@ fun CreateOrgScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
-            BackButton(onClick = {navController.popBackStack()})
+            BackButton(onClick = onBackButtonClick)
             Spacer(modifier = Modifier.height(50.dp))
             Text(text = "Kom i gang", fontSize = 36.sp, color = Color(0xFF364830))
             Text(text = "Opret organisation", fontSize = 17.sp, color = Color(0xFF364830))
@@ -89,8 +88,8 @@ fun CreateOrgScreen(
                 CustomButton(
                     text = "Tilmeld",
                     onClick = {
-                        viewModel.registerOrgToDatabase(
-                            onSuccess = onSuccess, onFail = {}
+                        viewModel.registerOrgAuthAndDatabase(
+                            onSuccess = onSuccess, onFail = { println("Failed")}
                         )
                     })
             }
