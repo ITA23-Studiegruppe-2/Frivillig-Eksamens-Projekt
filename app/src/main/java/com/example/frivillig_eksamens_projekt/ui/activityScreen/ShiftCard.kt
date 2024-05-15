@@ -122,7 +122,6 @@ fun ShiftCard(title: String, organization: String, date: String, time: String, a
 
                     } },
                 onClick = { viewModel.isExpanded = false },
-                modifier = Modifier,
             )
         }
     }

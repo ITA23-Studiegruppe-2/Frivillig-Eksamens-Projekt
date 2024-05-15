@@ -78,7 +78,7 @@ fun CreateOrgScreen(
             }
             Spacer(modifier = Modifier.height(28.dp))
 
-            TermsAndConditionsCheckbox()
+            //TermsAndConditionsCheckbox(checkboxViewModel = viewModel)
 
             Spacer(modifier = Modifier.height(4.dp))
 

@@ -62,12 +62,15 @@ class ChatViewModel : ViewModel() {
             }
         }
     }
+    }
     // SKRIVE BESKEDER
 
-
+/*
     // Funktion til at sende en besked
     suspend fun sendMessage(userId: String, message: String, orgId: String) {
         val newMessage = Message(message = message, userUID = userId, orgUID = orgId)
         chatRepository.sendMessage(userId, newMessage)
     }
 }
+
+ */

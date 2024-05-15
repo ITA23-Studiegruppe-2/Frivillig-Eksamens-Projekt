@@ -28,6 +28,13 @@ class CreateUserViewModel : ViewModel() {
     // Error handling
     var errorMessage by mutableStateOf("")
 
+    //Gender dropdown
+    var isExpanded by mutableStateOf(false)
+    var dropDownVisible by mutableStateOf(false)
+
+    //Terms and conditions
+    var isTermsAndConditionsChecked by mutableStateOf(false)
+
     fun registerUserAuthentication(onSuccess: () -> Unit, onFail: (String) -> Unit) {
 
         //Check to see if the fields are empty

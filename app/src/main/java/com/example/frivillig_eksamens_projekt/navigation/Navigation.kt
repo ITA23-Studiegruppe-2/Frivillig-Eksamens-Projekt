@@ -52,7 +52,7 @@ fun Navigation() {
     val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
     Scaffold(
         bottomBar = {
-            // If the currentRoute (Screen) isnt in the list of screensWithNoBottomNavigation render the navigation bar
+            // If the currentRoute (Screen) isn't in the list of screensWithNoBottomNavigation render the navigation bar
             // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
@@ -69,15 +69,10 @@ fun Navigation() {
     ){
         paddingValues -> NavHost(
         navController = navController,
-        startDestination = Screen.Calendar2.route,
+        startDestination = Screen.Logo.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 
-        //Home Screen
-        composable(Screen.Home.route) {
-            ActivityScreen()
-            currentRoute.value = Screen.Home.route
-        }
 
         // Start Screen
         composable(Screen.Start.route) {
@@ -115,7 +110,7 @@ fun Navigation() {
                 onSuccess = { navController.navigate(Screen.Home.route) },
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed") },
-                navController,
+                onBackButtonClick = {navController.popBackStack()},
                 viewModel = registerViewModel
             )
         }
@@ -135,7 +130,7 @@ fun Navigation() {
 
         //User Home Screen
         composable(Screen.Home.route) {
-            HomeScreen(userViewModel = UserViewModel(), navController)
+            HomeScreen(navController)
         }
         // Choose what type of account (Bruger)
         composable(Screen.UserOrOrg.route) {
@@ -150,7 +145,6 @@ fun Navigation() {
         composable(Screen.Calendar.route) {
             CalendarScreen(
                 onCalendarClick = { navController.navigate(Screen.Calendar.route) },
-                viewModel = CalendarViewModel()
             )
             currentRoute.value = Screen.Calendar.route
         }
