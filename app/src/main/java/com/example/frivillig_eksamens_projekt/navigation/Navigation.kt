@@ -192,7 +192,8 @@ fun Navigation() {
         composable(Screen.Logo.route) {
             LogoScreen(navController = navController)
         }
+
+        }
     }
     }
-}
 
