@@ -23,13 +23,6 @@ class MainActivity : ComponentActivity() {
 
                     ConversationList()
 
-                    /*BottomNavigationBar(
-                        onSearchClick = { /*TODO*/ },
-                        onCalenderClick = { /*TODO*/ },
-                        onHomePageClick = { /*TODO*/ },
-                        onEmailClick = { /*TODO*/ }) {
-
-                    }*/
 
                 }
             }

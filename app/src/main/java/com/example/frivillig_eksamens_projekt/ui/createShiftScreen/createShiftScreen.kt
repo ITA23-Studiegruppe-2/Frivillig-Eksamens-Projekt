@@ -55,6 +55,53 @@ fun CreateShift(
             Spacer(modifier = Modifier.height(40.dp))
 
             Column (
+                modifier = Modifier
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(28.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                InputFieldShift(label = "Titel",
+                    value = viewModel.title,
+                    onValueChange = {viewModel.title = it},
+                    width = 0.9f,
+                    height = 0.04f)
+                Row (
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+                    Spacer(modifier = Modifier.width(3.dp))
+                    InputFieldShift(
+                        label = "Antal timer",
+                        value = viewModel.hours,
+                        onValueChange = {viewModel.hours = it},
+                        width = 0.4f,
+                        height = 0.04f)
+                    InputFieldShift(
+                        label = "Vagtens dato",
+                        value = viewModel.date,
+                        onValueChange = {viewModel.date = it},
+                        width = 0.8f,
+                        height = 0.04f)
+                }
+                InputFieldShift(
+                    label = "Kontakt persons e-mail",
+                    value = viewModel.email,
+                    onValueChange = {viewModel.email = it},
+                    width = 0.9f,
+                    height = 0.04f)
+
+                InputFieldShift(
+                    label = "Tilføj en beskrivelse",
+                    value = viewModel.description,
+                    onValueChange = {viewModel.description = it},
+                    width = 0.9f,
+                    height = 0.3f)
+            }
+
+
+            /*
+            Column (
                     modifier = Modifier,
                     verticalArrangement = Arrangement.spacedBy(22.dp)
                 ){
@@ -87,6 +134,8 @@ fun CreateShift(
                         onValueChange = { viewModel.description = it })
 
             }
+
+             */
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.createShiftScreen
 
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,10 +26,11 @@ import androidx.compose.ui.unit.dp
 fun InputFieldShift(
     label: String,
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    width: Float,
+    height: Float
 )
 {
-
     val textFieldColors = textFieldColors(
         containerColor = Color.White,
         unfocusedIndicatorColor = Color.Transparent, // Remove underline when unfocused
@@ -38,7 +40,9 @@ fun InputFieldShift(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = Modifier,
+        modifier = Modifier
+            .fillMaxWidth(width)
+            .fillMaxHeight(height),
         shape = RoundedCornerShape(12.dp),
         label = { Text(text = label) },
         colors = textFieldColors,

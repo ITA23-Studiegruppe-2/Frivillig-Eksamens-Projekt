@@ -11,14 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -37,7 +36,7 @@ import com.example.frivillig_eksamens_projekt.navigation.Screen
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 
 @Composable
-fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
+fun HomeScreen( navController: NavController) {
 
     val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
     val shiftsIcon: Painter = painterResource(id = R.drawable.shift)
@@ -45,6 +44,8 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
     val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
 
     val secondaryColor = Color(0xFF364830)
+
+    val viewModel = UserViewModel()
 
     Surface (
         modifier = Modifier
@@ -65,7 +66,7 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Hej Navn Efternavn!",
+                        text = "Hej ${viewModel.name}!",
                         modifier = Modifier,
                         fontSize = 23.sp,
                         color = Color.White

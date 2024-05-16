@@ -41,18 +41,20 @@ fun Navigation() {
 
     /* Bottom Navigation bar */
     // List of all the screens that shouldnt have a bottom navigation bar
-    var screensWithNoBottomNavigation: List<String> = listOf(
+    val screensWithNoBottomNavigation: List<String> = listOf(
         Screen.Start.route,
         Screen.Login.route,
         Screen.RegisterUser.route,
         Screen.RegisterUserSecond.route,
-        Screen.UserOrOrg.route
+        Screen.UserOrOrg.route,
+        Screen.Logo.route,
+        Screen.RegisterOrg.route
     )
-    // Store the current route - Should only be Start route, but just to make sure we get the current destination
+    // Store the current route - Should only be logo route, but just to make sure we get the current destination
     val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
     Scaffold(
         bottomBar = {
-            // If the currentRoute (Screen) isnt in the list of screensWithNoBottomNavigation render the navigation bar
+            // If the currentRoute (Screen) isn't in the list of screensWithNoBottomNavigation render the navigation bar
             // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
@@ -73,10 +75,10 @@ fun Navigation() {
             modifier = Modifier.padding(paddingValues)
         ) {
 
-        //Home Screen
-        composable(Screen.Home.route) {
-            ActivityScreen()
-            currentRoute.value = Screen.Home.route
+
+        // Logo Screen
+        composable(Screen.Logo.route) {
+            LogoScreen(navController = navController)
         }
 
         // Start Screen
@@ -88,12 +90,13 @@ fun Navigation() {
             currentRoute.value = Screen.Start.route
 
         }
-
         // Login Screen
         composable(Screen.Login.route) {
+            // Handle both org and user homeScreen navigation
             LoginScreen(
-                onSuccessLogin = { navController.navigate(Screen.Home.route) },
-                onClick = {}
+                onUserSuccessLogin = { navController.navigate(Screen.Home.route) },
+                onClick = {},
+                onOrgSuccessLogin = {navController.navigate(Screen.OrgHomeScreen.route)}
             )
             currentRoute.value = Screen.Login.route
         }
@@ -111,37 +114,41 @@ fun Navigation() {
 
         // Register User Second Screen
         composable(Screen.RegisterUserSecond.route) {
+            // Its a user login -> Send it to the user homeScreen
             CreateUserSecondScreen(
                 onSuccess = { navController.navigate(Screen.Home.route) },
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed") },
-                navController,
+                onBackButtonClick = {navController.popBackStack()},
                 viewModel = registerViewModel
             )
+            currentRoute.value = Screen.RegisterUserSecond.route
         }
 
         //Register Organisation Screen
         composable(Screen.RegisterOrg.route) {
-
             CreateOrgScreen(
-                onSuccess = { navController.navigate(Screen.Home.route) }, //Skal laves om til Org Home Screen
+                onSuccess = { navController.navigate(Screen.OrgHomeScreen.route) }, //Skal laves om til Org Home Screen
                 onFail = { /*TODO*/ },
-                navController
+                onBackButtonClick = {navController.popBackStack()}
             )
 
-            currentRoute.value = Screen.RegisterUserSecond.route
+            currentRoute.value = Screen.RegisterOrg.route
         }
-
 
         //User Home Screen
         composable(Screen.Home.route) {
-            HomeScreen(userViewModel = UserViewModel(), navController)
+            HomeScreen(
+                 navController)
+
+            currentRoute.value = Screen.Home.route
         }
+
         // Choose what type of account (Bruger)
         composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
                 onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
-                onSuccesOrgSelection = {}
+                onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)}
             )
             currentRoute.value = Screen.UserOrOrg.route
         }
@@ -150,7 +157,6 @@ fun Navigation() {
         composable(Screen.Calendar.route) {
             CalendarScreen(
                 onCalendarClick = { navController.navigate(Screen.Calendar.route) },
-                viewModel = CalendarViewModel()
             )
             currentRoute.value = Screen.Calendar.route
         }
@@ -162,35 +168,43 @@ fun Navigation() {
         //Badges Screen
         composable(Screen.Badges.route) {
             BadgesScreen(navController)
+
+            currentRoute.value = Screen.Badges.route
         }
 
         // Second Calendar Screen
         composable(Screen.Calendar2.route) {
             CalendarScreen2(navController)
+
+            currentRoute.value = Screen.Calendar2.route
         }
 
         // Upcoming Shifts Screen
         composable(Screen.UpcomingShifts.route) {
             UpcomingShifts(navController)
+
+            currentRoute.value = Screen.UpcomingShifts.route
         }
 
         // Hours Screen
         composable(Screen.Hours.route) {
             HoursScreen(navController)
+
+            currentRoute.value = Screen.Hours.route
         }
 
         // Organisation Home Screen
         composable(Screen.OrgHomeScreen.route) {
             OrgHomeScreen(navController)
+
+            currentRoute.value = Screen.OrgHomeScreen.route
         }
 
         // Create Shift Screen
         composable(Screen.CreateShift.route) {
             CreateShift(navController, viewModel = CreateShiftViewModel())
-        }
 
-        composable(Screen.Logo.route) {
-            LogoScreen(navController = navController)
+            currentRoute.value = Screen.CreateShift.route
         }
 
         }

@@ -18,15 +18,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.KeyboardArrowLeft
+import androidx.compose.material.icons.outlined.KeyboardArrowRight
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +42,7 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.time.temporal.TemporalAdjuster
 import java.time.temporal.TemporalAdjusters
@@ -46,14 +54,25 @@ fun CalendarScreen2 (
     navController: NavController
 ) {
     val secondaryColor = Color(0xFF364830)
+    var currentMonth by remember { mutableStateOf(YearMonth.now()) }
+    val daysOfWeek = listOf("M", "T", "O", "T", "F", "L", "S")
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null)}
 
-    Surface (
+    // Define dialog
+    if (showDialog && selectedDate != null) {
+        DateDetailsDialog(selectedDate) {
+            showDialog = false
+            selectedDate = null
+        }
+    }
+
+    Surface(
         modifier = Modifier
             .fillMaxSize(),
         color = Color(0xFFC8D5B9)
-    ){
-        Column (
-            modifier = Modifier,
+    ) {
+        Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -61,7 +80,10 @@ fun CalendarScreen2 (
                     .padding(8.dp)
                     .height(70.dp)
                     .width(390.dp)
-                    .background(color = Color.White, shape = RoundedCornerShape(8.dp)),
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 BackButton(onClick = { navController.popBackStack() })
@@ -71,107 +93,111 @@ fun CalendarScreen2 (
                     color = secondaryColor
                 )
             }
-
-        }
-    }
-}
-
-
-
-
-
-
-
-/*
-fun CalendarScreen2(shifts: Map<LocalDate, List<Shift>>) {
-    val currentMonth = remember {mutableStateOf(YearMonth.now())}
-    val selectedDate = remember {mutableStateOf<LocalDate?>(null)}
-
-    Column {
-        Calendar(month = currentMonth.value, onDayClicked = {date ->
-            selectedDate.value = date
-        }, shifts = shifts)
-        selectedDate.value?.let { date ->
-            AlertDialog(
-                onDismissRequest = { selectedDate.value = null },
-                title = { Text(text = "Vagter for $date")},
-                text = { Text(shifts[date]?.joinToString(separator = "\n") { it.description } ?: "Ingen vagter")},
-                confirmButton = {
-                    Button(onClick = { selectedDate.value = null }) {
-                        Text(text = "OK")
-                    }
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun Calendar(month: YearMonth, onDayClicked: (LocalDate) -> Unit, shifts: Map<LocalDate, List<Shift>>) {
-
-    val firstDayOfMonth = month.atDay(1)
-    val firstDayOfCalendar = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY))
-
-    var currentDay = firstDayOfCalendar
-    val lastDayOfCalendar = month.atEndOfMonth().with(TemporalAdjusters.nextOrSame(java.time.DayOfWeek.SUNDAY))
-
-    Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            listOf("M", "T", "O", "T", "F", "L", "S").forEach { day -> 
-                Text(
-                    text = day,
-                    modifier = Modifier
-                        .padding(8.dp),
-                    fontSize = 12.sp)
-            }
-        }
-        while (currentDay <= lastDayOfCalendar) {
+            Spacer(modifier = Modifier.height(50.dp))
             Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                for (i in 1..7) {
-                    if (currentDay.month == month.month) {
-                        DayView(
-                            date = currentDay,
-                            shifts = shifts,
-                            onDayClicked = onDayClicked)
-                        currentDay = currentDay.plusDays(1)
-                    } else {
-                        Text(text = "", modifier = Modifier
-                            .weight(1f)
-                            .padding(8.dp))
-                        currentDay = currentDay.plusDays(1)
+                Icon(
+                    imageVector = Icons.Outlined.KeyboardArrowLeft,
+                    contentDescription = "Previous month",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable {
+                            currentMonth = currentMonth.minusMonths(1)
+                        })
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = currentMonth.format(DateTimeFormatter.ofPattern("MMM yyyy").withLocale(Locale("da", "DK"))),
+                    fontSize = 22.sp
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Icon(
+                    imageVector = Icons.Outlined.KeyboardArrowRight,
+                    contentDescription = "Next month",
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable {
+                            currentMonth = currentMonth.plusMonths(1)
+                        })
+            }
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Box(
+                modifier = Modifier
+                    .background(
+                        Color.White,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .width(390.dp)
+                    .border(
+                        width = 2.dp,
+                        color = secondaryColor,
+                        shape = RoundedCornerShape(8.dp),
+                    )
+            )
+            {
+                Column(
+                    modifier = Modifier
+                        .padding(18.dp)
+
+                ) {
+                    // Day headers
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        for (day in daysOfWeek) {
+                            Text(
+                                text = day,
+                                modifier = Modifier.weight(1f),
+                                fontSize = 22.sp,
+                                fontStyle = FontStyle.Italic,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                    // Calendar days
+                    val daysInMonth = currentMonth.lengthOfMonth()
+                    val firstOfMonth = currentMonth.atDay(1)
+                    val daysOffset = (firstOfMonth.dayOfWeek.value - 1)
+                    val totalDays = daysInMonth + daysOffset
+
+                    for (week in 0 until (totalDays / 7 + if (totalDays % 7 > 0) 1 else 0)) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            for (day in 0 until 7) {
+                                val dateNumber = week * 7 + day - daysOffset + 1
+                                if (dateNumber > 0 && dateNumber <= daysInMonth) {
+                                    Text(
+                                        text = dateNumber.toString(),
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .clickable {
+                                                selectedDate = currentMonth.atDay(dateNumber)
+                                                showDialog = true
+                                            }
+                                            .padding(vertical = 20.dp),
+
+                                        fontSize = 19.sp,
+                                        textAlign = TextAlign.Center
+                                    )
+                                } else {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
+                            }
+
+                        }
                     }
                 }
             }
         }
     }
 }
-
-@Composable
-fun DayView(date: LocalDate,
-            shifts: Map<LocalDate, List<Shift>>,
-            onDayClicked: (LocalDate) -> Unit) {
-    Box(modifier = Modifier
-        .padding(4.dp)
-        .clickable { onDayClicked(date) }
-        .border(BorderStroke(1.dp, Color.Black), shape = CircleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = date.dayOfMonth.toString())
-        if(shifts.containsKey(date)) {
-            Box(
-                modifier = Modifier
-                    .size(5.dp)
-                    .background(Color.Red, shape = CircleShape)
-                    .align(Alignment.BottomCenter)
-            )
-        }
-    }
-}
-*/

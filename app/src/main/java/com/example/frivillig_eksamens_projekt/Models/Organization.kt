@@ -3,9 +3,8 @@ package com.example.frivillig_eksamens_projekt.Models
 import com.google.firebase.firestore.DocumentId
 
 data class Organization(
-    @DocumentId var documentId: String? = null,
-    val cvrNumber: Int = 0,
+    @DocumentId var orgID: String? = null,
+    val cvrNumber: String = "",
     val email: String = "",
     val name: String = "",
-    val password: String = ""
 )

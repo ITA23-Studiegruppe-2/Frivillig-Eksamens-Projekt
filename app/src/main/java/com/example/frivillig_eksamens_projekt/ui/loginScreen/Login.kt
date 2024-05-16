@@ -36,8 +36,9 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 
 @Composable
 fun LoginScreen(
-    onSuccessLogin: () -> Unit,
-    onClick: () -> Unit
+    onUserSuccessLogin: () -> Unit,
+    onClick: () -> Unit,
+    onOrgSuccessLogin: () -> Unit
 ) {
     val loginViewModel: LoginViewModel = remember {
         LoginViewModel()
@@ -166,7 +167,8 @@ fun LoginScreen(
             loginViewModel.login(
                 loginViewModel.email,
                 loginViewModel.password,
-                onSuccessLogin,
+                onUserSuccessLogin = onUserSuccessLogin,
+                onOrgSuccessLogin = onOrgSuccessLogin,
                 onFailure = { loginViewModel.errorMessage = it}
             )
         }

@@ -20,8 +20,9 @@ class LoginViewModel : ViewModel() {
     fun login(
         email: String,
         password: String,
-        onSuccessLogin: () -> Unit,
-        onFailure: (String) -> Unit
+        onUserSuccessLogin: () -> Unit,
+        onFailure: (String) -> Unit,
+        onOrgSuccessLogin: () -> Unit
     ) {
 
         //Check to see if any of the fields are empty
@@ -31,8 +32,9 @@ class LoginViewModel : ViewModel() {
             accountService.login(
                 email = email,
                 password = password,
-                onSuccess = onSuccessLogin,
-                onFailure = onFailure
+                onUserSuccess = onUserSuccessLogin,
+                onFailure = onFailure,
+                onOrgSuccess = onOrgSuccessLogin
             )
         } else {
             // Tell the user to fill all the fields
