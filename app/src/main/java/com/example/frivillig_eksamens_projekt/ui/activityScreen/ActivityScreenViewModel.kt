@@ -11,9 +11,7 @@ import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-import com.example.frivillig_eksamens_projekt.DTO.Activity
-
-import kotlinx.coroutines.runBlocking
+import com.example.frivillig_eksamens_projekt.Models.Activity
 
 class ActivityScreenViewModel: ViewModel() {
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
@@ -22,13 +20,17 @@ class ActivityScreenViewModel: ViewModel() {
 
     // list of shifts
     var listOfActivities: MutableList<Activity> by mutableStateOf(mutableStateListOf())
+    var tempListOfActivities: MutableList<Activity> by mutableStateOf(mutableStateListOf())
     init {
         getActivities()
     }
 
     fun getActivities() {
          viewModelScope.launch {
-             listOfActivities = activitesRepository.getActivities()
+             // Get all the activities
+             tempListOfActivities = activitesRepository.getActivities()
+             // Get the updated list that also includes usersApplied
+             listOfActivities = activitesRepository.checkIfAlreadyApplied(tempListOfActivities)
          }
     }
 
@@ -37,18 +39,18 @@ class ActivityScreenViewModel: ViewModel() {
 
     fun searchForActivitiesByTitle() {
         viewModelScope.launch {
-            val newListOfActivites: MutableList<Activity> = activitesRepository.searchActivityTitle(searchBar)
+            val newListOfActivities: MutableList<Activity> = activitesRepository.searchActivityTitle(searchBar)
             // If the new list isnt empty - good request
-            if (newListOfActivites.isNotEmpty()) {
-                listOfActivities = newListOfActivites
-                println("Success")
+            if (newListOfActivities.isNotEmpty()) {
+                // get the list of userIDs
+                listOfActivities = activitesRepository.checkIfAlreadyApplied(newListOfActivities)
+
             } else {
                 // We didnt find anything in the database :)
-                println("No success")
+
             }
         }
     }
-
 
 
 

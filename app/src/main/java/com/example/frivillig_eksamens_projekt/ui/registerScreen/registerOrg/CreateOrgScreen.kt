@@ -30,7 +30,7 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.TermsAndConditio
 fun CreateOrgScreen(
     onSuccess: () -> Unit,
     onFail: () -> Unit,
-    onClick: () -> Unit
+    onBackButtonClick: () -> Unit
 ) {
 
     val viewModel = CreateOrgViewModel()
@@ -45,7 +45,7 @@ fun CreateOrgScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
-            BackButton(onClick = onClick)
+            BackButton(onClick = onBackButtonClick)
             Spacer(modifier = Modifier.height(50.dp))
             Text(text = "Kom i gang", fontSize = 36.sp, color = Color(0xFF364830))
             Text(text = "Opret organisation", fontSize = 17.sp, color = Color(0xFF364830))
@@ -77,7 +77,7 @@ fun CreateOrgScreen(
             }
             Spacer(modifier = Modifier.height(28.dp))
 
-            TermsAndConditionsCheckbox()
+            //TermsAndConditionsCheckbox(checkboxViewModel = viewModel)
 
             Spacer(modifier = Modifier.height(4.dp))
 
@@ -88,8 +88,8 @@ fun CreateOrgScreen(
                 CustomButton(
                     text = "Tilmeld",
                     onClick = {
-                        viewModel.registerOrgToDatabase(
-                            onSuccess = onSuccess, onFail = {}
+                        viewModel.registerOrgAuthAndDatabase(
+                            onSuccess = onSuccess, onFail = { println("Failed")}
                         )
                     })
             }

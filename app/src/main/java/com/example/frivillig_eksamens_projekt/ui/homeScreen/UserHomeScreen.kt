@@ -11,15 +11,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,45 +30,57 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
+import com.example.frivillig_eksamens_projekt.navigation.Screen
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 
 @Composable
-fun HomeScreen(userViewModel: UserViewModel) {
+fun HomeScreen( navController: NavController) {
 
     val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
     val shiftsIcon: Painter = painterResource(id = R.drawable.shift)
     val hoursIcon: Painter = painterResource(id = R.drawable.hours)
     val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
 
+    val secondaryColor = Color(0xFF364830)
+
+    val viewModel = UserViewModel()
+
     Surface (
         modifier = Modifier
             .fillMaxSize(),
         color = Color(0xFFC8D5B9)
     ){
-        Column(
-            modifier = Modifier,
-        ) {
-            Row(
+        Column() {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(22.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .background(secondaryColor),
             ) {
-                Text(
-                    text = "Navn Efternavn",
-                    modifier = Modifier,
-                    fontSize = 23.sp
-                )
-                Icon(
-                    imageVector = Icons.Outlined.Notifications,
-                    contentDescription = "Notification icon",
+                Row(
                     modifier = Modifier
-                        .size(36.dp)
-                )
+                        .fillMaxWidth()
+                        .padding(22.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Hej ${viewModel.name}!",
+                        modifier = Modifier,
+                        fontSize = 23.sp,
+                        color = Color.White
+                    )
+                    Icon(
+                        imageVector = Icons.Outlined.Notifications,
+                        contentDescription = "Notification icon",
+                        modifier = Modifier
+                            .size(36.dp),
+                        tint = Color.White
+                    )
+                }
             }
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(28.dp))
             Box() { 
                 Row(
                     modifier = Modifier
@@ -76,27 +89,39 @@ fun HomeScreen(userViewModel: UserViewModel) {
                 )
                 {
                     Column {
-                        InfoCards(label = "Badges", icon = bagdesIcon) {}
-                        InfoCards(label = "Kommende vagter", icon = shiftsIcon) {}
+                        InfoCards(label = "Badges", icon = bagdesIcon) {
+                            navController.navigate(Screen.Badges.route)
+                        }
+                        InfoCards(label = "Kommende vagter", icon = shiftsIcon) {
+                            navController.navigate(Screen.UpcomingShifts.route)
+                        }
                     }
                     Column {
-                        InfoCards(label = "Timer", icon = hoursIcon) {}
-                        InfoCards(label = "Kalender", icon = calendarIcon) {}
+                        InfoCards(label = "Timer", icon = hoursIcon) {
+                            navController.navigate(Screen.Hours.route)
+                        }
+                        InfoCards(label = "Kalender", icon = calendarIcon) {
+                            navController.navigate(Screen.Calendar2.route)
+                        }
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+                Column (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
+                ){
+                    Shortcut(onClick = { /*TODO*/ }, label = "Ledige vagter")
+                    Shortcut(onClick = { /*TODO*/ }, label = "Mine organisationer")
+                }
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(12.dp)
             ) {
-                Text(text = "Lorem ipsum dolor sit amet, consectetur adipisci elit, " +
-                        "sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum " +
-                        "exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea " +
-                        "commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse " +
-                        "cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat " +
-                        "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                HomeScreenNews(title = "New News", news = "hej hej hej hej hej" +
+                        "hej hej hejh eejh hej hej hej hej hej hej")
+
             }
         }
     }

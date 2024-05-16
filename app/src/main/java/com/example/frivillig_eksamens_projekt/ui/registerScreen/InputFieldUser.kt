@@ -55,7 +55,7 @@ fun InputfieldUser(
             .width(370.dp)
             .height(50.dp),
         shape = RoundedCornerShape(12.dp),
-        label = { Text(text = label) },
+        label = { Text(text = label, color = Color(0xFF364830)) },
         trailingIcon = { Icon(icon, contentDescription = null)},
         colors = textFieldColors,
         visualTransformation =

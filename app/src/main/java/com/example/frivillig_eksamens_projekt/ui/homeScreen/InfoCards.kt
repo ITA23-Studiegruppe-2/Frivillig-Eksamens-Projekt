@@ -1,6 +1,7 @@
 package com.example.frivillig_eksamens_projekt.ui.homeScreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,13 +30,18 @@ fun InfoCards(
     icon: Painter,
     onClick: () -> Unit
 ){
+    val secondaryColor = Color(0xFF364830)
     Card(
         modifier = Modifier
             .padding(8.dp)
             .height(120.dp)
             .width(180.dp)
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(10.dp),
+            .clickable(onClick = onClick)
+            .border(
+                width = 2.dp,
+                color = secondaryColor,
+                shape = RoundedCornerShape(8.dp)),
+        shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White)
     ) {
@@ -48,10 +54,12 @@ fun InfoCards(
         ) {
             Icon(painter = icon,
                 contentDescription = label,
-                modifier = Modifier.size(40.dp))
+                modifier = Modifier
+                    .size(40.dp),
+                tint = secondaryColor)
             Spacer(modifier = Modifier
                 .height(8.dp))
-            Text(text = label)
+            Text(text = label, color = secondaryColor)
 
         }
 

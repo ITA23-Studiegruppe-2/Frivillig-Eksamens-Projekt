@@ -23,53 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun GenderCheckbox(checkboxViewModel : CheckboxViewModel = viewModel()) {
-
-    val isMaleChecked = checkboxViewModel.isMaleChecked.value
-    val isFemaleChecked = checkboxViewModel.isFemaleChecked.value
-    val isOtherChecked = checkboxViewModel.isOtherChecked.value
-
-    Box(
-        modifier = Modifier.fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(40.dp),
-            modifier = Modifier,
-
-            ) {
-            Column {
-                Checkbox(
-                    checked = isMaleChecked,
-                    onCheckedChange = { checkboxViewModel.setMaleChecked(it) }, //Toggle the checkbox
-                    modifier = Modifier.graphicsLayer(scaleX = 1.5f, scaleY = 1.5f),
-                )
-                Text(text = "Mand")
-            }
-            Column {
-                Checkbox(
-                    checked = isFemaleChecked,
-                    onCheckedChange = { checkboxViewModel.setFemaleChecked(it) },
-                    modifier = Modifier.graphicsLayer(scaleX = 1.5f, scaleY = 1.5f)
-                )
-                Text(text = "Kvinde")
-            }
-            Column {
-                Checkbox(
-                    checked = isOtherChecked,
-                    onCheckedChange = { checkboxViewModel.setOtherChecked(it) },
-                    modifier = Modifier.graphicsLayer(scaleX = 1.5f, scaleY = 1.5f)
-                )
-                Text(text = "Andet")
-            }
-        }
-    }
-}
-
-@Composable
-fun TermsAndConditionsCheckbox(checkboxViewModel: CheckboxViewModel = viewModel()) {
-    val isTermsAndConditionsChecked = checkboxViewModel.isTermsAndConditionsChecked.value
+fun TermsAndConditionsCheckbox(checkboxViewModel: CreateUserViewModel) {
+    val isTermsAndConditionsChecked = checkboxViewModel.isTermsAndConditionsChecked
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -82,7 +37,7 @@ fun TermsAndConditionsCheckbox(checkboxViewModel: CheckboxViewModel = viewModel(
             Spacer(modifier = Modifier.width(40.dp))
             Checkbox(
                 checked = isTermsAndConditionsChecked,
-                onCheckedChange = { checkboxViewModel.setTermsAndConditionsChecked(it) },
+                onCheckedChange = { checkboxViewModel.isTermsAndConditionsChecked = !checkboxViewModel.isTermsAndConditionsChecked},
                 modifier = Modifier.graphicsLayer(scaleX = 1.1f, scaleY = 1.1f)
             )
             Column(

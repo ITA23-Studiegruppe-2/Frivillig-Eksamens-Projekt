@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter") // Undertrykker advarslen om ubrugte parametre
 @OptIn(ExperimentalMaterial3Api::class) // Indikerer brug af eksperimentelle Material3-API'er
@@ -29,14 +30,16 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CalendarScreen(
     onCalendarClick: () -> Unit,
-    viewModel: CalendarViewModel) {
-    val selectedDate = remember { mutableStateOf("") }
+    ) {
+
+    val viewModel: CalendarViewModel = CalendarViewModel()
+
 
     // Opretter en dialogboks til valg af dato.
     val datePickerDialog = android.app.DatePickerDialog(
         androidx.compose.ui.platform.LocalContext.current,
         { _, year, month, dayOfMonth ->
-            selectedDate.value = "$dayOfMonth/${month + 1}/$year" // Når brugeren vælger en dato, opdateres selectedDate
+            viewModel.selectedDate = "$dayOfMonth/${month + 1}/$year" // Når brugeren vælger en dato, opdateres selectedDate
         },
         viewModel.currentYear,
         viewModel.currentMonth,
@@ -49,12 +52,12 @@ fun CalendarScreen(
                 title = { Text("Din Kalender", color = Color.Black) }
             )
         },
-        content = { CalendarBody(selectedDate, datePickerDialog) } // Kalenderens indhold
+        content = { CalendarBody(viewModel.selectedDate, datePickerDialog) } // Kalenderens indhold
     )
 }
 
 @Composable
-fun CalendarBody(selectedDate: MutableState<String>, datePickerDialog: android.app.DatePickerDialog) {
+fun CalendarBody(selectedDate: String, datePickerDialog: android.app.DatePickerDialog) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -77,7 +80,7 @@ fun CalendarBody(selectedDate: MutableState<String>, datePickerDialog: android.a
 
         // Viser den valgte dato
         Text(
-            text = "Din valgte dato: ${selectedDate.value}",
+            text = "Din valgte dato: $selectedDate",
             fontSize = 20.sp,
             textAlign = TextAlign.Center
         )

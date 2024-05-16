@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,13 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
-fun BadgesScreen(
-    onClick: () -> Unit
-) {
+fun BadgesScreen(navController: NavController)
+{
     val secondaryColor = Color(0xFF364830)
 
     Surface (
@@ -39,33 +40,37 @@ fun BadgesScreen(
         ){
             Box(
                 modifier = Modifier
-                    .padding(22.dp),
+                    .padding(8.dp)
+                    .height(70.dp)
+                    .width(390.dp)
+                    .background(color = Color.White, shape = RoundedCornerShape(8.dp)),
                 contentAlignment = Alignment.Center
                 ) {
-                BackButton (onClick = onClick)
-                Spacer(modifier = Modifier.height(18.dp))
+                BackButton (onClick = {navController.popBackStack()})
                 Text(text = "Badges", fontSize = 28.sp, color = secondaryColor)
             }
-            Spacer(modifier = Modifier.height(25.dp))
-            Text(
-                text = "Her finder du de udmærkelser du har opnået:", 
-                fontSize = 16.sp, 
-                color = secondaryColor)
-            
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(8.dp))
+            Box(
+                modifier = Modifier
+                    .padding(26.dp),
+                contentAlignment = Alignment.Center
+            ){
+                Text(
+                    text = "Saml mærkater i Volunify ved at tage " +
+                            "forskellige vagter og se dine belønninger vokse!",
+                    fontSize = 16.sp,
+                    color = secondaryColor
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
 
             Box(
                 modifier = Modifier
                     .width(380.dp)
-                    .background(color = Color.White)
+                    .background(color = Color.White, shape = RoundedCornerShape(8.dp))
                     .padding(20.dp)
             ){
                 Column {
-                    Box(
-                        modifier = Modifier,
-                    ) {
-                        Text(text = "Opnåede badges:")
-                    }
                     Row (
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -80,33 +85,95 @@ fun BadgesScreen(
                         {}
                         Badges(
                             label = "Christmas",
-                            icon = painterResource(id = R.drawable.christmas)) {}
-                    }
-                    Box(
-                        modifier = Modifier,
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = "Låste badges:")
+                            icon = painterResource(id = R.drawable.christmas))
+                        {}
+                        Badges(
+                            label = "Locked hour 20",
+                            icon = painterResource(id = R.drawable.hour20_locked))
+                        {}
                     }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                     ){
                         Badges(
-                            label = "Locked hour 20",
-                            icon = painterResource(id = R.drawable.hour20_locked))
+                            label = "Locked loyal",
+                            icon = painterResource(id = R.drawable.loyal_locked))
                         {}
                         Badges(
                             label = "Locked hour 50",
                             icon = painterResource(id = R.drawable.hour50_locked))
                         {}
                         Badges(
-                            label = "Locked Different",
+                            label = "Locked different organisations",
                             icon = painterResource(id = R.drawable.different_locked)) 
                         {}
                         Badges(
-                            label = "Locked loyal", 
-                            icon = painterResource(id = R.drawable.loyal_locked)) 
+                            label = "Locked recommended by others",
+                            icon = painterResource(id = R.drawable.recommended_locked))
+                        {}
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    ){
+                        Badges(
+                            label = "Locked animals",
+                            icon = painterResource(id = R.drawable.animal_locked))
+                        {}
+                        Badges(
+                            label = "Locked recommended others",
+                            icon = painterResource(id = R.drawable.curious_locked))
+                        {}
+                        Badges(
+                            label = "Locked earth",
+                            icon = painterResource(id = R.drawable.earth_locked))
+                        {}
+                        Badges(
+                            label = "Locked 75 hours",
+                            icon = painterResource(id = R.drawable.hour75_locked))
+                        {}
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    ){
+                        Badges(
+                            label = "Locked night",
+                            icon = painterResource(id = R.drawable.night_locked))
+                        {}
+                        Badges(
+                            label = "Locked early",
+                            icon = painterResource(id = R.drawable.early_locked))
+                        {}
+                        Badges(
+                            label = "Locked 100 hours",
+                            icon = painterResource(id = R.drawable.hour100_locked))
+                        {}
+                        Badges(
+                            label = "Locked helped people",
+                            icon = painterResource(id = R.drawable.helped_people_locked))
+                        {}
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    ){
+                        Badges(
+                            label = "Locked festival",
+                            icon = painterResource(id = R.drawable.festival_locked))
+                        {}
+                        Badges(
+                            label = "Locked 150 hours",
+                            icon = painterResource(id = R.drawable.hour150_locked))
+                        {}
+                        Badges(
+                            label = "Locked more than 150 hours",
+                            icon = painterResource(id = R.drawable.over150_locked))
+                        {}
+                        Badges(
+                            label = "Locked expert",
+                            icon = painterResource(id = R.drawable.expert_locked))
                         {}
                     }
                 }

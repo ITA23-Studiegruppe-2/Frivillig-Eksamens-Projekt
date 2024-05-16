@@ -29,17 +29,22 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.R
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 
 
 @Composable
 fun LoginScreen(
-    onSuccessLogin: () -> Unit,
+    onUserSuccessLogin: () -> Unit,
+    onClick: () -> Unit,
+    onOrgSuccessLogin: () -> Unit
 ) {
     val loginViewModel: LoginViewModel = remember {
         LoginViewModel()
     }
+
+
 
     Column(
         modifier = Modifier
@@ -47,7 +52,10 @@ fun LoginScreen(
             .background(Color(0xFFC8D5B9)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
+
     ) {
+        BackButton(onClick = onClick)
+
 
         //Titel & undertitel
         Text(text = "Velkommen til Volunify", fontSize = 28.sp)
@@ -159,7 +167,8 @@ fun LoginScreen(
             loginViewModel.login(
                 loginViewModel.email,
                 loginViewModel.password,
-                onSuccessLogin,
+                onUserSuccessLogin = onUserSuccessLogin,
+                onOrgSuccessLogin = onOrgSuccessLogin,
                 onFailure = { loginViewModel.errorMessage = it}
             )
         }
