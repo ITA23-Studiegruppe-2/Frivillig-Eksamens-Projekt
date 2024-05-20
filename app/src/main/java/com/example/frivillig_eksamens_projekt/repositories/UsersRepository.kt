@@ -9,16 +9,19 @@ import kotlinx.coroutines.tasks.await
 class UsersRepository() {
     private val db = Firebase.firestore
 
-    val currentUser = Firebase.auth.currentUser
-    suspend fun getUser(): User? =
-        currentUser?.uid?.let {
-            db.collection("Users")
-            .document(it)
-            .get()
-            .await()
-            .toObject(User::class.java)
+    val currentUser = Firebase.auth.currentUser?.uid
 
-}
+
+     suspend fun getUser(): User? = currentUser?.let {
+         db.collection("Users")
+         .document(it)
+         .get()
+         .await()
+         .toObject(User::class.java)
+     }
+
+
+
 
 
      fun addUserToDatabase(user: User, userUID: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
@@ -26,7 +29,9 @@ class UsersRepository() {
             .set(user)
             .addOnSuccessListener {
                 // Send the user to home page - Successful registration
+                createBadgesSubCollection(userUID)
                 onSuccess()
+
 
             }
             .addOnFailureListener {
@@ -37,4 +42,11 @@ class UsersRepository() {
             }
 
     }
+    private fun createBadgesSubCollection(
+        userUID: String)
+    {
+        db.collection("Users").document(userUID).collection("Badges")
+
+    }
 }
+

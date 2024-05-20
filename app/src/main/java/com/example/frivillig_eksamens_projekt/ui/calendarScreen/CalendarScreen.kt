@@ -112,7 +112,7 @@ fun CalendarScreen2 (
 
 
                 Text(
-                    text = currentMonth.format(DateTimeFormatter.ofPattern("MMM yyyy")),
+                    text = currentMonth.format(DateTimeFormatter.ofPattern("MMM yyyy").withLocale(Locale("da", "DK"))),
                     fontSize = 22.sp
                 )
 

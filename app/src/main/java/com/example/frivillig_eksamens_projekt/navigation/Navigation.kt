@@ -54,7 +54,7 @@ fun Navigation() {
     val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
     Scaffold(
         bottomBar = {
-            // If the currentRoute (Screen) isnt in the list of screensWithNoBottomNavigation render the navigation bar
+            // If the currentRoute (Screen) isn't in the list of screensWithNoBottomNavigation render the navigation bar
             // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
@@ -119,7 +119,7 @@ fun Navigation() {
                 onSuccess = { navController.navigate(Screen.Home.route) },
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed") },
-                navController,
+                onBackButtonClick = {navController.popBackStack()},
                 viewModel = registerViewModel
             )
             currentRoute.value = Screen.RegisterUserSecond.route
@@ -139,7 +139,7 @@ fun Navigation() {
         //User Home Screen
         composable(Screen.Home.route) {
             HomeScreen(
-                userViewModel = UserViewModel(), navController)
+                 navController)
 
             currentRoute.value = Screen.Home.route
         }
@@ -157,7 +157,6 @@ fun Navigation() {
         composable(Screen.Calendar.route) {
             CalendarScreen(
                 onCalendarClick = { navController.navigate(Screen.Calendar.route) },
-                viewModel = CalendarViewModel()
             )
             currentRoute.value = Screen.Calendar.route
         }
@@ -209,7 +208,8 @@ fun Navigation() {
 
             currentRoute.value = Screen.CreateShift.route
         }
+
+        }
     }
     }
-}
 

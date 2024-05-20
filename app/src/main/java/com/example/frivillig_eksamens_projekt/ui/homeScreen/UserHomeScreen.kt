@@ -36,7 +36,7 @@ import com.example.frivillig_eksamens_projekt.navigation.Screen
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 
 @Composable
-fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
+fun HomeScreen( navController: NavController) {
 
     val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
     val shiftsIcon: Painter = painterResource(id = R.drawable.shift)
@@ -44,6 +44,8 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
     val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
 
     val secondaryColor = Color(0xFF364830)
+
+    val viewModel = UserViewModel()
 
     Surface (
         modifier = Modifier
@@ -64,7 +66,7 @@ fun HomeScreen(userViewModel: UserViewModel, navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Hej Navn Efternavn!",
+                        text = "Hej ${viewModel.name}!",
                         modifier = Modifier,
                         fontSize = 23.sp,
                         color = Color.White

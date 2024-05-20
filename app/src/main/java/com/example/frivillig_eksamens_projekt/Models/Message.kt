@@ -1,10 +1,7 @@
-package com.example.frivillig_eksamens_projekt.DTO
-
-import com.google.firebase.firestore.DocumentId
+package com.example.frivillig_eksamens_projekt.Models
 
 data class Message(
-    @DocumentId var documentId: String? = null,
-    val message: String = "",
-    val userUID: String = "", // Ændret fra "userid"
-    val orgUID: String = "" // Ændret fra "orgid"
+    val content: String = "",
+    val senderid: String = "",
+    val timestamp: Long = 0L
 )
