@@ -1,76 +1,119 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen
 
-import androidx.compose.runtime.State
+
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.frivillig_eksamens_projekt.Models.Organization
+import com.example.frivillig_eksamens_projekt.Models.Message
 import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-/*
-Firbase.auth.UID
-
- */
 
 // Håndterer logikken bag visningen af beskeder og søgning i chatten.
 class ChatViewModel : ViewModel() {
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
     val chatRepository = ChatRepository()
+/*
+    var currentUserId = mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid)
 
+ */
+    val messages = MutableStateFlow<List<Message>>(emptyList())
 
-    // Tilstand for beskeder
-    val messages: State<List<com.example.frivillig_eksamens_projekt.DTO.Message>> =
-        mutableStateOf(emptyList())
+/// ----- TEST FOR OM DET VIRKER -----///
+    var currentUserId = mutableStateOf<String?>(null)
+    var currentOrgId = mutableStateOf<String?>(null)
 
-
-    // FIND ORGANISATION
     init {
-        getOrganizations()
+        // Simuleret login for test
+        simulateLogin("kpKfZQTfKlmOc0f3KcJH", "UFxkscDTPAVilT4X9RTf")
     }
 
-    // list of organisations
-    var listOfOrganization: MutableList<Organization> by mutableStateOf(mutableStateListOf())
+    private fun simulateLogin(userId: String, orgId: String) {
+        this.currentUserId.value = userId
+        this.currentOrgId.value = orgId
+        loadMessages(userId, orgId)
+    }
 
-    fun getOrganizations() {
-        viewModelScope.launch {
-            listOfOrganization = chatRepository.getOrganizations()
+
+
+    //----- WRITE MESSAGES -----//
+
+    /*
+    init {
+        currentUserId.value?.let { userId ->
+            loadMessages(userId, orgId)
         }
     }
 
-    // Search bar
-    var searchBar by mutableStateOf("")
+     */
 
-    fun searchOrganisationByName() {
-        viewModelScope.launch {
-            val newListOfOrganization: MutableList<Organization> =
-                chatRepository.searchOrganizations(searchBar)
-            println(newListOfOrganization)
-            // Update the list with the search results instead of replacing it
-            if (newListOfOrganization.isNotEmpty()) {
-                listOfOrganization.clear()
-                listOfOrganization.addAll(newListOfOrganization)
-                println("Success")
-            } else {
-                // If no results found, clear the list
-                listOfOrganization.clear()
-                println("No success")
+    // Function to send message. (addChatScreen)
+    fun addMessage(messageText: String) {
+        val orgId = currentOrgId.value ?: return
+        currentUserId.value?.let { userId ->
+            if (messageText.isNotBlank()) {
+                val timestamp = System.currentTimeMillis()
+                chatRepository.addOrUpdateChat(userId, orgId, messageText, timestamp,
+                    onSuccess = {
+                        println("Chat updated or created successfully.")
+                    },
+                    onFailure = { e ->
+                        println("Error updating or creating chat: ${e.message}")
+                    }
+                )
             }
         }
     }
-    }
-    // SKRIVE BESKEDER
 
-/*
-    // Funktion til at sende en besked
-    suspend fun sendMessage(userId: String, message: String, orgId: String) {
-        val newMessage = Message(message = message, userUID = userId, orgUID = orgId)
-        chatRepository.sendMessage(userId, newMessage)
+    // Function to get message-update on the screen (addChatScreen) //
+   /*
+    fun loadMessages(userId: String) {
+        viewModelScope.launch {
+            chatRepository.getMessages(userId, "specificOrgId").collect { loadedMessages ->
+                messages.value = loadedMessages
+            }
+        }
+    }
+
+    */
+
+    fun loadMessages(userId: String, orgId: String) {
+        viewModelScope.launch {
+            chatRepository.getMessages(userId, orgId).collect { loadedMessages ->
+                messages.value = loadedMessages
+            }
+        }
+    }
+
+
+
+
+
+    //------- HENTE BESKEDER -------   (ConversationList)//
+
+    // Mutable state til at holde styr på de aktuelle beskeder
+    var userMessages by mutableStateOf<List<Message>>(emptyList())
+
+    // State for brugerens ID
+    var userId by mutableStateOf<String?>(null)
+
+    init { // Henter oplysninger fra den aktive bruger
+        FirebaseAuth.getInstance().addAuthStateListener { firebaseAuth ->
+            userId = firebaseAuth.currentUser?.uid
+            // Opdater beskeder når brugerens ID ændres
+            userId?.let { fetchMessages(it) }
+        }
+    }
+    fun fetchMessages(userId: String) {
+        viewModelScope.launch {
+
+            userMessages = chatRepository.getMessagesByUserId(userId)
+        }
     }
 }
 
- */
