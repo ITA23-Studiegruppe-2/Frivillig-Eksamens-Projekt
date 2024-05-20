@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun OrganisationProfile(viewModel: OrganisationProfileViewModel = viewModel()) {
     val organisationProfile by viewModel.organisationProfile.collectAsState()
-    val profile = organisationProfile // Use a temporary variable to hold the value
+    val profile = organisationProfile
 
     Scaffold(
         topBar = {
@@ -85,9 +85,7 @@ fun OrganisationProfile(viewModel: OrganisationProfileViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(14.dp))
                 InputfieldUser("Email: ${profile.email}", Icons.Default.Email)
                 Spacer(modifier = Modifier.height(14.dp))
-                InputfieldUser("Postnummer: ${profile.zipCode}", Icons.Default.ArrowDropDown)
-                Spacer(modifier = Modifier.height(14.dp))
-                InputfieldUser("CVR: ${profile.cvr}", Icons.Default.LocationOn)
+                InputfieldUser("CVR: ${profile.cvrNumber}", Icons.Default.LocationOn)
             }
         } else {
             Box(

@@ -7,14 +7,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import android.util.Log
 
 data class OrganisationProfile(
     val name: String = "",
     val email: String = "",
-    val photoUrl: String = "",
-    val providerId: String = "",
-    val zipCode: String = "",
-    val cvr: String = ""
+    val cvrNumber: String = ""
 )
 
 class OrganisationProfileViewModel : ViewModel() {
@@ -25,28 +23,47 @@ class OrganisationProfileViewModel : ViewModel() {
     val organisationProfile = _organisationProfile.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            val currentUser = auth.currentUser
-            currentUser?.let {
-                firestore.collection("organizations").document(it.uid).get().addOnSuccessListener { document ->
-                    if (document != null) {
-                        val name = document.getString("name") ?: "N/A"
-                        val email = document.getString("email") ?: "N/A"
-                        val photoUrl = document.getString("photoUrl") ?: "N/A"
-                        val providerId = document.getString("providerId") ?: "N/A"
-                        val zipCode = document.getString("zipCode") ?: "N/A"
-                        val cvr = document.getString("cvr") ?: "N/A"
-                        _organisationProfile.value = OrganisationProfile(
-                            name = name,
-                            email = email,
-                            photoUrl = photoUrl,
-                            providerId = providerId,
-                            zipCode = zipCode,
-                            cvr = cvr
-                        )
+        fetchOrganisationProfile()
+    }
+
+    private fun fetchOrganisationProfile() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            firestore.collection("Users").document(currentUser.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val orgId = document.getString("orgId")
+                        if (orgId != null) {
+                            fetchOrganizationDetails(orgId)
+                        } else {
+                            Log.e("OrganisationProfileViewModel", "orgId is null")
+                        }
                     }
                 }
-            }
+                .addOnFailureListener { exception ->
+                    Log.e("OrganisationProfileViewModel", "Error fetching user profile", exception)
+                }
+        } else {
+            Log.e("OrganisationProfileViewModel", "User is not authenticated")
         }
+    }
+
+    private fun fetchOrganizationDetails(orgId: String) {
+        firestore.collection("Organizations").document(orgId).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val name = document.getString("name") ?: "N/A"
+                    val email = document.getString("email") ?: "N/A"
+                    val cvrNumber = document.getString("cvrNumber") ?: "N/A"
+                    _organisationProfile.value = OrganisationProfile(
+                        name = name,
+                        email = email,
+                        cvrNumber = cvrNumber
+                    )
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("OrganisationProfileViewModel", "Error fetching organisation details", exception)
+            }
     }
 }

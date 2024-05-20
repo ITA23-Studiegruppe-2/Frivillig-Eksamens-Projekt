@@ -92,7 +92,7 @@ fun OrgHomeScreen(navController: NavController){
                             navController.navigate(Screen.Hours.route)
                         }
                         InfoCards(label = "Kalender", icon = calendarIcon) {
-                            navController.navigate(Screen.Calendar2.route)
+                            navController.navigate(Screen.Calendar.route)
                         }
                     }
                 }
