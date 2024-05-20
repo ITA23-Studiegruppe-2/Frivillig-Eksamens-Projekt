@@ -32,7 +32,7 @@ fun CalendarScreen(
     viewModel: CalendarViewModel) {
     val selectedDate = remember { mutableStateOf("") }
 
-    // Opretter en dialogboks til valg af dato.
+    // Opretter en dialogboks til valg af dato.- TODO HIV DET NED I VIEWMODEL
     val datePickerDialog = android.app.DatePickerDialog(
         androidx.compose.ui.platform.LocalContext.current,
         { _, year, month, dayOfMonth ->

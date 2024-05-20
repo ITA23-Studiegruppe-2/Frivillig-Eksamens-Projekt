@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.createShiftScreen
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -27,8 +29,8 @@ fun InputFieldShift(
     label: String,
     value: String,
     onValueChange: (String) -> Unit,
-    width: Float,
-    height: Float
+    width: Float = 0.8f,
+    height: Float = 0.1f
 )
 {
     val textFieldColors = textFieldColors(
@@ -36,15 +38,18 @@ fun InputFieldShift(
         unfocusedIndicatorColor = Color.Transparent, // Remove underline when unfocused
         focusedIndicatorColor = Color.Transparent // Remove underline when focused
     )
-
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = Modifier
-            .fillMaxWidth(width)
-            .fillMaxHeight(height),
-        shape = RoundedCornerShape(12.dp),
-        label = { Text(text = label) },
-        colors = textFieldColors,
-    )
+    Column {
+        Text(
+            text = label
+        )
+        TextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier
+                .fillMaxWidth(width)
+                .fillMaxHeight(height),
+            shape = RoundedCornerShape(12.dp),
+            colors = textFieldColors
+        )
+    }
 }

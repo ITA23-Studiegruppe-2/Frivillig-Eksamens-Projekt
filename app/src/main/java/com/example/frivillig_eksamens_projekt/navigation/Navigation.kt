@@ -71,7 +71,7 @@ fun Navigation() {
     ){
         paddingValues -> NavHost(
         navController = navController,
-        startDestination = Screen.Logo.route,
+        startDestination = Screen.CreateShift.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 
@@ -203,7 +203,9 @@ fun Navigation() {
 
         // Create Shift Screen
         composable(Screen.CreateShift.route) {
-            CreateShift(navController, viewModel = CreateShiftViewModel())
+            CreateShift(
+                onBackButtonClick = {navController.popBackStack()}
+            )
 
             currentRoute.value = Screen.CreateShift.route
         }

@@ -10,7 +10,7 @@ class CreateShiftViewModel: ViewModel() {
     // Variables
     var title by mutableStateOf("")
     var hours by mutableStateOf("")
-    var date by mutableStateOf("")
+    var date by mutableStateOf("Select Date")
     var email by mutableStateOf("")
     var description by mutableStateOf("")
     var amount by mutableStateOf("")

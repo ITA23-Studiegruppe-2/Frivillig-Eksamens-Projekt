@@ -33,12 +33,17 @@ fun ChatPage(userId: String) {
                 .fillMaxSize()
 
         ) {
+            /*
             // Inputfelt til at skrive og sende nye beskeder
             SendMessageInput(onSendMessage = { message ->
                 val orgId = "gmzWl7cT2mvskWjtc47t"
                 viewModel.sendMessage(userId, message, orgId)
             })
+
+             */
         }
+
+
     }
 }
 
