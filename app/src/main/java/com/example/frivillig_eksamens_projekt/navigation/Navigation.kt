@@ -156,9 +156,7 @@ fun Navigation() {
 
         // Calendar Screen
         composable(Screen.Calendar.route) {
-            CalendarScreen(
-                onCalendarClick = { navController.navigate(Screen.Calendar.route) },
-            )
+            CalendarScreen2(navController)
             currentRoute.value = Screen.Calendar.route
         }
         composable(Screen.Activities.route) {
@@ -171,13 +169,6 @@ fun Navigation() {
             BadgesScreen(navController)
 
             currentRoute.value = Screen.Badges.route
-        }
-
-        // Second Calendar Screen
-        composable(Screen.Calendar2.route) {
-            CalendarScreen2(navController)
-
-            currentRoute.value = Screen.Calendar2.route
         }
 
         // Upcoming Shifts Screen
