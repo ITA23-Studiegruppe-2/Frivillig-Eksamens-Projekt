@@ -71,7 +71,7 @@ fun Navigation() {
     ){
         paddingValues -> NavHost(
         navController = navController,
-        startDestination = Screen.Logo.route,
+        startDestination = Screen.Login.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 

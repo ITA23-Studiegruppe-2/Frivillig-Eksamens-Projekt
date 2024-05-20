@@ -96,4 +96,6 @@ dependencies {
     implementation ("androidx.core:core-ktx:1.7.0")
     implementation ("com.google.android.material:material:1.7.0")
 
+    //Badges live data
+    implementation ("androidx.compose.runtime:runtime-livedata:1.0.0")
 }
