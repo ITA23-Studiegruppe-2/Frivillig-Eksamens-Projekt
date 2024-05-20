@@ -29,7 +29,6 @@ class UsersRepository() {
             .set(user)
             .addOnSuccessListener {
                 // Send the user to home page - Successful registration
-                createBadgesSubCollection(userUID)
                 onSuccess()
 
 
@@ -40,12 +39,6 @@ class UsersRepository() {
                 onFail("There was an error trying to reach the database!")
                 // We should handle the deletion of the user stored in Authentication - TODO
             }
-
-    }
-    private fun createBadgesSubCollection(
-        userUID: String)
-    {
-        db.collection("Users").document(userUID).collection("Badges")
 
     }
 }

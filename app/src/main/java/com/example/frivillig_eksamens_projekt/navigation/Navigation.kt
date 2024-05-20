@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.navigation
 
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -62,7 +63,7 @@ fun Navigation() {
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
                     onChatPageClick = { /*TODO*/ },
-                    onAccountClick = { /*Todo*/ }
+                    onAccountClick = { }
                 )
 
 
@@ -209,6 +210,14 @@ fun Navigation() {
 
             currentRoute.value = Screen.CreateShift.route
         }
+
+        /*
+        composable(Screen.MyProfile.route) {
+            ProfileScreen()
+            currentRoute.value = Screen.MyProfile.route
+        }
+
+         */
 
         }
     }

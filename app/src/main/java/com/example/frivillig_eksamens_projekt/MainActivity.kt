@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.frivillig_eksamens_projekt.navigation.Navigation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TimeSelectDropDown
+import com.example.frivillig_eksamens_projekt.navigation.Navigation
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
 
 class MainActivity : ComponentActivity() {
