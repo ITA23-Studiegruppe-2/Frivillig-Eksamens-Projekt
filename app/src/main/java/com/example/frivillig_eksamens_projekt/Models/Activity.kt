@@ -8,5 +8,8 @@ data class Activity(
     val date: String = "",
     val timeStamp: String = "",
     @DocumentId var documentId: String? = null,
-    var listOfUsersApplied: MutableList<String> = mutableListOf()
+    val listOfUsersApplied: MutableList<String> = mutableListOf(),
+    val description: String = "",
+    val location: String = "",
+    val organisationId: String = ""
 )

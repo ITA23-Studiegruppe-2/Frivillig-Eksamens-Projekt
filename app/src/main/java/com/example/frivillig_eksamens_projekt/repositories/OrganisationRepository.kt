@@ -3,6 +3,7 @@ package com.example.frivillig_eksamens_projekt.repositories
 import com.example.frivillig_eksamens_projekt.Models.Organization
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 
 class OrganisationRepository {
     val db = Firebase.firestore
@@ -15,7 +16,8 @@ class OrganisationRepository {
             orgID = orgUID,
             cvrNumber = cvrNumber,
             email = email,
-            name = name
+            name = name,
+            orgUID = orgUID
         )
 
         db.collection("Organizations")
@@ -31,4 +33,10 @@ class OrganisationRepository {
             }
 
     }
+    suspend fun fetchCurrentOrgData(orgUID: String) =
+        db.collection("Organizations")
+            .whereEqualTo("orgUID",orgUID)
+            .get()
+            .await()
+            .toObjects(Organization::class.java)
 }
