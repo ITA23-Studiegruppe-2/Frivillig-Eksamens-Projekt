@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,7 +36,11 @@ import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
+import com.example.frivillig_eksamens_projekt.Models.Badge
 import java.io.File
 
 
@@ -45,7 +51,27 @@ fun BadgesScreen(navController: NavController)
     val viewModel: BadgesViewModel = viewModel()
     val secondaryColor = Color(0xFF364830)
     val badges = viewModel.badges.observeAsState(listOf())
-    println(badges)
+
+    //Dialog
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedBadge by remember { mutableStateOf<Badge?>(null) }
+
+    // Function to handle badge clicks
+    fun onBadgeClick(badge: Badge) {
+        selectedBadge = badge
+        showDialog = true
+    }
+    // Dialog that is shown when a badge is clicked
+    if (showDialog) {
+        BadgeDialog(
+            onDismiss = {
+                showDialog = false  // This needs to set showDialog to false
+                selectedBadge = null  // Clear the selected badge
+            },
+            title = selectedBadge?.title ?: "",
+            badgeDescription = selectedBadge?.description ?: ""
+        )
+    }
 
     Surface (
         modifier = Modifier
@@ -95,137 +121,10 @@ fun BadgesScreen(navController: NavController)
                     verticalArrangement = Arrangement.spacedBy(16.dp) )
                 {
                     items(badges.value) {badge ->
-                        BadgeIcon(badge = badge)
+                        BadgeIcon(badge = badge, onClick = { onBadgeClick(badge) })
                     }
                 }
-
-
-
-
-
-
-                /*
-                Column {
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    ){
-                        Badges(
-                            label = "Newbie",
-                            icon = painterResource(id = R.drawable.newbie))
-                        {}
-                        Badges(
-                            label = "5 hours",
-                            icon = painterResource(id = R.drawable.hour5))
-                        {}
-                        Badges(
-                            label = "Christmas",
-                            icon = painterResource(id = R.drawable.christmas))
-                        {}
-                        Badges(
-                            label = "Locked hour 20",
-                            icon = painterResource(id = R.drawable.hour20_locked))
-                        {}
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    ){
-                        Badges(
-                            label = "Locked loyal",
-                            icon = painterResource(id = R.drawable.loyal_locked))
-                        {}
-                        Badges(
-                            label = "Locked hour 50",
-                            icon = painterResource(id = R.drawable.hour50_locked))
-                        {}
-                        Badges(
-                            label = "Locked different organisations",
-                            icon = painterResource(id = R.drawable.different_locked)) 
-                        {}
-                        Badges(
-                            label = "Locked recommended by others",
-                            icon = painterResource(id = R.drawable.recommended_locked))
-                        {}
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    ){
-                        Badges(
-                            label = "Locked animals",
-                            icon = painterResource(id = R.drawable.animal_locked))
-                        {}
-                        Badges(
-                            label = "Locked recommended others",
-                            icon = painterResource(id = R.drawable.curious_locked))
-                        {}
-                        Badges(
-                            label = "Locked earth",
-                            icon = painterResource(id = R.drawable.earth_locked))
-                        {}
-                        Badges(
-                            label = "Locked 75 hours",
-                            icon = painterResource(id = R.drawable.hour75_locked))
-                        {}
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    ){
-                        Badges(
-                            label = "Locked night",
-                            icon = painterResource(id = R.drawable.night_locked))
-                        {}
-                        Badges(
-                            label = "Locked early",
-                            icon = painterResource(id = R.drawable.early_locked))
-                        {}
-                        Badges(
-                            label = "Locked 100 hours",
-                            icon = painterResource(id = R.drawable.hour100_locked))
-                        {}
-                        Badges(
-                            label = "Locked helped people",
-                            icon = painterResource(id = R.drawable.helped_people_locked))
-                        {}
-                    }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    ){
-                        Badges(
-                            label = "Locked festival",
-                            icon = painterResource(id = R.drawable.festival_locked))
-                        {}
-                        Badges(
-                            label = "Locked 150 hours",
-                            icon = painterResource(id = R.drawable.hour150_locked))
-                        {}
-                        Badges(
-                            label = "Locked more than 150 hours",
-                            icon = painterResource(id = R.drawable.over150_locked))
-                        {}
-                        Badges(
-                            label = "Locked expert",
-                            icon = painterResource(id = R.drawable.expert_locked))
-                        {}
-                    }
-                }
-                */
-
             }
         }
     }
 }
-
-/*
-@Composable
-fun BadgeC(path: String){
-    Icon(
-        painter = ,
-        contentDescription = "")
-
-}
-
- */

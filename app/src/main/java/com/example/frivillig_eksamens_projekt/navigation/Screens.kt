@@ -24,7 +24,6 @@ sealed class Screen (val route: String) {
 
     object Badges: Screen(route = "badges_screen")
 
-    object Activities: Screen(route = "activities_screen")
 
     object ChatPage: Screen(route = "chatPage_screen")
 

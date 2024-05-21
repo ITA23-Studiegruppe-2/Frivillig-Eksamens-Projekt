@@ -59,7 +59,7 @@ fun Navigation() {
             // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
-                    onSearchClick = { navController.navigate(Screen.Activities.route)},
+                    onSearchClick = { navController.navigate(Screen.Activity.route)},
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
                     onChatPageClick = { /*TODO*/ },
@@ -140,7 +140,9 @@ fun Navigation() {
         //User Home Screen
         composable(Screen.Home.route) {
             HomeScreen(
-                 navController)
+                navController,
+                onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
+                onActivityScreenClick = {navController.navigate(Screen.Activity.route)})
 
             currentRoute.value = Screen.Home.route
         }
@@ -159,10 +161,6 @@ fun Navigation() {
             CalendarScreen2(navController)
             currentRoute.value = Screen.Calendar.route
         }
-        composable(Screen.Activities.route) {
-            ActivityScreen()
-            currentRoute.value = Screen.Activities.route
-        }
 
         //Badges Screen
         composable(Screen.Badges.route) {
@@ -171,9 +169,17 @@ fun Navigation() {
             currentRoute.value = Screen.Badges.route
         }
 
+        //Activity Screen
+        composable(Screen.Activity.route) {
+            ActivityScreen(
+                onBackButtonClick = {navController.popBackStack()}
+            )
+            currentRoute.value = Screen.Activity.route
+        }
+
         // Upcoming Shifts Screen
         composable(Screen.UpcomingShifts.route) {
-            UpcomingShifts(navController)
+            UpcomingShifts(onBackButtonClick = {navController.popBackStack()})
 
             currentRoute.value = Screen.UpcomingShifts.route
         }
