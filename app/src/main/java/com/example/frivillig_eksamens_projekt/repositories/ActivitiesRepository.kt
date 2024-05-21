@@ -2,6 +2,7 @@ package com.example.frivillig_eksamens_projekt.repositories
 
 import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -21,7 +22,6 @@ class ActivitiesRepository() {
              .await()
              .toObjects(Activity::class.java)
 
-    // TODO CREATE ACTIVITY
 
     // TODO APPLY FOR ACTIVITY
 
@@ -73,5 +73,34 @@ class ActivitiesRepository() {
                 .document(userID)
                 .set(userIDObject)
         }
+    }
+
+    // TODO CREATE ACTIVITY
+
+    fun createActivity(
+        title: String,
+        date: String,
+        timeFrame: String,
+        description: String,
+        location: String,
+        orgId: String,
+        organisation: String,
+        onSuccess: () -> Unit
+    ) {
+        // Create the activity object
+        val activity = Activity(
+            title = title,
+            date = date,
+            timeStamp = timeFrame,
+            description = description,
+            location = location,
+            organisationId = orgId,
+            organization = organisation
+        )
+        // Create the activity in the database
+        db.collection("Activites")
+            .add(activity)
+            .addOnSuccessListener { onSuccess()}
+
     }
 }

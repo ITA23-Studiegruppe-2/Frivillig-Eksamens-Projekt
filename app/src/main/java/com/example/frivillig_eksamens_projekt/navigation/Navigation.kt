@@ -21,6 +21,7 @@ import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShiftViewModel
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
+import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
@@ -60,7 +61,7 @@ fun Navigation() {
             // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
-                    onSearchClick = { navController.navigate(Screen.Activities.route) },
+                    onSearchClick = { navController.navigate(Screen.Activities.route)},
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
                     onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
@@ -70,49 +71,49 @@ fun Navigation() {
 
             }
         },
-    ) { paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = Screen.Logo.route,
+    ){
+        paddingValues -> NavHost(
+        navController = navController,
+        startDestination = Screen.Logo.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 
 
-            // Logo Screen
-            composable(Screen.Logo.route) {
-                LogoScreen(navController = navController)
-            }
+        // Logo Screen
+        composable(Screen.Logo.route) {
+            LogoScreen(navController = navController)
+        }
 
-            // Start Screen
-            composable(Screen.Start.route) {
-                StartScreen(
-                    onLoginClick = { navController.navigate(Screen.Login.route) },
-                    onRegisterClick = { navController.navigate(Screen.UserOrOrg.route) }
-                )
-                currentRoute.value = Screen.Start.route
+        // Start Screen
+        composable(Screen.Start.route) {
+            StartScreen(
+                onLoginClick = { navController.navigate(Screen.Login.route) },
+                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route) }
+            )
+            currentRoute.value = Screen.Start.route
 
-            }
-            // Login Screen
-            composable(Screen.Login.route) {
-                // Handle both org and user homeScreen navigation
-                LoginScreen(
-                    onUserSuccessLogin = { navController.navigate(Screen.Home.route) },
-                    onClick = {},
-                    onOrgSuccessLogin = { navController.navigate(Screen.OrgHomeScreen.route) }
-                )
-                currentRoute.value = Screen.Login.route
-            }
-            // Register User Screen
-            composable(Screen.RegisterUser.route) {
-                CreateUserScreen(
-                    onSuccess = { navController.navigate(Screen.RegisterUserSecond.route) },
-                    // TEMP () ADD INDICATOR
-                    onFail = { println("Failed") },
-                    viewModel = registerViewModel,
-                    onBackButtonClick = { navController.popBackStack() }
-                )
-                currentRoute.value = Screen.RegisterUser.route
-            }
+        }
+        // Login Screen
+        composable(Screen.Login.route) {
+            // Handle both org and user homeScreen navigation
+            LoginScreen(
+                onUserSuccessLogin = { navController.navigate(Screen.Home.route) },
+                onClick = {},
+                onOrgSuccessLogin = {navController.navigate(Screen.OrgHomeScreen.route)}
+            )
+            currentRoute.value = Screen.Login.route
+        }
+        // Register User Screen
+        composable(Screen.RegisterUser.route) {
+            CreateUserScreen(
+                onSuccess = { navController.navigate(Screen.RegisterUserSecond.route) },
+                // TEMP () ADD INDICATOR
+                onFail = { println("Failed") },
+                viewModel = registerViewModel,
+                onBackButtonClick = { navController.popBackStack() }
+            )
+            currentRoute.value = Screen.RegisterUser.route
+        }
 
             // Register User Second Screen
             composable(Screen.RegisterUserSecond.route) {
@@ -127,13 +128,13 @@ fun Navigation() {
                 currentRoute.value = Screen.RegisterUserSecond.route
             }
 
-            //Register Organisation Screen
-            composable(Screen.RegisterOrg.route) {
-                CreateOrgScreen(
-                    onSuccess = { navController.navigate(Screen.OrgHomeScreen.route) }, //Skal laves om til Org Home Screen
-                    onFail = { /*TODO*/ },
-                    onBackButtonClick = { navController.popBackStack() }
-                )
+        //Register Organisation Screen
+        composable(Screen.RegisterOrg.route) {
+            CreateOrgScreen(
+                onSuccess = { navController.navigate(Screen.OrgHomeScreen.route) }, //Skal laves om til Org Home Screen
+                onFail = { /*TODO*/ },
+                onBackButtonClick = {navController.popBackStack()}
+            )
 
                 currentRoute.value = Screen.RegisterOrg.route
             }
@@ -156,17 +157,15 @@ fun Navigation() {
                 currentRoute.value = Screen.UserOrOrg.route
             }
 
-            // Calendar Screen
-            composable(Screen.Calendar.route) {
-                CalendarScreen(
-                    onCalendarClick = { navController.navigate(Screen.Calendar.route) },
-                )
-                currentRoute.value = Screen.Calendar.route
-            }
-            composable(Screen.Activities.route) {
-                ActivityScreen()
-                currentRoute.value = Screen.Activities.route
-            }
+        // Calendar Screen
+        composable(Screen.Calendar.route) {
+            CalendarScreen2(navController)
+            currentRoute.value = Screen.Calendar.route
+        }
+        composable(Screen.Activities.route) {
+            ActivityScreen()
+            currentRoute.value = Screen.Activities.route
+        }
 
             //Badges Screen
             composable(Screen.Badges.route) {
@@ -175,16 +174,9 @@ fun Navigation() {
                 currentRoute.value = Screen.Badges.route
             }
 
-            // Second Calendar Screen
-            composable(Screen.Calendar2.route) {
-                CalendarScreen2(navController)
-
-                currentRoute.value = Screen.Calendar2.route
-            }
-
-            // Upcoming Shifts Screen
-            composable(Screen.UpcomingShifts.route) {
-                UpcomingShifts(navController)
+        // Upcoming Shifts Screen
+        composable(Screen.UpcomingShifts.route) {
+            UpcomingShifts(navController)
 
                 currentRoute.value = Screen.UpcomingShifts.route
             }
@@ -203,9 +195,12 @@ fun Navigation() {
                 currentRoute.value = Screen.OrgHomeScreen.route
             }
 
-            // Create Shift Screen
-            composable(Screen.CreateShift.route) {
-                CreateShift(navController, viewModel = CreateShiftViewModel())
+        // Create Shift Screen
+        composable(Screen.CreateShift.route) {
+            CreateShift(
+                onBackButtonClick = {navController.popBackStack()},
+                onSuccess = {navController.popBackStack()}
+            )
 
                 currentRoute.value = Screen.CreateShift.route
             }
@@ -232,6 +227,14 @@ fun Navigation() {
             composable(Screen.AddChatScreen.route) {
                 AddChatScreen()
             }
+        /*
+        composable(Screen.MyProfile.route) {
+            ProfileScreen()
+            currentRoute.value = Screen.MyProfile.route
+        }
+
+         */
+
         }
     }
 }

@@ -152,9 +152,9 @@ class AccountService {
                     .build()
                 currentUser?.updateProfile(profileUpdate)
 
-
                 // If we get good request back
                 // Handle the addition to the database here.
+                print(it.user?.uid)
                     it.user?.let { it ->
                         organisationRepository.addOrgToDatabase(
                             orgUID = it.uid,

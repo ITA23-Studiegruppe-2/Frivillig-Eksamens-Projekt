@@ -17,14 +17,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material.icons.outlined.KeyboardArrowRight
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -100,6 +99,7 @@ fun CalendarScreen2 (
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
+
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowLeft,
                     contentDescription = "Previous month",
@@ -109,6 +109,7 @@ fun CalendarScreen2 (
                             currentMonth = currentMonth.minusMonths(1)
                         })
                 Spacer(modifier = Modifier.width(8.dp))
+
 
                 Text(
                     text = currentMonth.format(DateTimeFormatter.ofPattern("MMM yyyy").withLocale(Locale("da", "DK"))),

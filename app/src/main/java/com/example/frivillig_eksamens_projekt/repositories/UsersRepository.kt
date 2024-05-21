@@ -11,7 +11,6 @@ class UsersRepository() {
 
     val currentUser = Firebase.auth.currentUser?.uid
 
-
      suspend fun getUser(): User? = currentUser?.let {
          db.collection("Users")
          .document(it)
@@ -25,11 +24,11 @@ class UsersRepository() {
 
 
      fun addUserToDatabase(user: User, userUID: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
-        db.collection("Users").document(userUID)
+        db.collection("Users")
+            .document(userUID)
             .set(user)
             .addOnSuccessListener {
                 // Send the user to home page - Successful registration
-                createBadgesSubCollection(userUID)
                 onSuccess()
 
 
@@ -40,12 +39,6 @@ class UsersRepository() {
                 onFail("There was an error trying to reach the database!")
                 // We should handle the deletion of the user stored in Authentication - TODO
             }
-
-    }
-    private fun createBadgesSubCollection(
-        userUID: String)
-    {
-        db.collection("Users").document(userUID).collection("Badges")
 
     }
 }

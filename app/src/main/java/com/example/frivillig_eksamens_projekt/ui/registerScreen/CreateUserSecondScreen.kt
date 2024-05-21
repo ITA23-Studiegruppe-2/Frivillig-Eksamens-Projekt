@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.R
@@ -48,6 +49,8 @@ fun CreateUserSecondScreen(
         calendarViewModel.currentMonth,
         calendarViewModel.currentDay
     )
+
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -86,6 +89,7 @@ fun CreateUserSecondScreen(
                         icon = Icons.Outlined.DateRange,
                         onClick = {
                             datePickerDialog.show()
+
                         }
                     )
                     Box(
@@ -104,9 +108,10 @@ fun CreateUserSecondScreen(
                         }
                     }
                 }
-
+                
                 Spacer(modifier = Modifier.height(28.dp))
-
+                
+                Text(text = viewModel.errorMessage)
                 Box {
                     TermsAndConditionsCheckbox(checkboxViewModel = viewModel)
                 }
@@ -118,7 +123,9 @@ fun CreateUserSecondScreen(
                     CustomButton(
                         text = "Tilmeld",
                         onClick = {
+                            viewModel.birthDate = calendarViewModel.selectedDate
                             viewModel.registerUserToDatabase(onSuccess = onSuccess, onFail = {})
+
                         })
                 }
             }
