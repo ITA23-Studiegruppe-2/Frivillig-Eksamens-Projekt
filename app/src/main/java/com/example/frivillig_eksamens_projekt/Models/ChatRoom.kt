@@ -11,5 +11,5 @@ data class ChatRoom(
     val messages: List<Message> = emptyList(), //Ændrer til array empty
     val userid: String = "",
     val orgid: String = "",
-
+    val time: Long = 0L
 )

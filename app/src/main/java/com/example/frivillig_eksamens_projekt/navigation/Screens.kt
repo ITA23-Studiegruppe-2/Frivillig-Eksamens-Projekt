@@ -38,5 +38,5 @@ sealed class Screen (val route: String) {
 
     object Chat: Screen(route = "chat_screen")
 
-    object SendMessage: Screen(route = "sendMessage_screen")
+    object AddChatScreen: Screen(route = "sendMessage_screen")
 }

@@ -1,4 +1,4 @@
-package com.example.frivillig_eksamens_projekt.ui.chatScreen
+package com.example.frivillig_eksamens_projekt.ui.chatScreen.findOrganisation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -21,8 +21,9 @@ class OrganizationViewModel : ViewModel() {
     private val chatRepository = ChatRepository()
 
 
-    var     listOfOrganization by mutableStateOf(mutableStateListOf<Organization>())
+    var listOfOrganization by mutableStateOf(mutableStateListOf<Organization>())
     var searchBar by mutableStateOf("")
+
 
     private var searchJob: Job? = null
 
@@ -53,15 +54,12 @@ class OrganizationViewModel : ViewModel() {
         }
     }
 
-
-
-
-    // Function to delay the search for 300ms
-
-    fun searchOrganisationByNameDebounced() {
+    // Delays the search to get live searching
+    fun updateSearchBar(value: String) {
+        searchBar = value
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            delay(300)
+            delay(300)  //
             searchOrganisationByName()
         }
     }

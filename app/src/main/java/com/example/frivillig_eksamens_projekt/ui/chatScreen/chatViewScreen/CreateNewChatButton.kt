@@ -14,14 +14,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CustomFloatingActionButton(
-    onClick: () -> Unit) {
+    onCreateClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(30.dp)
     ) {
         FloatingActionButton(
-            onClick = onClick,
+            onClick = onCreateClick,
             modifier = Modifier
                 .align(Alignment.TopEnd),
             content = {
