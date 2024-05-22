@@ -1,3 +1,4 @@
+
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +24,6 @@ class ConversationViewModel : ViewModel() {
 
 
 
-
     init {
         // Get current user
         FirebaseAuth.getInstance().addAuthStateListener { firebaseAuth ->
@@ -36,12 +36,17 @@ class ConversationViewModel : ViewModel() {
     }
 
 
+
     // Function to fetch messages for the current user
     fun fetchMessages(userId: String) {
         viewModelScope.launch {
             Log.d("ChatViewModel", "Fetching messages for user ID: $userId")
-            conversations = chatRepository.getConversationsByUserId(userId)
-            Log.d("ChatViewModel", "Fetched messages: ${conversations.size}")
+            try {
+                conversations = chatRepository.getConversationsByUserId(userId)
+                Log.d("ChatViewModel", "Fetched messages: ${conversations.size}")
+            } catch (e: Exception) {
+                Log.e("ChatViewModel", "Error fetching messages: ${e.message}")
+            }
         }
     }
 }

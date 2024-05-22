@@ -26,17 +26,20 @@ sealed class Screen (val route: String) {
 
     object Activities: Screen(route = "activities_screen")
 
-    object ChatPage: Screen(route = "chatPage_screen")
 
     object CreateShift: Screen(route = "create_shift_screen")
 
     object OrgHomeScreen: Screen(route = "orgHome_screen")
 
     object Hours: Screen(route = "hours")
+    object UpcomingShifts: Screen(route = "upcoming_shifts_screen")
 
     object Chat: Screen(route = "chat_screen")
 
     object AddChatScreen: Screen(route = "sendMessage_screen")
-    object MyProfile: Screen(route = "my_profile_screen")
+
+    object ConversationScreen: Screen(route = "conversation_screen")
+
+
 
 }

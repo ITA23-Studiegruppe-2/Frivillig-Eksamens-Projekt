@@ -14,14 +14,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
-import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.AddChatScreen
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
-import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShiftViewModel
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
-import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
@@ -174,12 +171,14 @@ fun Navigation() {
                 currentRoute.value = Screen.Badges.route
             }
 
+
         // Upcoming Shifts Screen
         composable(Screen.UpcomingShifts.route) {
             UpcomingShifts(navController)
 
                 currentRoute.value = Screen.UpcomingShifts.route
             }
+
 
             // Hours Screen
             composable(Screen.Hours.route) {
@@ -206,12 +205,13 @@ fun Navigation() {
             }
 
 
+
             // Find organisations & resume a conversation
             composable(Screen.ConversationScreen.route) {
                 ConversationList(
                     onCreateClick = { navController.navigate(Screen.Chat.route) },
                     onResumeClick = { conversationId ->
-                        navController.navigate("${Screen.AddChatScreen.route}/$conversationId")
+                        navController.navigate(Screen.AddChatScreen.route)
                     }
                 )
             }
@@ -220,13 +220,19 @@ fun Navigation() {
             composable(Screen.Chat.route) {
                 ChatScreen(
                     onNewChatClick = { orgId ->
-                        navController.navigate("${Screen.AddChatScreen.route}/$orgId")
+                        navController.navigate(Screen.AddChatScreen.route)
                     }
                 )
             }
+
             composable(Screen.AddChatScreen.route) {
                 AddChatScreen()
             }
+
+
+
+
+
         /*
         composable(Screen.MyProfile.route) {
             ProfileScreen()
