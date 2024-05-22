@@ -1,11 +1,13 @@
 package com.example.frivillig_eksamens_projekt.ui.activityScreen
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,7 +37,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun ShiftCard(title: String, organization: String, date: String, time: String, activityID: String, listOfUsers: List<String>) {
+fun ShiftCard(title: String, organization: String, date: String, time: String, activityID: String, listOfUsers: List<String>, description: String, location: String) {
 
     val viewModel = RequestShiftViewModel()
 
@@ -106,22 +108,37 @@ fun ShiftCard(title: String, organization: String, date: String, time: String, a
         DropdownMenu(
             expanded = viewModel.isExpanded,
             onDismissRequest = { viewModel.isExpanded = false },
-            modifier = Modifier.width(382.dp),
-
+            modifier = Modifier.width(382.dp)
+                .background(Color.White)
             ) {
+
             DropdownMenuItem(
                 text = {
+                    Column {
                     Row (
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
-                    ){
-                        Text(text = dropdownText, fontSize = 14.sp, modifier = Modifier.padding(10.dp))
+                    ) {
+                        Text(
+                            text = dropdownText,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(10.dp)
+                        )
                         RequestShiftCheckbox(viewModel, activityID = activityID)
+                    }
+                        Text(
+                            text = description,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(10.dp))
+                        Text(
+                            text = "Adresse: $location",
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(10.dp))
 
                     } },
-                onClick = { viewModel.isExpanded = false },
+                onClick = { viewModel.isExpanded = false }
             )
         }
     }

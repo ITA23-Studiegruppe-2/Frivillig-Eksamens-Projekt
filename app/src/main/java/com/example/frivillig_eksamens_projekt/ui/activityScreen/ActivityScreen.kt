@@ -14,9 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 
 @Composable
-fun ActivityScreen() {
+fun ActivityScreen(
+    onBackButtonClick: () -> Unit
+) {
 
     val viewModel = ActivityScreenViewModel()
 
@@ -25,7 +28,7 @@ fun ActivityScreen() {
         color = viewModel.backgroundColor
     ) {
         Column {
-            TopBar()
+            TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = "Ledige vagter")
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,7 +57,9 @@ fun ActivityScreen() {
                                 date = activity.date,
                                 time = activity.timeStamp,
                                 activityID = it,
-                                listOfUsers = activity.listOfUsersApplied
+                                listOfUsers = activity.listOfUsersApplied,
+                                description = activity.description,
+                                location = activity.location
                             )
                         }
                     }

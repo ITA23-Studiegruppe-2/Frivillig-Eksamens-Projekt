@@ -20,7 +20,8 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
 fun TopBarCreateShift(
-    onBackButtonClick: () -> Unit
+    onBackButtonClick: () -> Unit,
+    text: String
 ) {
     Box(
         modifier = Modifier
@@ -32,14 +33,10 @@ fun TopBarCreateShift(
     ) {
         BackButton(onClick = onBackButtonClick )
         Text(
-            text = "Opret Vagt",
-            fontSize = 28.sp,
+            text = text,
+            fontSize = 26.sp,
+            color = Color(0xFF364830)
 
         )
     }
-}
-@Composable
-@Preview
-fun showTopBar() {
-    TopBarCreateShift({})
 }

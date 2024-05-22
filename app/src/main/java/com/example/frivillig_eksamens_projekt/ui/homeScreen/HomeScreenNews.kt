@@ -37,9 +37,11 @@ fun HomeScreenNews(
             .border(
                 width = 2.dp,
                 color = secondaryColor,
-                shape = RoundedCornerShape(8.dp))
-            .background(Color.White),
-        shape = RoundedCornerShape(8.dp)
+                shape = RoundedCornerShape(8.dp)
+            ),
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+
     ) {
         Column(
             modifier = Modifier

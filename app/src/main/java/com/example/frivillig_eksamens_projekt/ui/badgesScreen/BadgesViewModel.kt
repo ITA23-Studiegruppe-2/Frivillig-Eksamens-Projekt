@@ -16,6 +16,7 @@ class BadgesViewModel: ViewModel() {
     private val _badges = MutableLiveData<List<Badge>>()
     val badges: LiveData<List<Badge>> = _badges
 
+
     init {
         loadBadges()
     }

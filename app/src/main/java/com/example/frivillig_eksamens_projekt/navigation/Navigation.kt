@@ -58,7 +58,7 @@ fun Navigation() {
             // Set the new current route each time we change it!
             if (!screensWithNoBottomNavigation.contains(currentRoute.value)) {
                 BottomNavigationBar(
-                    onSearchClick = { navController.navigate(Screen.Activities.route)},
+                    onSearchClick = { navController.navigate(Screen.Activity.route)},
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
                     onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
@@ -136,63 +136,66 @@ fun Navigation() {
                 currentRoute.value = Screen.RegisterOrg.route
             }
 
-            //User Home Screen
-            composable(Screen.Home.route) {
-                HomeScreen(
-                    navController
-                )
+        //User Home Screen
+        composable(Screen.Home.route) {
+            HomeScreen(
+                navController,
+                onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
+                onActivityScreenClick = {navController.navigate(Screen.Activity.route)})
 
-                currentRoute.value = Screen.Home.route
-            }
+            currentRoute.value = Screen.Home.route
+        }
 
-            // Choose what type of account (Bruger)
-            composable(Screen.UserOrOrg.route) {
-                UserOrOrganisation(
-                    onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
-                    onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route) }
-                )
-                currentRoute.value = Screen.UserOrOrg.route
-            }
+        // Choose what type of account (Bruger)
+        composable(Screen.UserOrOrg.route) {
+            UserOrOrganisation(
+                onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
+                onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)}
+            )
+            currentRoute.value = Screen.UserOrOrg.route
+        }
 
         // Calendar Screen
         composable(Screen.Calendar.route) {
             CalendarScreen2(navController)
             currentRoute.value = Screen.Calendar.route
         }
-        composable(Screen.Activities.route) {
-            ActivityScreen()
-            currentRoute.value = Screen.Activities.route
+
+        //Badges Screen
+        composable(Screen.Badges.route) {
+            BadgesScreen(navController)
+
+            currentRoute.value = Screen.Badges.route
         }
 
-            //Badges Screen
-            composable(Screen.Badges.route) {
-                BadgesScreen(navController)
-
-                currentRoute.value = Screen.Badges.route
-            }
-
+        //Activity Screen
+        composable(Screen.Activity.route) {
+            ActivityScreen(
+                onBackButtonClick = {navController.popBackStack()}
+            )
+            currentRoute.value = Screen.Activity.route
+        }
 
         // Upcoming Shifts Screen
         composable(Screen.UpcomingShifts.route) {
-            UpcomingShifts(navController)
+            UpcomingShifts(onBackButtonClick = {navController.popBackStack()})
 
-                currentRoute.value = Screen.UpcomingShifts.route
-            }
+            currentRoute.value = Screen.UpcomingShifts.route
+        }
 
+        // Hours Screen
+        composable(Screen.Hours.route) {
+            HoursScreen(navController)
 
-            // Hours Screen
-            composable(Screen.Hours.route) {
-                HoursScreen(navController)
+            currentRoute.value = Screen.Hours.route
+        }
 
-                currentRoute.value = Screen.Hours.route
-            }
+        // Organisation Home Screen
+        composable(Screen.OrgHomeScreen.route) {
+            OrgHomeScreen(navController)
 
-            // Organisation Home Screen
-            composable(Screen.OrgHomeScreen.route) {
-                OrgHomeScreen(navController)
-
-                currentRoute.value = Screen.OrgHomeScreen.route
-            }
+            currentRoute.value = Screen.OrgHomeScreen.route
+        }
 
         // Create Shift Screen
         composable(Screen.CreateShift.route) {

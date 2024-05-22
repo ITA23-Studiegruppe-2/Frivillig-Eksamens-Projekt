@@ -44,7 +44,8 @@ fun CreateShift(
     ) {
         Column {
             TopBarCreateShift(
-                onBackButtonClick = onBackButtonClick
+                onBackButtonClick = onBackButtonClick,
+                text = "Opret vagt"
             )
             Box(
                 modifier = Modifier
