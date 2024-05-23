@@ -13,7 +13,11 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.core.view.WindowCompat
+import com.example.frivillig_eksamens_projekt.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -36,6 +40,8 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
+
 
 @Composable
 fun FrivilligEksamensProjektTheme(
@@ -67,4 +73,6 @@ fun FrivilligEksamensProjektTheme(
         typography = Typography,
         content = content
     )
+
+
 }

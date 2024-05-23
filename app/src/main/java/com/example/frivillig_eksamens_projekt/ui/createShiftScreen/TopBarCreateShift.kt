@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
+import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 
 @Composable
 fun TopBarCreateShift(
@@ -35,7 +36,8 @@ fun TopBarCreateShift(
         Text(
             text = text,
             fontSize = 26.sp,
-            color = Color(0xFF364830)
+            color = Color(0xFF364830),
+            style = title
 
         )
     }

@@ -34,6 +34,7 @@ import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.navigation.Screen
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
+import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 
 @Composable
 fun HomeScreen(
@@ -73,7 +74,8 @@ fun HomeScreen(
                         text = "Hej ${viewModel.name}!",
                         modifier = Modifier,
                         fontSize = 23.sp,
-                        color = Color.White
+                        color = Color.White,
+                        style = title
                     )
                     Icon(
                         imageVector = Icons.Outlined.Notifications,

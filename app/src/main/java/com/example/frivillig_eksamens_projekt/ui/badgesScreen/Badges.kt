@@ -26,8 +26,6 @@ fun BadgeIcon(badge: Badge, onClick: () -> Unit) {
     val drawableId = context.resources.getIdentifier(resourceName, "drawable", context.packageName)
 
     //Dialog
-
-
     if (drawableId != 0) {
 
         Image(
