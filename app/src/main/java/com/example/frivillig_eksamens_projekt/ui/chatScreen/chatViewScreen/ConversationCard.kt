@@ -16,7 +16,7 @@ import com.example.frivillig_eksamens_projekt.Models.Conversation
 @Composable
 fun ConversationItem(
     conversation: Conversation,
-    onResumeClick: (String) -> Unit
+    onResumeClick: (String) -> Unit,
 ) {
     Card(
         modifier = Modifier

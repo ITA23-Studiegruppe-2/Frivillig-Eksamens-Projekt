@@ -1,6 +1,5 @@
 package com.example.frivillig_eksamens_projekt
 
-import GroupChatScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.example.frivillig_eksamens_projekt.navigation.Navigation
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.FrivilligEksamensProjektTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 
 
-                    GroupChatScreen(activityId = "5H9Udjj934mmW3vH3P4Z")
+                    Navigation()
                 }
             }
         }

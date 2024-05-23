@@ -11,5 +11,9 @@ data class ChatRoom(
     val messages: List<Message> = emptyList(), //Ændrer til array empty
     val userIds: List<String> = emptyList(),
     val orgId: String = "",
-    val time: Long = 0L
+    val time: Long = 0L,
+    var organizationName: String = "",
+    var taskTitle: String = "",
+    val id: String = ""
+
 )

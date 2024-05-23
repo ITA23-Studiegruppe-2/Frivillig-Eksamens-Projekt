@@ -1,20 +1,21 @@
 package com.example.frivillig_eksamens_projekt.navigation
 
-import ChatScreen
 import ConversationList
+import GroupChatScreen
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
-import com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.AddChatScreen
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
@@ -209,41 +210,35 @@ fun Navigation() {
 
 
 
-            // Find organisations & resume a conversation
-            composable(Screen.ConversationScreen.route) {
-                ConversationList(
-                    onCreateClick = { navController.navigate(Screen.Chat.route) },
-                    onResumeClick = { conversationId ->
-                        navController.navigate(Screen.AddChatScreen.route)
-                    }
-                )
+
+
+            // Resume a conversation
+        composable(Screen.GroupChat.route,
+            arguments = listOf(navArgument("conversationId"){ type = NavType.StringType })
+        )
+        {
+            backStackEntry ->
+            val conversationId = backStackEntry.arguments?.getString("conversationId")
+            if (conversationId != null) {
+               GroupChatScreen(conversationId = conversationId, activityId = conversationId)
             }
-
-            // Create new chat with organisation
-            composable(Screen.Chat.route) {
-                ChatScreen(
-                    onNewChatClick = { orgId ->
-                        navController.navigate(Screen.AddChatScreen.route)
-                    }
-                )
-            }
-
-            composable(Screen.AddChatScreen.route) {
-                AddChatScreen()
-            }
-
-
-
-
-
-        /*
-        composable(Screen.MyProfile.route) {
-            ProfileScreen()
-            currentRoute.value = Screen.MyProfile.route
         }
 
-         */
+        composable(Screen.ConversationScreen.route) {
+            ConversationList(
+                onCreateClick = {},
+                onResumeClick = { conversationId ->
+                    navController.navigate(Screen.GroupChat.createRoute(conversationId))})
 
+        }
+
+        /*
+       composable(Screen.MyProfile.route) {
+           ProfileScreen()
+           currentRoute.value = Screen.MyProfile.route
+       }
+
+        */
         }
     }
 }

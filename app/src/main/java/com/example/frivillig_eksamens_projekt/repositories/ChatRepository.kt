@@ -13,7 +13,6 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 
 
@@ -45,7 +44,7 @@ class ChatRepository {
 
 
     //------------------------------------------------------------------------------//
-    ///---SEND MESSAGES---(addChatScreen)///
+    ///-----------------SEND MESSAGES---(addChatScreen)///
     // Function to send messages to database.
     fun addOrUpdateChat(
         userIds: String,
@@ -92,6 +91,7 @@ class ChatRepository {
     }
 
 
+    // ------------------ GET MESSAGE ON SCREEN ---------------//
     // Function to get messages on screen to chat in realtime
     fun getMessages(userIds: String, orgId: String): Flow<List<Message>> = callbackFlow {
         val query = db.collection("Chat")
@@ -119,7 +119,6 @@ class ChatRepository {
 
     //------------------------------------------------------------------------------//
     //--- GET MESSAGES ---(ConversationList)//
-
     // Function to fetch chat rooms for a user
     // Fetch conversations by user ID
     suspend fun getConversationsByUserId(userId: String): List<Conversation> {
@@ -152,7 +151,7 @@ class ChatRepository {
     // Function to fetch chat rooms for a user
     suspend fun fetchChatRooms(userIds: String): List<ChatRoom> {
         val querySnapshot = db.collection("Chat")
-            .whereEqualTo("userIds", userIds)
+            .whereArrayContains("userIds", userIds)
             .orderBy("time", Query.Direction.DESCENDING)
             .get()
             .await()
@@ -190,20 +189,28 @@ class ChatRepository {
 
 
 
-    // Function to get messages for the chosen conversation
-    suspend fun getMessagesForConversation(conversationId: String): Flow<List<Message>> = flow {
-        val snapshot = FirebaseFirestore.getInstance()
+    // ------------ RESUME CHAT --------------------//
+    // Function to get messages for the chosen conversation in real-time
+    fun getMessagesForConversation(conversationId: String): Flow<List<Message>> = callbackFlow {
+        val query = FirebaseFirestore.getInstance()
             .collection("Chat")
-            .whereEqualTo("conversationId", conversationId)
+            .document(conversationId)
+            .collection("messages")
             .orderBy("timestamp", Query.Direction.ASCENDING)
-            .get()
-            .await()
 
-        // Convert a document to a message object
-        val messages = snapshot.documents.map { document ->
-            document.toObject(Message::class.java)
+        val listener = query.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                close(exception)
+                return@addSnapshotListener
+            }
+            if (snapshot != null) {
+                val messages = snapshot.documents.mapNotNull { it.toObject(Message::class.java) }
+                trySend(messages)
+            }
         }
+        awaitClose { listener.remove() }
     }
+
 
 
 
@@ -218,7 +225,6 @@ class ChatRepository {
         return snapshot.documents.firstOrNull()?.toObject(Organization::class.java)
     }
 }
-
 
 
 

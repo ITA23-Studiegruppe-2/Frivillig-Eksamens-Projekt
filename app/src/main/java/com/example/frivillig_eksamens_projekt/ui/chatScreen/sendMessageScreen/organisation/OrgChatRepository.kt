@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.callbackFlow
 class OrgChatRepository {
     val db = Firebase.firestore
 
+    // ----------------------- FESTCH APPROVED USERS -------------------------//
     // Fetch approved user IDs from the 'userApproved' subcollection for a specified activity
     fun fetchApprovedUserIds(
         activityId: String,
@@ -35,6 +36,7 @@ class OrgChatRepository {
             }
     }
 
+    // -------------------- CREATE OR UPDATE CHATROOM ---------------------//
     // Function to create or update a chatroom with userIds
     fun createOrUpdateChatroomWithUsers(
         activityId: String,
@@ -89,6 +91,7 @@ class OrgChatRepository {
         }
     }
 
+    // ----------------------- SEND GROUP MESSAGE -------------------------- //
     // Send a group message to a specific activity's chatroom
     fun sendGroupMessage(
         activityId: String,
@@ -136,6 +139,8 @@ class OrgChatRepository {
         }.addOnFailureListener(onFailure)
     }
 
+
+    // --------------------- GET MESSAGES ON SCREEN -----------------//
     // Function to get messages on screen to chat in real time
     fun getMessages(activityId: String): Flow<List<Message>> = callbackFlow {
         val query = db.collection("Chat")

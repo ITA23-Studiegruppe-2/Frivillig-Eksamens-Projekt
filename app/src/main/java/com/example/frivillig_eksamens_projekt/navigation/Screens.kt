@@ -33,12 +33,16 @@ sealed class Screen (val route: String) {
     object Hours: Screen(route = "hours")
     object UpcomingShifts: Screen(route = "upcoming_shifts_screen")
 
+
+
+
+    object GroupChat: Screen(route = "group_chat_screen/{conversationId}") {
+        fun createRoute(conversationId: String) = "group_chat_screen/$conversationId"
+    }
     object Chat: Screen(route = "chat_screen")
 
     object AddChatScreen: Screen(route = "sendMessage_screen")
 
     object ConversationScreen: Screen(route = "conversation_screen")
-
-
 
 }

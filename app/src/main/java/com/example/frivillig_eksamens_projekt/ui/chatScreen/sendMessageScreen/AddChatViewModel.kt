@@ -70,11 +70,13 @@ class AddChatViewModel : ViewModel() {
     }
 
 
-    // To resume a chat
+    /*
+    //----------- To resume a chat --------------//
     // Initializes chat for an existing conversation using its ID.
     fun initialize(conversationId: String) {
         loadMessages(conversationId)
     }
+
 
 
     // Load messages based on conversationId
@@ -85,6 +87,8 @@ class AddChatViewModel : ViewModel() {
             }
         }
     }
+
+     */
 
 
     // Initializes chat with a specific organization ID and loads relevant organization details.

@@ -15,7 +15,6 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +38,7 @@ fun AddChatScreen(
     var messageText by remember { mutableStateOf("") }
 
 
+    /*
     // Initialize chat based on conversationId or orgId
     LaunchedEffect(conversationId, orgId) {
         when {
@@ -46,6 +46,8 @@ fun AddChatScreen(
             orgId != null -> viewModel.initializeWithOrgId(orgId)
         }
     }
+
+     */
 
 
     // UI layout for the chat screen.

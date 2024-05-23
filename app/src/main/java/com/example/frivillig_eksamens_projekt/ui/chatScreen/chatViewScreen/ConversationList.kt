@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,18 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.frivillig_eksamens_projekt.ui.activityScreen.TopBar
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.chatViewScreen.ConversationItem
 
 @Composable
 fun ConversationList(
-    viewModel: ConversationViewModel = viewModel(),
     onCreateClick: () -> Unit,
-    onResumeClick: (String) -> Unit
+    onResumeClick: (String) -> Unit,
 ) {
+    val viewModel: ConversationViewModel = viewModel()
+
     val conversations = viewModel.conversations
 
-    TopBar()
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -56,7 +57,7 @@ fun ConversationList(
                 items(conversations) { conversation ->
                     ConversationItem(
                         conversation = conversation,
-                        onResumeClick = { conversationId -> onResumeClick(conversationId)
+                        onResumeClick = { onResumeClick(conversation.conversationId)
                         }
                     )
                 }

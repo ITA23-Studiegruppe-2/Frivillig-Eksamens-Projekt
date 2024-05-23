@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,23 +23,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation.OrgChatViewModel
 
 
 @Composable
 fun GroupChatScreen(
+    conversationId: String,
     activityId: String) {
-    val viewModel: OrgChatViewModel = viewModel()
+
+    val viewModel: OrgChatViewModel = OrgChatViewModel(conversationId)
+    // val viewModel: OrgChatViewModel = viewModel()
     val messages by viewModel.messages.collectAsState()
     var messageText by remember { mutableStateOf("") }
     val orgId = viewModel.currentUserId
 
 
-    // Initialize the chatroom for approved users when the screen is first composed
-    LaunchedEffect(activityId) {
-        viewModel.initializeChatForApprovedUsers(activityId, orgId)
+    LaunchedEffect(conversationId) {
+            viewModel.loadMessages(conversationId)
+            viewModel.listenToMessages(conversationId) // Ensure real-time updates
+            viewModel.initializeChatForApprovedUsers(activityId, orgId)
     }
+
 
     // Building the UI layout for the group chat screen
     Column(
