@@ -1,26 +1,25 @@
 package com.example.frivillig_eksamens_projekt.navigation
 
-
+import ConversationList
+import GroupChatScreen
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
-import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
-import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
-import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShiftViewModel
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
-import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
@@ -52,7 +51,8 @@ fun Navigation() {
         Screen.RegisterOrg.route
     )
     // Store the current route - Should only be logo route, but just to make sure we get the current destination
-    val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
+    val currentRoute =
+        remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
     Scaffold(
         bottomBar = {
             // If the currentRoute (Screen) isn't in the list of screensWithNoBottomNavigation render the navigation bar
@@ -62,8 +62,8 @@ fun Navigation() {
                     onSearchClick = { navController.navigate(Screen.Activity.route)},
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
-                    onChatPageClick = { /*TODO*/ },
-                    onAccountClick = { }
+                    onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
+                    onAccountClick = { /*Todo*/ }
                 )
 
 
@@ -113,18 +113,18 @@ fun Navigation() {
             currentRoute.value = Screen.RegisterUser.route
         }
 
-        // Register User Second Screen
-        composable(Screen.RegisterUserSecond.route) {
-            // Its a user login -> Send it to the user homeScreen
-            CreateUserSecondScreen(
-                onSuccess = { navController.navigate(Screen.Home.route) },
-                // TEMP () ADD INDICATOR
-                onFail = { println("Failed") },
-                onBackButtonClick = {navController.popBackStack()},
-                viewModel = registerViewModel
-            )
-            currentRoute.value = Screen.RegisterUserSecond.route
-        }
+            // Register User Second Screen
+            composable(Screen.RegisterUserSecond.route) {
+                // Its a user login -> Send it to the user homeScreen
+                CreateUserSecondScreen(
+                    onSuccess = { navController.navigate(Screen.Home.route) },
+                    // TEMP () ADD INDICATOR
+                    onFail = { println("Failed") },
+                    onBackButtonClick = { navController.popBackStack() },
+                    viewModel = registerViewModel
+                )
+                currentRoute.value = Screen.RegisterUserSecond.route
+            }
 
         //Register Organisation Screen
         composable(Screen.RegisterOrg.route) {
@@ -134,8 +134,8 @@ fun Navigation() {
                 onBackButtonClick = {navController.popBackStack()}
             )
 
-            currentRoute.value = Screen.RegisterOrg.route
-        }
+                currentRoute.value = Screen.RegisterOrg.route
+            }
 
         //User Home Screen
         composable(Screen.Home.route) {
@@ -205,18 +205,43 @@ fun Navigation() {
                 onSuccess = {navController.popBackStack()}
             )
 
-            currentRoute.value = Screen.CreateShift.route
+                currentRoute.value = Screen.CreateShift.route
+            }
+
+
+
+
+
+            // Resume a conversation
+        composable(Screen.GroupChat.route,
+            arguments = listOf(navArgument("conversationId"){ type = NavType.StringType })
+        )
+        {
+            backStackEntry ->
+            val conversationId = backStackEntry.arguments?.getString("conversationId")
+            if (conversationId != null) {
+               GroupChatScreen(conversationId = conversationId, activityId = conversationId)
+            }
+        }
+
+        composable(Screen.ConversationScreen.route) {
+            ConversationList(
+                onCreateClick = {},
+                onResumeClick = { conversationId ->
+                    navController.navigate(Screen.GroupChat.createRoute(conversationId))})
+
         }
 
         /*
-        composable(Screen.MyProfile.route) {
-            ProfileScreen()
-            currentRoute.value = Screen.MyProfile.route
-        }
+       composable(Screen.MyProfile.route) {
+           ProfileScreen()
+           currentRoute.value = Screen.MyProfile.route
+       }
 
-         */
-
+        */
         }
     }
-    }
+}
+
+
 

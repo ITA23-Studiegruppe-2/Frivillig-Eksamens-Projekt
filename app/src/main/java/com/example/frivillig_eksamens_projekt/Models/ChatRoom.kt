@@ -9,7 +9,11 @@ import com.google.firebase.firestore.DocumentId
 data class ChatRoom(
     @DocumentId var documentId: String? = null,
     val messages: List<Message> = emptyList(), //Ændrer til array empty
-    val userid: String = "",
-    val orgid: String = "",
+    val userIds: List<String> = emptyList(),
+    val orgId: String = "",
+    val time: Long = 0L,
+    var organizationName: String = "",
+    var taskTitle: String = "",
+    val id: String = ""
 
 )
