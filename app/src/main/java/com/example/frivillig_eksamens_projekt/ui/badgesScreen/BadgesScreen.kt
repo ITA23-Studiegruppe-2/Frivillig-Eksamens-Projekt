@@ -65,8 +65,8 @@ fun BadgesScreen(navController: NavController)
     if (showDialog) {
         BadgeDialog(
             onDismiss = {
-                showDialog = false  // This needs to set showDialog to false
-                selectedBadge = null  // Clear the selected badge
+                showDialog = false
+                selectedBadge = null
             },
             title = selectedBadge?.title ?: "",
             badgeDescription = selectedBadge?.description ?: ""
@@ -111,7 +111,9 @@ fun BadgesScreen(navController: NavController)
             Box(
                 modifier = Modifier
                     .width(380.dp)
-                    .background(color = Color.White, shape = RoundedCornerShape(8.dp))
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(8.dp))
                     .padding(20.dp)
             ){
                 LazyVerticalGrid(

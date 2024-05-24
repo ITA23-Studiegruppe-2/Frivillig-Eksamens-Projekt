@@ -23,10 +23,20 @@ fun ActivityScreen(
 
     val viewModel = ActivityScreenViewModel()
 
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = viewModel.backgroundColor
     ) {
+
+        if (viewModel.showFilterDialog){
+            FilterDialog(
+                onDismiss = {viewModel.showFilterDialog = false},
+                viewModel = viewModel,
+                listOfCities = viewModel.listOfCities
+            )
+        }
+
         Column {
             TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = "Ledige vagter")
             Column(
@@ -37,7 +47,8 @@ fun ActivityScreen(
             ) {
                 SearchBar(
                     searchBarValue = viewModel.searchBar,
-                    onValueChange = { viewModel.searchBar = it }
+                    onValueChange = { viewModel.searchBar = it },
+                    viewModel = viewModel
                 )
                 Row {
                     Button(onClick = { viewModel.searchForActivitiesByTitle() }) {

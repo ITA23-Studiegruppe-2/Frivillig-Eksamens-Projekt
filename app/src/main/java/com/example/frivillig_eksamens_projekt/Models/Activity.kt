@@ -12,5 +12,6 @@ data class Activity(
     val listOfUsersApproved: MutableList<String> = mutableListOf(),
     val description: String = "",
     val location: String = "",
-    val organisationId: String = ""
+    val organisationId: String = "",
+    val city: String = ""
 )

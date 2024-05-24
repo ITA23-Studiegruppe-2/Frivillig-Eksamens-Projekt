@@ -13,7 +13,6 @@ data class ChatRoom(
     val orgId: String = "",
     val time: Long = 0L,
     var organizationName: String = "",
-    var taskTitle: String = "",
     val id: String = ""
 
 )

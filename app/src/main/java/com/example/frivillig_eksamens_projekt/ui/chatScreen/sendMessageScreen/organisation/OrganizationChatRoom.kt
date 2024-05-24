@@ -39,9 +39,9 @@ fun GroupChatScreen(
 
 
     LaunchedEffect(conversationId) {
-            viewModel.loadMessages(conversationId)
-            viewModel.listenToMessages(conversationId) // Ensure real-time updates
-            viewModel.initializeChatForApprovedUsers(activityId, orgId)
+        viewModel.loadMessages(conversationId)
+        viewModel.listenToMessages(conversationId) // Ensure real-time updates
+        viewModel.initializeChatForApprovedUsers(activityId, orgId)
     }
 
 

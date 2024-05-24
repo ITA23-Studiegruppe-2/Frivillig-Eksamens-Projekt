@@ -30,7 +30,7 @@ import com.example.frivillig_eksamens_projekt.R
 @Composable
 fun SearchBar(
     onValueChange: (String) -> Unit,
-    searchBarValue: String
+    searchBarValue: String, viewModel: ActivityScreenViewModel
 ) {
 
     val secondaryColor = Color(0xFF364830)
@@ -78,7 +78,11 @@ fun SearchBar(
                     contentDescription = "Tune Icon",
                     modifier = Modifier
                         .size(58.dp)
-                        .clickable { }
+                        .clickable {
+                            viewModel.showFilterDialog = true
+                            println(viewModel.showFilterDialog)
+
+                        }
                 )
             }
         }
