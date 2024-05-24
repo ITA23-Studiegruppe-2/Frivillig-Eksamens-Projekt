@@ -7,5 +7,5 @@ data class Organization(
     val cvrNumber: String = "",
     val email: String = "",
     val name: String = "",
-    val orgUID: String? = ""
+    val orgUID: String? = "",
 )
