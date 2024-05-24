@@ -226,7 +226,6 @@ fun Navigation() {
 
         composable(Screen.ConversationScreen.route) {
             ConversationList(
-                onCreateClick = {},
                 onResumeClick = { conversationId ->
                     navController.navigate(Screen.GroupChat.createRoute(conversationId))})
 

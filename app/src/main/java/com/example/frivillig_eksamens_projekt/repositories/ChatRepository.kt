@@ -22,8 +22,7 @@ class ChatRepository {
 
     ///--- ORGANISATIONER ---(Chat)///
 
-    // Get organisationens
-    // Hent liste af organisationer
+    // Get a list of organisations
     suspend fun getOrganizations(): List<Organization> {
         val result =
             db.collection("Organizations").get().await().toObjects(Organization::class.java)
@@ -31,7 +30,7 @@ class ChatRepository {
         return result
     }
 
-    //Search for Organisationens (Chat)
+    //Search for Organisations (Chat)
     suspend fun searchOrganizations(name: String): List<Organization> =
         db.collection("Organizations")
             .whereEqualTo("name", name)
@@ -118,31 +117,27 @@ class ChatRepository {
 
 
     //------------------------------------------------------------------------------//
-    //--- GET MESSAGES ---(ConversationList)//
+    //------------------ GET MESSAGES ---(ConversationList)//
     // Function to fetch chat rooms for a user
     // Fetch conversations by user ID
     suspend fun getConversationsByUserId(userId: String): List<Conversation> {
 
-        Log.d("ChatRepository", "Fetching conversations for user ID: $userId") // TJEK OM DET VIRKER
+        Log.d("ChatRepository", "Fetching conversations for user ID: $userId")
         // Fetch chat rooms for the specified user
         val chatRooms = fetchChatRooms(userId)
-        Log.d("FetchConversations", "Number of chat rooms for user $userId: ${chatRooms.size}") // TJEK OM DET VIRKER
+        Log.d("FetchConversations", "Number of chat rooms for user $userId: ${chatRooms.size}")
 
         // Map each chat room to a Conversation object, including fetching the organization name
         return chatRooms.mapNotNull { chatRoom ->
-            val lastMessage =
-                chatRoom.messages.maxByOrNull { it.timestamp } // Find the latest message based on timestamp
+            val lastMessage = chatRoom.messages.maxByOrNull { it.timestamp } // Find the latest message based on timestamp
             chatRoom.documentId?.let { conversationId ->  // Ensure the chat room ID is not null
                 lastMessage?.let { message ->
-                    val orgName =
-                        fetchOrganizationName(chatRoom.orgId)  // Fetch the organization name asynchronously
-                    Log.d("FetchConversations", "Fetched organization name for chat room: $conversationId - $orgName")
-
+                    // Create a new Conversation object with all required fields
                     Conversation(
-                        orgName,
-                        message,
-                        conversationId
-                    )  // Create a new Conversation object with all required fields
+                        organizationName = chatRoom.organizationName,
+                        lastMessage = message,
+                        conversationId = chatRoom.documentId ?: ""
+                    )
                 }
             }
         }
@@ -164,7 +159,7 @@ class ChatRepository {
 
 
 
-
+/*
     // Function to fetch the organization name by orgId
     suspend fun fetchOrganizationName(orgId: String): String {
         // Log the orgId that is being fetched
@@ -185,6 +180,8 @@ class ChatRepository {
         // Return the organization name if available, otherwise return "Unknown Organization"
         return organization?.name ?: "Unknown Organization"
     }
+
+ */
 
 
 
@@ -225,7 +222,6 @@ class ChatRepository {
         return snapshot.documents.firstOrNull()?.toObject(Organization::class.java)
     }
 }
-
 
 
 
