@@ -38,6 +38,8 @@ fun OrgHomeScreen(navController: NavController){
     val hoursIcon: Painter = painterResource(id = R.drawable.hours)
     val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
 
+    val viewModel: OrgViewModel = OrgViewModel()
+
     Surface (
         modifier = Modifier
             .fillMaxSize(),
@@ -57,7 +59,7 @@ fun OrgHomeScreen(navController: NavController){
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Hej Organisation!",
+                        text = "Hej ${viewModel.name}!",
                         modifier = Modifier,
                         fontSize = 23.sp,
                         color = Color.White

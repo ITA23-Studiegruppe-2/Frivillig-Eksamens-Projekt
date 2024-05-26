@@ -72,7 +72,7 @@ fun Navigation() {
     ){
         paddingValues -> NavHost(
         navController = navController,
-        startDestination = Screen.Logo.route,
+        startDestination = Screen.OrgHomeScreen.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 
@@ -164,7 +164,7 @@ fun Navigation() {
 
         //Badges Screen
         composable(Screen.Badges.route) {
-            BadgesScreen(navController)
+            BadgesScreen(onBackButtonClick = {navController.popBackStack()})
 
             currentRoute.value = Screen.Badges.route
         }

@@ -33,6 +33,8 @@ fun InputFieldShift(
     height: Float = 0.1f
 )
 {
+    val secondaryColor = Color(0xFF364830)
+
     val textFieldColors = textFieldColors(
         containerColor = Color.White,
         unfocusedIndicatorColor = Color.Transparent, // Remove underline when unfocused
@@ -40,7 +42,10 @@ fun InputFieldShift(
     )
     Column {
         Text(
-            text = label
+            text = label,
+            color = secondaryColor,
+            modifier = Modifier
+                .padding(4.dp)
         )
         TextField(
             value = value,
