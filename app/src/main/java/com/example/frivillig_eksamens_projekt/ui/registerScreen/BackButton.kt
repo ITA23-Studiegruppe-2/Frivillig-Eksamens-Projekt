@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BackButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier

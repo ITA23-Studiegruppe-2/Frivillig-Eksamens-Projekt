@@ -12,20 +12,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.chatViewScreen.ConversationItem
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
 fun ConversationList(
-    onResumeClick: (String) -> Unit,
+    onResumeClick: (String, String) -> Unit,
+    onBackButtonClick: () -> Unit
 
 ) {
     val secondaryColor = Color(0xFF364830)
@@ -56,10 +58,12 @@ fun ConversationList(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
+                BackButton(onClick = onBackButtonClick)
+                androidx.compose.material3.Text(
                     text = "Dine samtaler",
                     fontSize = 28.sp,
-                    color = secondaryColor
+                    color = secondaryColor,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
@@ -74,7 +78,8 @@ fun ConversationList(
                 items(conversations) { conversation ->
                     ConversationItem(
                         conversation = conversation,
-                        onResumeClick = { onResumeClick(conversation.conversationId)
+                        onResumeClick = { Conversation, organizationName ->
+                            onResumeClick(conversation.conversationId, conversation.organizationName )
                         }
                     )
                 }

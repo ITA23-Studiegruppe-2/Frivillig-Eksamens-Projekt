@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,8 +20,17 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 @Composable
 fun UserOrOrganisation (
     onSuccesUserSelection: () -> Unit,
-    onSuccesOrgSelection: () -> Unit
+    onSuccesOrgSelection: () -> Unit,
+    onBackButtonClick: () -> Unit
     ) {
+
+    BackButton(
+        onClick = onBackButtonClick,
+        modifier = Modifier
+            .padding(16.dp)
+    )
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()

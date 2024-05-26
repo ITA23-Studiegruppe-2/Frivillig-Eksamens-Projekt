@@ -26,7 +26,7 @@ import com.example.frivillig_eksamens_projekt.Models.Conversation
 @Composable
 fun ConversationItem(
     conversation: Conversation,
-    onResumeClick: () -> Unit
+    onResumeClick: (String, String) -> Unit
 ) {
     Surface(
         shape = RoundedCornerShape(8.dp),
@@ -34,7 +34,7 @@ fun ConversationItem(
         shadowElevation = 4.dp,
         modifier = Modifier
             .padding(8.dp)
-            .clickable { onResumeClick() }
+            .clickable { onResumeClick(conversation.conversationId, conversation.organizationName) }
     ) {
         Box(
             modifier = Modifier
@@ -60,7 +60,7 @@ fun ConversationItem(
                         color = Color.Black
                     )
                     Text(
-                        text = "Seneste besked: ${conversation.lastMessage.content}",
+                        text = "${conversation.lastMessage.content}",
                         fontSize = 14.sp,
                         color = Color.Gray,
                         modifier = Modifier.padding(top = 4.dp)

@@ -86,7 +86,8 @@ fun Navigation() {
         composable(Screen.Start.route) {
             StartScreen(
                 onLoginClick = { navController.navigate(Screen.Login.route) },
-                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route) }
+                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route) },
+                onBackButtonClick = { navController.popBackStack() }
             )
             currentRoute.value = Screen.Start.route
 
@@ -96,7 +97,7 @@ fun Navigation() {
             // Handle both org and user homeScreen navigation
             LoginScreen(
                 onUserSuccessLogin = { navController.navigate(Screen.Home.route) },
-                onClick = {},
+                onBackButtonClick = { navController.popBackStack()},
                 onOrgSuccessLogin = {navController.navigate(Screen.OrgHomeScreen.route)}
             )
             currentRoute.value = Screen.Login.route
@@ -151,7 +152,8 @@ fun Navigation() {
         composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
                 onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
-                onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)}
+                onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)},
+                onBackButtonClick = { navController.popBackStack()}
             )
             currentRoute.value = Screen.UserOrOrg.route
         }
@@ -214,22 +216,36 @@ fun Navigation() {
 
             // Resume a conversation
         composable(Screen.GroupChat.route,
-            arguments = listOf(navArgument("conversationId"){ type = NavType.StringType })
+            arguments = listOf(
+                navArgument("conversationId"){ type = NavType.StringType },
+                navArgument("organizationName"){ type = NavType.StringType }
+            )
         )
         {
             backStackEntry ->
             val conversationId = backStackEntry.arguments?.getString("conversationId")
-            if (conversationId != null) {
-               GroupChatScreen(conversationId = conversationId, activityId = conversationId)
+            val organizationName = backStackEntry.arguments?.getString("organizationName")
+            if (conversationId != null && organizationName != null) {
+               GroupChatScreen(
+                   conversationId = conversationId,
+                   activityId = conversationId,
+                   organizationName = organizationName,
+                   onBackButtonClick = { navController.popBackStack() }
+               )
             }
         }
 
         composable(Screen.ConversationScreen.route) {
             ConversationList(
-                onResumeClick = { conversationId ->
-                    navController.navigate(Screen.GroupChat.createRoute(conversationId))})
+                onResumeClick = { conversationId, organizationName ->
+                    navController.navigate(Screen.GroupChat.createRoute(conversationId, organizationName))
+                },
+                onBackButtonClick = { navController.popBackStack() }
+            )
 
         }
+
+
 
         /*
        composable(Screen.MyProfile.route) {
