@@ -38,4 +38,11 @@ sealed class Screen (val route: String) {
 
     object MyProfile: Screen(route = "my_profile_screen")
 
+    object OrgOwnActivities: Screen(route = "orgOwnActivities_screen")
+
+    //Because we store the routes inside of a sealed class, we have to create a function that create a new route with the desired value
+    object ListOfUsersAppliedActivity: Screen(route = "listOfUsersApplied/{activityId}") {
+        fun createRoute(activityId: String) = "listOfUsersApplied/$activityId"
+    }
+
 }

@@ -2,8 +2,6 @@ package com.example.frivillig_eksamens_projekt.ui.createShiftScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,8 +17,9 @@ import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
-fun TopBarCreateShift(
-    onBackButtonClick: () -> Unit
+fun TopBarWithBackButtonUniversal(
+    onBackButtonClick: () -> Unit,
+    text: String
 ) {
     Box(
         modifier = Modifier
@@ -32,14 +31,15 @@ fun TopBarCreateShift(
     ) {
         BackButton(onClick = onBackButtonClick )
         Text(
-            text = "Opret Vagt",
+            text = text,
             fontSize = 28.sp,
 
         )
     }
 }
+
 @Composable
 @Preview
-fun showTopBar() {
-    TopBarCreateShift({})
+fun showtahtding() {
+    TopBarWithBackButtonUniversal(onBackButtonClick = { /*TODO*/ }, text = "asdsaa")
 }

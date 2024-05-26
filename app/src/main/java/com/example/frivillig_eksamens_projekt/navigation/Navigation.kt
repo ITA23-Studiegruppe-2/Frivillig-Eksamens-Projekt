@@ -7,20 +7,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.fragment.app.FragmentManager.BackStackEntry
+import androidx.navigation.NavType
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity.ListOfUsersApplied
+import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.OrgAllActivitiesScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
-import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
+// import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
-import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
-import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
-import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShiftViewModel
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
-import com.example.frivillig_eksamens_projekt.ui.homeScreen.UserViewModel
 import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
@@ -166,7 +168,7 @@ fun Navigation() {
 
         //Badges Screen
         composable(Screen.Badges.route) {
-            BadgesScreen(navController)
+            // BadgesScreen(navController)
 
             currentRoute.value = Screen.Badges.route
         }
@@ -187,7 +189,10 @@ fun Navigation() {
 
         // Organisation Home Screen
         composable(Screen.OrgHomeScreen.route) {
-            OrgHomeScreen(navController)
+            OrgHomeScreen(
+                navController,
+                onMyActivitiesClick = {navController.navigate(Screen.OrgOwnActivities.route)}
+            )
 
             currentRoute.value = Screen.OrgHomeScreen.route
         }
@@ -210,7 +215,29 @@ fun Navigation() {
 
          */
 
+        //Orgs list of own activities
+        composable(Screen.OrgOwnActivities.route) {
+            OrgAllActivitiesScreen(
+                onBackButtonClick = {navController.popBackStack()},
+                onActivityListClick = { activityId ->
+                    navController.navigate(Screen.ListOfUsersAppliedActivity.createRoute(activityId))}
+            )
+        }
+
+        //List of users applied - org admin view
+        composable(Screen.ListOfUsersAppliedActivity.route,
+            arguments = listOf(navArgument("activityId") {type = NavType.StringType})
+        )
+        {
+            backStackEntry ->
+            val activityId = backStackEntry.arguments?.getString("activityId")
+            if (activityId != null) {
+                ListOfUsersApplied(activityId = activityId, onBackButtonClick = {navController.popBackStack()})
+            }
+        }
+
+
         }
     }
-    }
+}
 

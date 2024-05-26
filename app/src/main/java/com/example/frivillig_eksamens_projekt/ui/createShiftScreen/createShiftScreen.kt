@@ -12,10 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
 fun CreateShift(
@@ -43,8 +41,9 @@ fun CreateShift(
             .fillMaxSize()
     ) {
         Column {
-            TopBarCreateShift(
-                onBackButtonClick = onBackButtonClick
+            TopBarWithBackButtonUniversal(
+                onBackButtonClick = onBackButtonClick,
+                text = "Opret vagt"
             )
             Box(
                 modifier = Modifier
@@ -86,7 +85,13 @@ fun CreateShift(
                         label = "Beskrivelse",
                         value = viewModel.description,
                         onValueChange = {viewModel.description = it},
-                        height = 0.5f
+                        height = 0.45f
+                    )
+                    InputFieldShift(
+                        label = "By navn",
+                        value = viewModel.city,
+                        onValueChange = {viewModel.description = it},
+                        height = 0.45f
                     )
 
                     InputFieldShift(

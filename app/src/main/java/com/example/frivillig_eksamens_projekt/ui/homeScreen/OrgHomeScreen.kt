@@ -29,7 +29,10 @@ import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.navigation.Screen
 
 @Composable
-fun OrgHomeScreen(navController: NavController){
+fun OrgHomeScreen(
+    navController: NavController,
+    onMyActivitiesClick: () -> Unit
+){
 
     val secondaryColor = Color(0xFF364830)
 
@@ -103,8 +106,8 @@ fun OrgHomeScreen(navController: NavController){
                         .fillMaxWidth()
                         .padding(12.dp)
                 ){
-                    Shortcut(onClick = { /*TODO*/ }, label = "Chat med de frivillige")
-                    Shortcut(onClick = { /*TODO*/ }, label = "Mine ??")
+                    Shortcut(onClick = {}, label = "Chat med de frivillige")
+                    Shortcut(onClick = onMyActivitiesClick, label = "Mine ??")
                 }
             Box(
                 modifier = Modifier

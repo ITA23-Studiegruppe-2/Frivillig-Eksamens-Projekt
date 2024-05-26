@@ -24,10 +24,11 @@ class CreateShiftViewModel(): ViewModel(
 
     // Variables
     var title by mutableStateOf("")
-    var date by mutableStateOf("Select Date")
+    var date by mutableStateOf("Vælg dato")
     var email by mutableStateOf("")
     var description by mutableStateOf("")
     var location by mutableStateOf("")
+    var city by mutableStateOf("")
 
     var orgId: String?
 
@@ -45,7 +46,6 @@ class CreateShiftViewModel(): ViewModel(
         currentDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         //Get the currentOrgData
-
         orgId = Firebase.auth.currentUser?.uid
         orgId?.let { getOrgData(it) }
 
@@ -76,7 +76,8 @@ class CreateShiftViewModel(): ViewModel(
                 location = location,
                 orgId = orgId!!,
                 organisation = currentOrgData.name,
-                onSuccess = onSuccess
+                onSuccess = onSuccess,
+                city = city
             )
         }
 

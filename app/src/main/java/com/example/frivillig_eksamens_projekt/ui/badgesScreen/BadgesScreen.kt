@@ -33,10 +33,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.painter.Painter
 import java.io.File
 
+/*
 
 @Composable
 fun BadgesScreen(navController: NavController)
@@ -45,7 +45,6 @@ fun BadgesScreen(navController: NavController)
     val viewModel: BadgesViewModel = viewModel()
     val secondaryColor = Color(0xFF364830)
     val badges = viewModel.badges.observeAsState(listOf())
-    println(badges)
 
     Surface (
         modifier = Modifier
@@ -227,5 +226,8 @@ fun BadgeC(path: String){
         contentDescription = "")
 
 }
+
+ */
+
 
  */

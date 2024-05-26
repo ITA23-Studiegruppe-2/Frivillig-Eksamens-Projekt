@@ -10,6 +10,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.auth
 
+
+/**
+ *
+ * @author
+ *
+ */
 class AccountService {
      fun registerUserAuth(email: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         Firebase.auth.createUserWithEmailAndPassword(email, password)
@@ -56,6 +62,8 @@ class AccountService {
                 onFail(errorMessage)
             }
     }
+
+
 
     fun login(email: String, password: String, onUserSuccess: () -> Unit, onFailure: (String) -> Unit, onOrgSuccess: () -> Unit) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
@@ -153,8 +161,7 @@ class AccountService {
                 currentUser?.updateProfile(profileUpdate)
 
                 // If we get good request back
-                // Handle the addition to the database here.
-                print(it.user?.uid)
+                // Handle the addition to the database here
                     it.user?.let { it ->
                         organisationRepository.addOrgToDatabase(
                             orgUID = it.uid,
@@ -164,7 +171,6 @@ class AccountService {
                             name = name,
                             email = email
                         )
-
                     }
             }
             .addOnFailureListener {
@@ -174,3 +180,7 @@ class AccountService {
             }
     }
 }
+
+// Agil udvikling - Hvis vi ville ligge op på appstore
+// Skriv hvem der har lavet hvad
+// K-DUCK
