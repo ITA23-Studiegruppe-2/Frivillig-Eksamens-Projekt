@@ -1,9 +1,12 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
 import com.example.frivillig_eksamens_projekt.Models.Activity
+import com.example.frivillig_eksamens_projekt.Models.User
+import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 
 class ActivitiesRepository() {
@@ -45,7 +48,6 @@ class ActivitiesRepository() {
     }
 
 
-    // TODO APPLY FOR ACTIVITY
 
     /* CHECK APPLICATION STATE */
     suspend fun checkIfAlreadyApplied(listOfActivities: List<Activity>): MutableList<Activity>  {
@@ -97,8 +99,6 @@ class ActivitiesRepository() {
         }
     }
 
-    // TODO CREATE ACTIVITY
-
     fun createActivity(
         title: String,
         date: String,
@@ -107,7 +107,8 @@ class ActivitiesRepository() {
         location: String,
         orgId: String,
         organisation: String,
-        onSuccess: () -> Unit
+        onSuccess: () -> Unit,
+        city: String
     ) {
         // Create the activity object
         val activity = Activity(
@@ -123,6 +124,71 @@ class ActivitiesRepository() {
         db.collection("Activites")
             .add(activity)
             .addOnSuccessListener { onSuccess()}
-
     }
+
+
+   suspend fun fetchActivityByOrgID(listOfActivities: MutableList<Activity>, orgUID: String): MutableList<Activity> {
+       return listOfActivities.filter { activity -> activity.organisationId == orgUID }.toMutableList()
+   }
+
+    suspend fun getUsersAppliedByActivityId(activityId: String): MutableList<User> {
+        val listOfAllUserObjects: MutableList<User> = mutableListOf()
+
+       val listOfALlUserId = db.collection("Activites")
+            .document(activityId)
+            .collection("usersApplied")
+            .get()
+            .await()
+            .documents
+            .map { userId -> userId.id }
+
+        listOfALlUserId.forEach{activity ->
+
+           val currentUser =  db.collection("Users")
+                .document(activity)
+                .get()
+                .await()
+                .toObject(User::class.java)
+
+            if (currentUser != null) {
+                listOfAllUserObjects.add(currentUser)
+            }
+        }
+        return listOfAllUserObjects
+    }
+
+    suspend fun getListOfApprovedUserIdByActivityId(activityId: String): MutableList<String>{
+
+        val listOfUserIds = db.collection("Activites")
+            .document(activityId)
+            .collection("userApproved")
+            .get()
+            .await()
+            .documents
+            .map { documentId -> documentId.id }
+        return listOfUserIds.toMutableList()
+    }
+
+
+    // Handle org side of approving users
+     fun approveUserToActivity(activityId: String, userID: String) {
+
+        // Create the object to insert into the collection
+         val user: UserId = UserId(documentId = userID, userUId = userID)
+        db.collection("Activites")
+            .document(activityId)
+            .collection("userApproved")
+            .document(userID)
+            .set(user)
+    }
+
+    fun removeApprovedUser(activityId: String, userID: String) {
+        db.collection("Activites")
+            .document(activityId)
+            .collection("userApproved")
+            .document(userID)
+            .delete()
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
 import com.example.frivillig_eksamens_projekt.Models.User
+import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
@@ -22,7 +23,6 @@ class UsersRepository() {
 
 
 
-
      fun addUserToDatabase(user: User, userUID: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         db.collection("Users")
             .document(userUID)
@@ -39,7 +39,25 @@ class UsersRepository() {
                 onFail("There was an error trying to reach the database!")
                 // We should handle the deletion of the user stored in Authentication - TODO
             }
+    }
 
+    fun addActivityIdToUserSubCollection(activityId: String, userId: String) {
+        val activityIdObject = hashMapOf(
+            "activityId" to activityId
+        )
+        db.collection("Users")
+            .document(userId)
+            .collection("MyActivities")
+            .document(activityId)
+            .set(activityIdObject)
+    }
+
+    fun removeActivityIdFromUserSubCollection(activityId: String,userId: String) {
+        db.collection("Users")
+            .document(userId)
+            .collection("MyActivities")
+            .document(activityId)
+            .delete()
     }
 }
 

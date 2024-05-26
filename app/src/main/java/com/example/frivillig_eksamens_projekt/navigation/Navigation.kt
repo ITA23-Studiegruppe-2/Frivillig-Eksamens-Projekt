@@ -8,14 +8,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.fragment.app.FragmentManager.BackStackEntry
 import androidx.navigation.NavType
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity.ListOfUsersApplied
+import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.OrgAllActivitiesScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
-import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
+// import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
+import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
+import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
+
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
@@ -30,7 +37,9 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewMo
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
-
+import androidx.compose.runtime.LaunchedEffect
+import com.example.frivillig_eksamens_projekt.ui.OrganisationScreen
+import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 
 @Composable
 fun Navigation() {
@@ -50,9 +59,15 @@ fun Navigation() {
         Screen.Logo.route,
         Screen.RegisterOrg.route
     )
-    // Store the current route - Should only be logo route, but just to make sure we get the current destination
-    val currentRoute =
-        remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
+
+    val currentRoute = remember { mutableStateOf(Screen.Start.route) }
+
+    LaunchedEffect(navController) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            currentRoute.value = destination.route ?: Screen.Start.route
+        }
+    }
+
     Scaffold(
         bottomBar = {
             // If the currentRoute (Screen) isn't in the list of screensWithNoBottomNavigation render the navigation bar
@@ -191,54 +206,49 @@ fun Navigation() {
             currentRoute.value = Screen.Hours.route
         }
 
-        // Organisation Home Screen
-        composable(Screen.OrgHomeScreen.route) {
-            OrgHomeScreen(navController)
+            // Organisation Home Screen
+            composable(Screen.OrgHomeScreen.route) {
+                OrgHomeScreen(
+                    navController
+                )
 
-            currentRoute.value = Screen.OrgHomeScreen.route
-        }
+                currentRoute.value = Screen.OrgHomeScreen.route
+            }
 
-        // Create Shift Screen
-        composable(Screen.CreateShift.route) {
-            CreateShift(
-                onBackButtonClick = {navController.popBackStack()},
-                onSuccess = {navController.popBackStack()}
-            )
-
+            // Create Shift Screen
+            composable(Screen.CreateShift.route) {
+                CreateShift(
+                    onBackButtonClick = {navController.popBackStack()},
+                    onSuccess = {navController.popBackStack()}
+                )
                 currentRoute.value = Screen.CreateShift.route
             }
 
-
-
-
-
-            // Resume a conversation
-        composable(Screen.GroupChat.route,
-            arguments = listOf(navArgument("conversationId"){ type = NavType.StringType })
-        )
-        {
-            backStackEntry ->
-            val conversationId = backStackEntry.arguments?.getString("conversationId")
-            if (conversationId != null) {
-               GroupChatScreen(conversationId = conversationId, activityId = conversationId)
+            composable(Screen.MyProfile.route) {
+                ProfileScreen()
+                currentRoute.value = Screen.MyProfile.route
             }
-        }
 
-        composable(Screen.ConversationScreen.route) {
-            ConversationList(
-                onCreateClick = {},
-                onResumeClick = { conversationId ->
-                    navController.navigate(Screen.GroupChat.createRoute(conversationId))})
+            //Orgs list of own activities
+            composable(Screen.OrgOwnActivities.route) {
+                OrgAllActivitiesScreen(
+                    onBackButtonClick = {navController.popBackStack()},
+                    onActivityListClick = { activityId ->
+                        navController.navigate(Screen.ListOfUsersAppliedActivity.createRoute(activityId))}
+                )
+            }
 
-        }
-
-        /*
-       composable(Screen.MyProfile.route) {
-           ProfileScreen()
-           currentRoute.value = Screen.MyProfile.route
-       }
-
-        */
+            //List of users applied - org admin view
+            composable(Screen.ListOfUsersAppliedActivity.route,
+                arguments = listOf(navArgument("activityId") {type = NavType.StringType})
+            )
+            {
+                    backStackEntry ->
+                val activityId = backStackEntry.arguments?.getString("activityId")
+                if (activityId != null) {
+                    ListOfUsersApplied(activityId = activityId, onBackButtonClick = {navController.popBackStack()})
+                }
+            }
         }
     }
 }

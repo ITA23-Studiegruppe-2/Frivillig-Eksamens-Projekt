@@ -24,25 +24,26 @@ sealed class Screen (val route: String) {
 
     object Badges: Screen(route = "badges_screen")
 
+    object Activities: Screen(route = "activities_screen")
 
+    object ChatPage: Screen(route = "chatPage_screen")
 
     object CreateShift: Screen(route = "create_shift_screen")
 
     object OrgHomeScreen: Screen(route = "orgHome_screen")
 
     object Hours: Screen(route = "hours")
+
     object UpcomingShifts: Screen(route = "upcoming_shifts_screen")
 
+    object MyProfile: Screen(route = "my_profile_screen")
 
+    object OrgOwnActivities: Screen(route = "orgOwnActivities_screen")
 
-
-    object GroupChat: Screen(route = "group_chat_screen/{conversationId}") {
-        fun createRoute(conversationId: String) = "group_chat_screen/$conversationId"
+    //Because we store the routes inside of a sealed class, we have to create a function that create a new route with the desired value
+    object ListOfUsersAppliedActivity: Screen(route = "listOfUsersApplied/{activityId}") {
+        fun createRoute(activityId: String) = "listOfUsersApplied/$activityId"
     }
-    object Chat: Screen(route = "chat_screen")
 
-    object AddChatScreen: Screen(route = "sendMessage_screen")
-
-    object ConversationScreen: Screen(route = "conversation_screen")
-
+    object OrganisationProfile: Screen(route = "Organisation_Profile")
 }

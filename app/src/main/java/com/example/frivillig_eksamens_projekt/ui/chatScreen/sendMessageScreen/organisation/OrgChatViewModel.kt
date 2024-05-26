@@ -1,6 +1,5 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.frivillig_eksamens_projekt.Models.Message
@@ -10,9 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class OrgChatViewModel(
-    var conversationId: String,
-): ViewModel(){
-
+    conversationId: String,
+) : ViewModel() {
 
     val orgChatRepository = OrgChatRepository()
     val chatRepository: ChatRepository = ChatRepository()
@@ -20,7 +18,6 @@ class OrgChatViewModel(
 
     // Get current user ID from FirebaseAuth
     val currentUserId: String = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-
 
     init {
         loadMessages(conversationId)
@@ -38,7 +35,7 @@ class OrgChatViewModel(
     }
 
     //-------------------------- SHOW MESSAGES AND ADD NEW MESSAGES TO CHAT -------------------//
-    // Listen to messages in realtime
+    // Listen to messages in real-time
     fun listenToMessages(conversationId: String) {
         viewModelScope.launch {
             orgChatRepository.getMessages(conversationId).collect { newMessages ->
@@ -47,25 +44,27 @@ class OrgChatViewModel(
         }
     }
 
-
-
-
     //----------------------- CREATE CHATROOM ---------------------//
-    private fun createChatroomWithUsers(activityId: String, userIds: List<String>, orgId: String) {
+    fun createChatroomWithUsers(activityId: String, userIds: List<String>, orgId: String) {
         if (userIds.isEmpty()) {
-            Log.w("createChatroomWithUsers", "User IDs list is empty, cannot create/update chatroom")
+            println("User IDs list is empty, cannot create/update chatroom")
             return
         }
         val timestamp = System.currentTimeMillis()
-        orgChatRepository.createOrUpdateChatroomWithUsers(activityId, userIds, orgId, timestamp,
-            onSuccess = {
-                println("Chatroom created/updated successfully.")
-                listenToMessages(activityId)
-            },
-            onFailure = { e -> println("Failed to create/update chatroom: ${e.message}") }
-        )
+        viewModelScope.launch {
+            try {
+                val result = orgChatRepository.createOrUpdateChatroomWithUsers(activityId, userIds, orgId, timestamp)
+                if (result) {
+                    println("Chatroom created/updated successfully.")
+                    listenToMessages(activityId)
+                } else {
+                    println("Failed to create/update chatroom.")
+                }
+            } catch (e: Exception) {
+                println("Failed to create/update chatroom: ${e.message}")
+            }
+        }
     }
-
 
     fun initializeChatForApprovedUsers(activityId: String, orgId: String) {
         orgChatRepository.fetchApprovedUserIds(activityId,
@@ -82,25 +81,23 @@ class OrgChatViewModel(
         )
     }
 
-
-
-
     //--------------------- SEND GROUP MESSAGE ----------------------//
     // Send a group message
     fun sendGroupMessage(activityId: String, messageText: String, orgId: String) {
         if (messageText.isNotBlank()) {
             val timestamp = System.currentTimeMillis()
-            orgChatRepository.sendGroupMessage(activityId, messageText, currentUserId, orgId, timestamp,
-                onSuccess = {
-                    println("Message sent successfully to group.")
-                },
-                onFailure = { e ->
+            viewModelScope.launch {
+                try {
+                    val result = orgChatRepository.sendGroupMessage(activityId, messageText, currentUserId, orgId, timestamp)
+                    if (result) {
+                        println("Message sent successfully to group.")
+                    } else {
+                        println("Failed to send message to group.")
+                    }
+                } catch (e: Exception) {
                     println("Failed to send message to group: ${e.message}")
                 }
-            )
+            }
         }
     }
-
-
-
 }
