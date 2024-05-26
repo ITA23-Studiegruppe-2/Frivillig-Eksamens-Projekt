@@ -77,7 +77,7 @@ fun Navigation() {
                     onSearchClick = { navController.navigate(Screen.Activity.route)},
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
-                    onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
+                    onChatPageClick = {  },
                     onAccountClick = { /*Todo*/ }
                 )
 
@@ -209,7 +209,8 @@ fun Navigation() {
             // Organisation Home Screen
             composable(Screen.OrgHomeScreen.route) {
                 OrgHomeScreen(
-                    navController
+                    navController,
+                    onMyActivitiesClick = { navController.navigate(Screen.OrgOwnActivities.route)}
                 )
 
                 currentRoute.value = Screen.OrgHomeScreen.route
