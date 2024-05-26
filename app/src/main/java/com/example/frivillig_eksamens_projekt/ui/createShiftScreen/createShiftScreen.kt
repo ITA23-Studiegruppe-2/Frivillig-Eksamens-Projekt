@@ -41,10 +41,13 @@ fun CreateShift(
             .fillMaxSize()
     ) {
         Column {
-            TopBarWithBackButtonUniversal(
+
+
+            TopBarCreateShift(
                 onBackButtonClick = onBackButtonClick,
                 text = "Opret vagt"
             )
+
             Box(
                 modifier = Modifier
                     .fillMaxSize(),

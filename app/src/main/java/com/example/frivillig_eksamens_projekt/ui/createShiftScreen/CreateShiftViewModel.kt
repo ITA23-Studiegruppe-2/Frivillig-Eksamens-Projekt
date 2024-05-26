@@ -10,7 +10,6 @@ import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 import com.example.frivillig_eksamens_projekt.repositories.OrganisationRepository
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.google.firebase.auth.ktx.auth
 import kotlinx.coroutines.launch
 import java.util.Calendar
 

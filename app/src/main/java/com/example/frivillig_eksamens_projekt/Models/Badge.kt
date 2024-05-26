@@ -8,5 +8,7 @@ data class Badge(
 
     var name: String = "",
     var path: String = "",
-    var pathLocked: String = ""
+    var pathLocked: String = "",
+    val title: String = "",
+    val description: String = ""
 )

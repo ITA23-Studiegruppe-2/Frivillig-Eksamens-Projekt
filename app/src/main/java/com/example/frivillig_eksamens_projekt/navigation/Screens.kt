@@ -45,4 +45,5 @@ sealed class Screen (val route: String) {
         fun createRoute(activityId: String) = "listOfUsersApplied/$activityId"
     }
 
+    object OrganisationProfile: Screen(route = "Organisation_Profile")
 }

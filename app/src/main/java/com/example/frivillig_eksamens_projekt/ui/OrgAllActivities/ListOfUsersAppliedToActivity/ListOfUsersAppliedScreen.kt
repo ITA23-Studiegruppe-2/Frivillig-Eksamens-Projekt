@@ -8,7 +8,7 @@ import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarWithBackButtonUniversal
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 
 @Composable
 fun ListOfUsersApplied(
@@ -21,7 +21,8 @@ fun ListOfUsersApplied(
 
 
     Column() {
-        TopBarWithBackButtonUniversal(onBackButtonClick = onBackButtonClick, text = "Vælg frivillige")
+
+        TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = "Vælg frivillige")
 
         LazyColumn {
             items(listOfUsersAppliedViewmodel.listOFAllUsersApplied) { user ->

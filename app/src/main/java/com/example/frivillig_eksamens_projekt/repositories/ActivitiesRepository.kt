@@ -25,6 +25,28 @@ class ActivitiesRepository() {
              .await()
              .toObjects(Activity::class.java)
 
+    suspend fun getActivitiesForUser(listOfActivities: MutableList<Activity>, userUID: String): MutableList<Activity> {
+        // Initialize a return list
+        val listOfActivitesWithUsers: MutableList<Activity> = mutableListOf()
+
+        listOfActivities.forEach { activity ->
+            val currentActivityList = activity.documentId?.let {
+                db.collection("Activites")
+                    .document(it)
+                    .collection("usersApplied")
+                    .get()
+                    .await()
+                    .documents
+                    .map { userDocument -> userDocument.id }
+            }
+            activity.listOfUsersApplied.add(currentActivityList.toString())
+            if (activity.listOfUsersApplied.contains("[$userUID]")) {
+                listOfActivitesWithUsers.add(activity)
+            }
+        }
+        return listOfActivitesWithUsers
+    }
+
 
 
     /* CHECK APPLICATION STATE */

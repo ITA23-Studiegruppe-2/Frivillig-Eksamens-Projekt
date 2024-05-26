@@ -14,18 +14,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 
 @Composable
-fun ActivityScreen() {
+fun ActivityScreen(
+    onBackButtonClick: () -> Unit
+) {
 
     val viewModel = ActivityScreenViewModel()
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = viewModel.backgroundColor
     ) {
+
+        if (viewModel.showFilterDialog){
+            FilterDialog(
+                onDismiss = {viewModel.showFilterDialog = false},
+                viewModel = viewModel,
+                listOfCities = viewModel.listOfCities
+            )
+        }
+
         Column {
-            TopBar()
+            TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = "Ledige vagter")
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -34,7 +47,8 @@ fun ActivityScreen() {
             ) {
                 SearchBar(
                     searchBarValue = viewModel.searchBar,
-                    onValueChange = { viewModel.searchBar = it }
+                    onValueChange = { viewModel.searchBar = it },
+                    viewModel = viewModel
                 )
                 Row {
                     Button(onClick = { viewModel.searchForActivitiesByTitle() }) {
@@ -54,7 +68,9 @@ fun ActivityScreen() {
                                 date = activity.date,
                                 time = activity.timeStamp,
                                 activityID = it,
-                                listOfUsers = activity.listOfUsersApplied
+                                listOfUsers = activity.listOfUsersApplied,
+                                description = activity.description,
+                                location = activity.location
                             )
                         }
                     }

@@ -15,9 +15,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
+import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 
 @Composable
-fun TopBarWithBackButtonUniversal(
+fun TopBarCreateShift(
     onBackButtonClick: () -> Unit,
     text: String
 ) {
@@ -33,13 +34,8 @@ fun TopBarWithBackButtonUniversal(
         Text(
             text = text,
             fontSize = 28.sp,
-
+            color = Color(0xFF364830),
+            style = title
         )
     }
-}
-
-@Composable
-@Preview
-fun showtahtding() {
-    TopBarWithBackButtonUniversal(onBackButtonClick = { /*TODO*/ }, text = "asdsaa")
 }

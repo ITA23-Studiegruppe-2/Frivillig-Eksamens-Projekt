@@ -18,9 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
-fun TopBar() {
+fun TopBar(
+    onBackButtonClick: () -> Unit
+) {
+
     Surface(
         modifier = Modifier.padding(10.dp),
         color = Color.White,
@@ -37,6 +42,7 @@ fun TopBar() {
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(100.dp)
             ) {
+                BackButton (onClick = onBackButtonClick)
                 Text(text = "Ledige vagter", fontSize = 28.sp, color = Color(0xFF364830))
                 Icon(
                     imageVector = Icons.Outlined.Notifications,

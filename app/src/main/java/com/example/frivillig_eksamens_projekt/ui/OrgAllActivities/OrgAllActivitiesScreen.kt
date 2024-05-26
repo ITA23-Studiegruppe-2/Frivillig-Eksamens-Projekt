@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.Models.Activity
-import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarWithBackButtonUniversal
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 
 @Composable
 fun OrgAllActivitiesScreen(
@@ -29,7 +29,7 @@ fun OrgAllActivitiesScreen(
         .fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
 
-            TopBarWithBackButtonUniversal(
+            TopBarCreateShift(
                 onBackButtonClick = onBackButtonClick,
                 text = "Mine Aktiviteter"
             )

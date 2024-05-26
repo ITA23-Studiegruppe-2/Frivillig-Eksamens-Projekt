@@ -34,9 +34,14 @@ import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.navigation.Screen
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
+import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 
 @Composable
-fun HomeScreen( navController: NavController) {
+fun HomeScreen(
+    navController: NavController,
+    onBadgeScreenClick: () -> Unit,
+    onActivityScreenClick: () -> Unit
+) {
 
     val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
     val shiftsIcon: Painter = painterResource(id = R.drawable.shift)
@@ -69,7 +74,8 @@ fun HomeScreen( navController: NavController) {
                         text = "Hej ${viewModel.name}!",
                         modifier = Modifier,
                         fontSize = 23.sp,
-                        color = Color.White
+                        color = Color.White,
+                        style = title
                     )
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
@@ -89,9 +95,7 @@ fun HomeScreen( navController: NavController) {
                 )
                 {
                     Column {
-                        InfoCards(label = "Badges", icon = bagdesIcon) {
-                            navController.navigate(Screen.Badges.route)
-                        }
+                        InfoCards(label = "Badges", icon = bagdesIcon, onClick = onBadgeScreenClick)
                         InfoCards(label = "Kommende vagter", icon = shiftsIcon) {
                             navController.navigate(Screen.UpcomingShifts.route)
                         }
@@ -112,7 +116,7 @@ fun HomeScreen( navController: NavController) {
                         .fillMaxWidth()
                         .padding(12.dp)
                 ){
-                    Shortcut(onClick = { /*TODO*/ }, label = "Ledige vagter")
+                    Shortcut(onClick = onActivityScreenClick, label = "Ledige vagter")
                     Shortcut(onClick = { /*TODO*/ }, label = "Mine organisationer")
                 }
             Box(
