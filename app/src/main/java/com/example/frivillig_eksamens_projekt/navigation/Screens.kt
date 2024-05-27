@@ -38,6 +38,8 @@ sealed class Screen (val route: String) {
 
     object MyProfile: Screen(route = "my_profile_screen")
 
+    object Advice: Screen(route = "advice_screen")
+
 //<<<<<<< HEAD
 
 
@@ -48,9 +50,7 @@ sealed class Screen (val route: String) {
 
     object ConversationScreen: Screen(route = "conversation_screen")
 
-    object Chat: Screen(route = "chat_screen")
 
-    object AddChatScreen: Screen(route = "sendMessage_screen")
 //=======
     object OrgOwnActivities: Screen(route = "orgOwnActivities_screen")
 

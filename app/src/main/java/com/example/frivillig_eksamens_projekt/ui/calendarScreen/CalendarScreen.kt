@@ -47,10 +47,8 @@ fun CalendarScreen2 (
     onBackButtonClick: () -> Unit
 ) {
     val secondaryColor = Color(0xFF364830)
-    var currentMonth by remember { mutableStateOf(YearMonth.now()) }
+
     val daysOfWeek = listOf("M", "T", "O", "T", "F", "L", "S")
-    var showDialog by remember { mutableStateOf(false) }
-    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
     val calendarViewModel: CalendarViewModel = viewModel()
 
     //Current days
@@ -59,11 +57,11 @@ fun CalendarScreen2 (
     var yearFormat: String
 
     // Define dialog
-    if (showDialog && selectedDate != null) {
-        val activity = calendarViewModel.getActivityForDate(selectedDate!!)
-        DateDetailsDialog(selectedDate, activity) {
-            showDialog = false
-            selectedDate = null
+    if (calendarViewModel.showDialog && calendarViewModel.selectedDate != null) {
+        val activity = calendarViewModel.getActivityForDate(calendarViewModel.selectedDate!!)
+        DateDetailsDialog(calendarViewModel.selectedDate, activity) {
+            calendarViewModel.showDialog = false
+            calendarViewModel.selectedDate = null
         }
     }
 
@@ -93,13 +91,13 @@ fun CalendarScreen2 (
                     modifier = Modifier
                         .size(30.dp)
                         .clickable {
-                            currentMonth = currentMonth.minusMonths(1)
+                            calendarViewModel.currentMonth = calendarViewModel.currentMonth.minusMonths(1)
                         })
                 Spacer(modifier = Modifier.width(8.dp))
 
 
                 Text(
-                    text = currentMonth.format(
+                    text = calendarViewModel.currentMonth.format(
                         DateTimeFormatter.ofPattern("MMM yyyy").withLocale(Locale("da", "DK"))
                     ),
                     fontSize = 22.sp
@@ -113,7 +111,7 @@ fun CalendarScreen2 (
                     modifier = Modifier
                         .size(30.dp)
                         .clickable {
-                            currentMonth = currentMonth.plusMonths(1)
+                            calendarViewModel.currentMonth = calendarViewModel.currentMonth.plusMonths(1)
                         })
             }
             Spacer(modifier = Modifier.height(32.dp))
@@ -153,8 +151,8 @@ fun CalendarScreen2 (
                         }
                     }
                     // Calendar days
-                    val daysInMonth = currentMonth.lengthOfMonth()
-                    val firstOfMonth = currentMonth.atDay(1)
+                    val daysInMonth = calendarViewModel.currentMonth.lengthOfMonth()
+                    val firstOfMonth = calendarViewModel.currentMonth.atDay(1)
                     val daysOffset = (firstOfMonth.dayOfWeek.value - 1)
                     val totalDays = daysInMonth + daysOffset
 
@@ -170,7 +168,7 @@ fun CalendarScreen2 (
                                 if (dateNumber > 0 && dateNumber <= daysInMonth) {
 
 
-                                    val dateToBeFormatted = currentMonth.atDay(dateNumber).toString()
+                                    val dateToBeFormatted = calendarViewModel.currentMonth.atDay(dateNumber).toString()
 
                                     dayFormat = dateToBeFormatted.substring(8,10)
                                     monthFormat = dateToBeFormatted.substring(6,7)
@@ -183,8 +181,8 @@ fun CalendarScreen2 (
                                         modifier = Modifier
                                             .weight(1f)
                                             .clickable {
-                                                selectedDate = currentMonth.atDay(dateNumber)
-                                                showDialog = true
+                                                calendarViewModel.selectedDate = calendarViewModel.currentMonth.atDay(dateNumber)
+                                                calendarViewModel.showDialog = true
                                             },
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {

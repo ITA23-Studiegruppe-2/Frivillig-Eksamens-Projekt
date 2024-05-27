@@ -7,13 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,13 +18,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
+// Main Composable function for the profile screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen() {
+    // Initialize the ViewModel
     val viewModel: UserProfileViewModel = viewModel()
+
+    // Collect state from ViewModel
     val userProfile by viewModel.userProfile.collectAsState()
     val isEditing by viewModel.isEditing.collectAsState()
 
+    // Log user profile state
     Log.d("ProfileScreen", "Displaying user profile: $userProfile")
 
     Scaffold(
@@ -39,12 +38,12 @@ fun ProfileScreen() {
                 title = {
                     Column {
                         Text(
-                            "Din profil:",
+                            "Din profil:", // Profile label
                             color = Color.Black,
                             modifier = Modifier.padding(top = 20.dp)
                         )
                         Text(
-                            viewModel.name,
+                            viewModel.name, // Display user name
                             color = Color.Black
                         )
                     }
@@ -56,7 +55,7 @@ fun ProfileScreen() {
                 actions = {
                     IconButton(onClick = { viewModel.toggleEdit() }) {
                         Icon(
-                            imageVector = if (isEditing) Icons.Filled.Check else Icons.Filled.Edit,
+                            imageVector = if (isEditing) Icons.Filled.Check else Icons.Filled.Edit, // Toggle icon between edit and save
                             modifier = Modifier
                                 .size(30.dp)
                                 .padding(top = 10.dp),
@@ -86,7 +85,7 @@ fun ProfileScreen() {
         ) {
             Spacer(modifier = Modifier.height(20.dp))
             Icon(
-                imageVector = Icons.Default.AccountCircle,
+                imageVector = Icons.Default.AccountCircle, // Profile icon
                 contentDescription = "Profile",
                 modifier = Modifier
                     .size(160.dp)
@@ -126,13 +125,17 @@ fun ProfileScreen() {
                 Spacer(modifier = Modifier.height(14.dp))
                 Button(
                     onClick = {
-                        viewModel.updateUserProfile(updatedProfile.value)
+                        viewModel.updateUserProfile(updatedProfile.value) // Update user profile
                     },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .width(110.dp)
+                        .height(40.dp),
                 ) {
                     Text("Save")
                 }
             } else {
+                // Display user profile information
                 InputFieldUser(label = viewModel.name, mainIcon = Icons.Default.Person)
                 Spacer(modifier = Modifier.height(14.dp))
                 InputFieldUser(label = viewModel.phoneNumber, mainIcon = Icons.Default.Phone)
@@ -145,6 +148,7 @@ fun ProfileScreen() {
     }
 }
 
+// Composable for displaying a single line of user info without input field
 @Composable
 fun InputFieldUser(label: String, mainIcon: ImageVector) {
     Row(
@@ -170,6 +174,7 @@ fun InputFieldUser(label: String, mainIcon: ImageVector) {
     }
 }
 
+// Composable for displaying a user input field
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputFieldUser(
@@ -184,8 +189,8 @@ fun InputFieldUser(
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .background(Color.White, RoundedCornerShape(10.dp))
-            .border(0.6.dp, Color.Black, RoundedCornerShape(10.dp))
-            .padding(8.dp)
+            .border(0.8.dp, Color.Black, RoundedCornerShape(10.dp))
+            .padding(4.dp)
     ) {
         Icon(
             imageVector = mainIcon,
@@ -208,6 +213,7 @@ fun InputFieldUser(
     }
 }
 
+// Preview function for displaying the profile screen in Android Studio
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {

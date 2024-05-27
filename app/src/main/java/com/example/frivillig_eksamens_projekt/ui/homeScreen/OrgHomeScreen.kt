@@ -30,11 +30,11 @@ import com.example.frivillig_eksamens_projekt.navigation.Screen
 
 @Composable
 fun OrgHomeScreen(
-    navController: NavController,
     onMyActivitiesClick: () -> Unit,
     onCreateShiftClick: () -> Unit,
     onChatScreenClick: () -> Unit,
-    onAccountTypeChange: (String) -> Unit
+    onAccountTypeChange: (String) -> Unit,
+    onVolunteersClick: () -> Unit
 ){
 
     val secondaryColor = Color(0xFF364830)
@@ -100,20 +100,14 @@ fun OrgHomeScreen(
                         InfoCards(label = "Vagtportal", icon = hoursIcon) {
                             onMyActivitiesClick()
                         }
-                        InfoCards(label = "Frivillige", icon = peopleIcon) {
-                            navController.navigate(Screen.UpcomingShifts.route)
+                        InfoCards(label = "Tips & Tricks", icon = peopleIcon) {
+                            onVolunteersClick()
                         }
                     }
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-                Column (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp)
-                ){
-                    Shortcut(onClick = onMyActivitiesClick, label = "Mine ??")
-                }
+
             Box(
                 modifier = Modifier
                     .padding(12.dp)

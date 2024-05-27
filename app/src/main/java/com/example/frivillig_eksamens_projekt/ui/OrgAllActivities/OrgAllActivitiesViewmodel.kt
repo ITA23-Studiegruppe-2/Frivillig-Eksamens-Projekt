@@ -25,7 +25,7 @@ class OrgAllActivitiesViewmodel: ViewModel() {
     private fun fetchActivities() {
         if (currentOrgUID != null) {
             viewModelScope.launch {
-                listOfActivities = activitiesRepository.fetchActivityByOrgID(activitiesRepository.getActivities(),currentOrgUID)
+                listOfActivities = activitiesRepository.addListOfAppliedToActivities(activitiesRepository.fetchActivityByOrgID(activitiesRepository.getActivities(),currentOrgUID))
             }
         }
     }

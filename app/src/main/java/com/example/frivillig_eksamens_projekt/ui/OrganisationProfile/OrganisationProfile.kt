@@ -1,4 +1,4 @@
-package com.example.frivillig_eksamens_projekt.ui
+package com.example.frivillig_eksamens_projekt.ui.OrganisationProfile
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -74,7 +74,7 @@ fun OrganisationScreen() {
 
             InputFieldUser(label = viewModel.name, mainIcon = Icons.Default.Person)
             Spacer(modifier = Modifier.height(14.dp))
-            InputFieldUser(label = viewModel.cvrNumber, mainIcon = Icons.Default.Phone)
+            InputFieldUser(label = viewModel.cvrNumber, mainIcon = Icons.Default.Info)
             Spacer(modifier = Modifier.height(14.dp))
             InputFieldUser(label = viewModel.email, mainIcon = Icons.Default.Email)
         }

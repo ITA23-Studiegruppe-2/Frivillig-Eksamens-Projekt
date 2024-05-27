@@ -1,6 +1,7 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
 import com.example.frivillig_eksamens_projekt.Models.Notification
+
 import com.example.frivillig_eksamens_projekt.Models.News
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
@@ -54,7 +55,7 @@ class UsersRepository() {
             .set(activityIdObject)
     }
 
-    fun removeActivityIdFromUserSubCollection(activityId: String,userId: String) {
+    fun removeActivityIdFromUserSubCollection(activityId: String, userId: String) {
         db.collection("Users")
             .document(userId)
             .collection("MyActivities")
@@ -80,6 +81,7 @@ class UsersRepository() {
         }
     }
 
+
     /* COULD BE ITS OWN REPOSITORY -- NOTIFICATION CENTER */
 
     fun sendNotificationToUser(userUId: String, title: String, message: String) {
@@ -94,6 +96,7 @@ class UsersRepository() {
             .collection("MyNotifications")
             .add(notification)
     }
+
 
     suspend fun retrieveNotificationsByUserUId(userUId: String): MutableList<Notification> =
         db.collection("Users")
@@ -119,6 +122,7 @@ class UsersRepository() {
         // Commit the batch - Aka delete from the collection
         batch.commit().await()
     }
-
 }
+
+
 
