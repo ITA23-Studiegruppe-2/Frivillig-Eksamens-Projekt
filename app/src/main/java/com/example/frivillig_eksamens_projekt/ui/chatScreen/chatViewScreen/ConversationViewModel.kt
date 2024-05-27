@@ -21,6 +21,7 @@ class ConversationViewModel : ViewModel() {
 
     // Mutable state to hold the current user's ID
     var currentUserId by mutableStateOf<String?>(null)
+    var currentOrgId by mutableStateOf<String?>(null)
 
 
 
@@ -28,21 +29,47 @@ class ConversationViewModel : ViewModel() {
         // Get current user
         FirebaseAuth.getInstance().addAuthStateListener { firebaseAuth ->
             currentUserId = firebaseAuth.currentUser?.uid
-            // Fetch messages when user change
-            currentUserId?.let {
-                fetchMessages(it)
+
+            currentUserId?.let { userId ->
+                viewModelScope.launch {
+
+                    currentOrgId = chatRepository.getOrgId(userId)?.orgID
+                    Log.d("ConversationViewModel", "Fetched org ID: $currentOrgId")
+                    fetchMessages(userId)
+
+                    currentOrgId?.let { orgId ->
+                        fetchMessagesForOrg(orgId)
+                    }
+                }
             }
         }
     }
 
 
 
-    // Function to fetch messages for the current user
+
+    // Function to fetch messages (USERID)
     fun fetchMessages(userId: String) {
         viewModelScope.launch {
             Log.d("ChatViewModel", "Fetching messages for user ID: $userId")
             try {
-                conversations = chatRepository.getConversationsByUserId(userId)
+                val userConversations = chatRepository.getConversationsByUserId(userId)
+                conversations = conversations + userConversations
+                Log.d("ChatViewModel", "Fetched messages: ${conversations.size}")
+            } catch (e: Exception) {
+                Log.e("ChatViewModel", "Error fetching messages: ${e.message}")
+            }
+        }
+    }
+
+
+    // Function to fetch messages (ORGID)
+    fun fetchMessagesForOrg(orgId: String) {
+        viewModelScope.launch {
+            Log.d("ChatViewModel", "Fetching messages for org ID: $orgId")
+            try {
+                val orgConversations = chatRepository.getConversationsByOrgId(orgId)
+                conversations = conversations + orgConversations
                 Log.d("ChatViewModel", "Fetched messages: ${conversations.size}")
             } catch (e: Exception) {
                 Log.e("ChatViewModel", "Error fetching messages: ${e.message}")

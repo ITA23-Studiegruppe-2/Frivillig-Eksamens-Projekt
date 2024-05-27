@@ -67,9 +67,12 @@ fun ConversationList(
                 )
             }
 
-            LaunchedEffect(viewModel.currentUserId) {
+            LaunchedEffect(viewModel.currentUserId, viewModel.currentOrgId) {
                 viewModel.currentUserId?.let {
                     viewModel.fetchMessages(it)
+                }
+                viewModel.currentOrgId?.let {
+                    viewModel.fetchMessagesForOrg(it)
                 }
             }
 
@@ -79,8 +82,9 @@ fun ConversationList(
                     ConversationItem(
                         conversation = conversation,
                         onResumeClick = { Conversation, organizationName ->
-                            onResumeClick(conversation.conversationId, conversation.organizationName )
-                        }
+                            onResumeClick(conversation.conversationId, conversation.organizationName)
+                        },
+                        onClick = { onResumeClick(conversation.conversationId, conversation.organizationName) }
                     )
                 }
             }

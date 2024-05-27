@@ -1,5 +1,5 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen
-
+/*
 import MessageBubble
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -92,3 +92,5 @@ fun AddChatScreen(
     }
 }
 
+
+ */

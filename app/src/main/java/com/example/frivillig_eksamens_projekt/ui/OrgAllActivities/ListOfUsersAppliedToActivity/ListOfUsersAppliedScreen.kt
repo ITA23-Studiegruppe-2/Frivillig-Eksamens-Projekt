@@ -9,11 +9,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 
 @Composable
@@ -52,6 +50,7 @@ fun ListOfUsersApplied(
             Button(
                 onClick = {
                     listOfUsersAppliedViewmodel.addOrRemoveActivityForUsers()
+                    listOfUsersAppliedViewmodel.chatRoomForApprovedUsers(activityId)
                     onBackButtonClick()
 
                 }) {

@@ -1,19 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen.findOrganisation
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.frivillig_eksamens_projekt.Models.Organization
-import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-
-
+/*
 //----- Chat ----/
 
 class OrganizationViewModel : ViewModel() {
@@ -54,6 +41,8 @@ class OrganizationViewModel : ViewModel() {
         }
     }
 
+
+
     // Delays the search to get live searching
     fun updateSearchBar(value: String) {
         searchBar = value
@@ -64,3 +53,5 @@ class OrganizationViewModel : ViewModel() {
         }
     }
 }
+
+ */
