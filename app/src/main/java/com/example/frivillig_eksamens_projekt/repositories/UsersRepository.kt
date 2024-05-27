@@ -1,8 +1,8 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
+import com.example.frivillig_eksamens_projekt.Models.Notification
 
 import com.example.frivillig_eksamens_projekt.Models.News
-import com.example.frivillig_eksamens_projekt.Models.Notification
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
