@@ -3,6 +3,7 @@ package com.example.frivillig_eksamens_projekt.Models
 import com.google.firebase.firestore.DocumentId
 
 data class Message(
+    var senderName: String = "",
     val content: String = "",
     val senderId: String = "",
     val timestamp: Long = 0L,

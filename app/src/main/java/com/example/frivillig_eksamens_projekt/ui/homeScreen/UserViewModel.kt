@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.frivillig_eksamens_projekt.Models.News
 import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.example.frivillig_eksamens_projekt.Models.Badge
 import com.example.frivillig_eksamens_projekt.Models.Notification
@@ -13,11 +14,13 @@ import com.example.frivillig_eksamens_projekt.Models.UserStats
 import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 import com.example.frivillig_eksamens_projekt.repositories.BadgesRepository
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+
+
 
 class UserViewModel: ViewModel() {
 
@@ -26,23 +29,27 @@ class UserViewModel: ViewModel() {
     val badgesRepository: BadgesRepository = BadgesRepository()
     val activitiesRepository: ActivitiesRepository = ActivitiesRepository()
 
-    init {
-        getUserData()
-        getUserNotification()
-        awardUsersWithBadgeCheck()
+    // Using mutableStateOf to hold the news data
+    
 
+
+    init {
+            getUserData()
+            fetchRandomNews()
+            getUserNotification()
+            awardUsersWithBadgeCheck()
     }
 
     var listOfNotifications: MutableList<Notification> = mutableListOf()
 
+    var news by mutableStateOf<News?>(null)
     var name by mutableStateOf("")
     var bellColor by mutableStateOf(Color.White)
 
     //Dialog
     var dialogShow by mutableStateOf(false)
 
-
-     private fun getUserData(){
+    private fun getUserData(){
         viewModelScope.launch {
             val userData = usersRepository.getUser()
             if (userData != null) {
@@ -50,6 +57,17 @@ class UserViewModel: ViewModel() {
             }
         }
     }
+
+
+
+     fun fetchRandomNews() {
+        viewModelScope.launch {
+            val fetchedNews = usersRepository.fetchRandomNews()
+            news = fetchedNews
+        }
+        }
+
+    
     // Get the notifications if there is any
     private fun getUserNotification() {
         viewModelScope.launch {

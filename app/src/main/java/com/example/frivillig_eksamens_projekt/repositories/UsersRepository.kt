@@ -1,6 +1,7 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
 import com.example.frivillig_eksamens_projekt.Models.Notification
+import com.example.frivillig_eksamens_projekt.Models.News
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
@@ -8,18 +9,19 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
+
 class UsersRepository() {
     private val db = Firebase.firestore
 
     val currentUser = Firebase.auth.currentUser?.uid
 
-     suspend fun getUser(): User? = currentUser?.let {
-         db.collection("Users")
-         .document(it)
-         .get()
-         .await()
-         .toObject(User::class.java)
-     }
+    suspend fun getUser(): User? = currentUser?.let {
+        db.collection("Users")
+            .document(it)
+            .get()
+            .await()
+            .toObject(User::class.java)
+    }
 
 
 
@@ -61,6 +63,23 @@ class UsersRepository() {
     }
 
 
+    // Fetch random news to homescreen
+    suspend fun fetchRandomNews(): News? {
+        return try {
+            val result = db.collection("News")
+                .get()
+                .await()
+            val newsList =
+                result.mapNotNull { doc -> // filters if a document doesn't have a newsText
+                    doc.getString("newsText")?.let { News(it) }
+                }
+            // Picks a random news if newsList isn't empty
+            if (newsList.isNotEmpty()) newsList.random() else null
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     /* COULD BE ITS OWN REPOSITORY -- NOTIFICATION CENTER */
 
     fun sendNotificationToUser(userUId: String, title: String, message: String) {
@@ -69,6 +88,7 @@ class UsersRepository() {
             title = title,
             message = message
         )
+
         db.collection("Users")
             .document(userUId)
             .collection("MyNotifications")
@@ -82,6 +102,8 @@ class UsersRepository() {
             .get()
             .await()
             .toObjects(Notification::class.java)
+
+
 
     suspend fun deleteNotificationsForUser(userUId: String) {
         //Deletes every document inside of the collection using batch - Which can allow up to 500 at a time

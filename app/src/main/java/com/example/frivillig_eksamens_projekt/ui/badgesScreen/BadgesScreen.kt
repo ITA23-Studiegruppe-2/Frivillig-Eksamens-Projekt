@@ -47,8 +47,7 @@ import java.io.File
 
 @Composable
 fun BadgesScreen(
-    onBackButtonClick: () -> Unit
-) {
+    onBackButtonClick: () -> Unit) {
 
     val viewModel: BadgesViewModel = viewModel()
     val secondaryColor = Color(0xFF364830)
@@ -100,7 +99,7 @@ fun BadgesScreen(
                         fontSize = 16.sp,
                         color = secondaryColor
                     )
-
+                    
                     Spacer(modifier = Modifier.height(28.dp))
 
                     Box(

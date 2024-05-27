@@ -38,6 +38,20 @@ sealed class Screen (val route: String) {
 
     object MyProfile: Screen(route = "my_profile_screen")
 
+//<<<<<<< HEAD
+
+
+    object GroupChat: Screen(route = "group_chat_screen/{conversationId}/{organizationName}") {
+        fun createRoute(conversationId: String, organizationName: String) =
+            "group_chat_screen/$conversationId/$organizationName"
+    }
+
+    object ConversationScreen: Screen(route = "conversation_screen")
+
+    object Chat: Screen(route = "chat_screen")
+
+    object AddChatScreen: Screen(route = "sendMessage_screen")
+//=======
     object OrgOwnActivities: Screen(route = "orgOwnActivities_screen")
 
     //Because we store the routes inside of a sealed class, we have to create a function that create a new route with the desired value
@@ -46,4 +60,5 @@ sealed class Screen (val route: String) {
     }
 
     object OrganisationProfile: Screen(route = "Organisation_Profile")
+//>>>>>>> origin/main
 }

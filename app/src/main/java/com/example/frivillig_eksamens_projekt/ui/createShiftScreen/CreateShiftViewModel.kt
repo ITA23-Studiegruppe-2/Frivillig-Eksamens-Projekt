@@ -84,7 +84,7 @@ class CreateShiftViewModel(): ViewModel(
 
     fun getOrgData(orgId: String) {
         viewModelScope.launch {
-            currentOrgData = organisationRepository.fetchCurrentOrgData(orgId)[0]
+            currentOrgData = organisationRepository.fetchCurrentOrgData(orgId)!!
         }
     }
     // Handle hours by itself - function that takes the timestamps and calculates the hours

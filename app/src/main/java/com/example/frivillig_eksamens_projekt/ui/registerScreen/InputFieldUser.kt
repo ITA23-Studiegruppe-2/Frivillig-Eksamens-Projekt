@@ -53,7 +53,7 @@ fun InputfieldUser(
         onValueChange = onValueChange,
         modifier = Modifier
             .width(370.dp)
-            .height(50.dp),
+            .height(55.dp),
         shape = RoundedCornerShape(12.dp),
         label = { Text(text = label, color = Color(0xFF364830)) },
         trailingIcon = { Icon(icon, contentDescription = null)},

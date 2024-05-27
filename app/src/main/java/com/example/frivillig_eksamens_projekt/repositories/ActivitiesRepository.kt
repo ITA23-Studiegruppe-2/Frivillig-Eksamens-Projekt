@@ -34,7 +34,7 @@ class ActivitiesRepository() {
 
     suspend fun getActivitiesForUser(listOfActivities: MutableList<Activity>, userUID: String): MutableList<Activity> {
         // Initialize a return list
-        val listOfActivitesWithUsers: MutableList<Activity> = mutableListOf()
+        val listOfActivitiesWithUsers: MutableList<Activity> = mutableListOf()
 
         listOfActivities.forEach { activity ->
             val currentActivityList = activity.documentId?.let {
@@ -46,12 +46,17 @@ class ActivitiesRepository() {
                     .documents
                     .map { userDocument -> userDocument.id }
             }
-            activity.listOfUsersApplied.add(currentActivityList.toString())
-            if (activity.listOfUsersApplied.contains("[$userUID]")) {
-                listOfActivitesWithUsers.add(activity)
+
+            if (currentActivityList != null) {
+                activity.listOfUsersApplied = currentActivityList.toMutableList()
             }
+            if (activity.listOfUsersApplied.contains(userUID)) {
+                listOfActivitiesWithUsers.add(activity)
+            }
+
         }
-        return listOfActivitesWithUsers
+        println(listOfActivitiesWithUsers)
+        return listOfActivitiesWithUsers
     }
 
 

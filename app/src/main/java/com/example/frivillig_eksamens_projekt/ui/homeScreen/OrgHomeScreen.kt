@@ -31,7 +31,9 @@ import com.example.frivillig_eksamens_projekt.navigation.Screen
 @Composable
 fun OrgHomeScreen(
     navController: NavController,
-    onMyActivitiesClick: () -> Unit
+    onMyActivitiesClick: () -> Unit,
+    onCreateShiftClick: () -> Unit,
+    onChatScreenClick: () -> Unit,
 ){
 
     val secondaryColor = Color(0xFF364830)
@@ -39,7 +41,9 @@ fun OrgHomeScreen(
     val createShiftIcon: Painter = painterResource(id = R.drawable.createshift)
     val peopleIcon: Painter = painterResource(id = R.drawable.people)
     val hoursIcon: Painter = painterResource(id = R.drawable.hours)
-    val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
+    val chatIcon: Painter = painterResource(id = R.drawable.chat)
+
+    val viewModel: OrgViewModel = OrgViewModel()
 
     Surface (
         modifier = Modifier
@@ -60,7 +64,7 @@ fun OrgHomeScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Hej Organisation!",
+                        text = "Hej ${viewModel.name}!",
                         modifier = Modifier,
                         fontSize = 23.sp,
                         color = Color.White
@@ -84,18 +88,18 @@ fun OrgHomeScreen(
                 {
                     Column {
                         InfoCards(label = "Opret vagt", icon = createShiftIcon) {
-                            navController.navigate(Screen.CreateShift.route)
+                            onCreateShiftClick()
                         }
-                        InfoCards(label = "Frivillige", icon = peopleIcon) {
-                            navController.navigate(Screen.UpcomingShifts.route)
+                        InfoCards(label = "Chat", icon = chatIcon) {
+                            onChatScreenClick()
                         }
                     }
                     Column {
                         InfoCards(label = "Vagtportal", icon = hoursIcon) {
-                            navController.navigate(Screen.Hours.route)
+                            onMyActivitiesClick()
                         }
-                        InfoCards(label = "Kalender", icon = calendarIcon) {
-                            navController.navigate(Screen.Calendar.route)
+                        InfoCards(label = "Frivillige", icon = peopleIcon) {
+                            navController.navigate(Screen.UpcomingShifts.route)
                         }
                     }
                 }
@@ -106,16 +110,13 @@ fun OrgHomeScreen(
                         .fillMaxWidth()
                         .padding(12.dp)
                 ){
-                    Shortcut(onClick = {}, label = "Chat med de frivillige")
                     Shortcut(onClick = onMyActivitiesClick, label = "Mine ??")
                 }
             Box(
                 modifier = Modifier
                     .padding(12.dp)
             ) {
-                HomeScreenNews(title = "New News", news = "hej hej hej hej hej" +
-                        "hej hej hejh eejh hej hej hej hej hej hej")
-
+                HomeScreenNews()
             }
         }
     }

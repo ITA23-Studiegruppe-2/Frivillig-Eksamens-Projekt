@@ -1,9 +1,11 @@
 package com.example.frivillig_eksamens_projekt.ui.createShiftScreen
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,6 +16,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -56,11 +60,22 @@ fun TimeSelectDropDown(
                 readOnly = true,
                 modifier = Modifier
                     .menuAnchor()
-                    .width(150.dp),
-                colors = ExposedDropdownMenuDefaults.textFieldColors(),
+                    .width(150.dp)
+                    .border(
+                        1.5.dp,
+                        color = Color(0xFF364830),
+                        shape = RoundedCornerShape(8.dp))
+                    .shadow(4.dp, shape = RoundedCornerShape(12.dp)),
+                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent
+                ),
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
-                }
+                },
+                shape = RoundedCornerShape(8.dp)
             )
             ExposedDropdownMenu(
                 expanded = isExpanded,
@@ -68,7 +83,9 @@ fun TimeSelectDropDown(
             ) {
                 listOfTimes.forEach { time ->
                     DropdownMenuItem(
-                        text = { Text(text = time) },
+                        text = { Text(
+                            text = time,
+                            color = Color(0xFF364830)) },
                         onClick = {
                             onValueClick(time)
                             onDismiss()

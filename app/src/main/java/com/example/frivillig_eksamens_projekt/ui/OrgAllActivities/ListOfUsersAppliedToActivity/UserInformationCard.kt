@@ -1,9 +1,12 @@
 package com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -35,15 +38,18 @@ fun UserInformationCard(user: User, checkedState: Boolean, activityId: String) {
 
     Box(
         modifier = Modifier
-            .border(2.dp, color = Color.Black, shape = RoundedCornerShape(9.dp))
+            .padding(12.dp)
     ) {
 
-        Row {
+        Row(
+            modifier = Modifier
+                .background(Color.White)
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
             // User Information + badges
             Column {
-                Box(
-                    modifier = Modifier,
-                    contentAlignment = Alignment.Center
+                Box(modifier = Modifier
                 ) {
                     Column {
                         Text(text = user.fullName)
@@ -51,7 +57,6 @@ fun UserInformationCard(user: User, checkedState: Boolean, activityId: String) {
                 }
                 Box(
                     modifier = Modifier
-                        .border(2.dp, color = Color.Black, shape = RoundedCornerShape(9.dp))
                 ) {
                    LazyRow {
                        items(viewmodel.listOfUsersBadges) { badge ->

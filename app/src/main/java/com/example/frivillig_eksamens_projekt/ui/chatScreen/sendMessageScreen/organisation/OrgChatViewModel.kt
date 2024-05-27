@@ -1,5 +1,9 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.frivillig_eksamens_projekt.Models.Message
@@ -10,20 +14,36 @@ import kotlinx.coroutines.launch
 
 class OrgChatViewModel(
     conversationId: String,
+    activityId: String
 ) : ViewModel() {
 
     val orgChatRepository = OrgChatRepository()
     val chatRepository: ChatRepository = ChatRepository()
     val messages = MutableStateFlow<List<Message>>(emptyList())
+    var orgId by mutableStateOf("")
+    val secondaryColor = Color(0xFF364830)
+    val backgroundColor = Color(0xFFC8D5B9)
 
     // Get current user ID from FirebaseAuth
     val currentUserId: String = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
+
+
     init {
-        loadMessages(conversationId)
-        println(conversationId)
-        listenToMessages(conversationId)
+        viewModelScope.launch {
+            orgId = orgChatRepository.fetchOrganizationsId(conversationId)
+            initializeChat(conversationId, activityId)
+        }
     }
+
+    // Listen for changes in conversationId, and start again
+    fun initializeChat(conversationId: String, activityId: String) {
+        loadMessages(conversationId)
+        listenToMessages(conversationId)
+        initializeChatForApprovedUsers(activityId, orgId)
+    }
+
+
 
     //------------------RESUME CONVERSATION-----------------//
     fun loadMessages(conversationId: String) {
@@ -53,7 +73,12 @@ class OrgChatViewModel(
         val timestamp = System.currentTimeMillis()
         viewModelScope.launch {
             try {
-                val result = orgChatRepository.createOrUpdateChatroomWithUsers(activityId, userIds, orgId, timestamp)
+                val result = orgChatRepository.createOrUpdateChatroomWithUsers(
+                    activityId,
+                    userIds,
+                    orgId,
+                    timestamp
+                )
                 if (result) {
                     println("Chatroom created/updated successfully.")
                     listenToMessages(activityId)
@@ -88,7 +113,16 @@ class OrgChatViewModel(
             val timestamp = System.currentTimeMillis()
             viewModelScope.launch {
                 try {
-                    val result = orgChatRepository.sendGroupMessage(activityId, messageText, currentUserId, orgId, timestamp)
+                    val senderName =
+                        orgChatRepository.fetchFullNameOfUsers(currentUserId) // Fetch the sender's full name
+                    val result = orgChatRepository.sendGroupMessage(
+                        activityId,
+                        messageText,
+                        currentUserId,
+                        senderName,
+                        orgId,
+                        timestamp
+                    )
                     if (result) {
                         println("Message sent successfully to group.")
                     } else {

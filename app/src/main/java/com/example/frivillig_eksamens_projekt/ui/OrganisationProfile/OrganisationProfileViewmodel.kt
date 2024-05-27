@@ -28,9 +28,11 @@ class OrganisationProfileViewModel : ViewModel() {
         fetchCurrentOrgData()
     }
 
+
     fun fetchCurrentOrgData() {
         val userUID = auth.currentUser?.uid ?: return
         viewModelScope.launch {
+            /*
             try {
                 val currentOrganisationInformation = organisationRepository.fetchCurrentOrgData(userUID).firstOrNull()
                 currentOrganisationInformation?.let {
@@ -41,6 +43,8 @@ class OrganisationProfileViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.e("OrganisationProfileViewModel", "Error fetching organization data", e)
             }
+
+             */
         }
     }
 }

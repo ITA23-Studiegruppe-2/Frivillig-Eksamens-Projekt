@@ -3,9 +3,11 @@ package com.example.frivillig_eksamens_projekt.ui.chooseScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,26 +21,37 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 @Composable
 fun UserOrOrganisation (
     onSuccesUserSelection: () -> Unit,
-    onSuccesOrgSelection: () -> Unit
+    onSuccesOrgSelection: () -> Unit,
+    onBackButtonClick: () -> Unit
     ) {
+
+    BackButton(
+        onClick = onBackButtonClick,
+        modifier = Modifier
+            .padding(16.dp)
+    )
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFC8D5B9)),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        val userOrOrgViewModel = UserOrOrgViewModel()
-
+        Spacer(modifier = Modifier.height(20.dp))
+        Row {
+            Spacer(modifier = Modifier.width(10.dp))
+            BackButton(onClick = onBackButtonClick)
+        }
+        Spacer(modifier = Modifier.height(220.dp))
 
         //Titel & undertitel
         Text(text = "Opret dig her", fontSize = 32.sp)
         Spacer(modifier = Modifier.height(15.dp))
-        Text(text = "Hvordan skal du bruge Volunify")
+        Text(text = "Hvordan skal du bruge Volunify?")
 
 
-        Spacer(modifier = Modifier.height(45.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
 
         CustomButton(text = "Organisation",
