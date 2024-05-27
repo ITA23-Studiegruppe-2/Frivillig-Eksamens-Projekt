@@ -61,13 +61,7 @@ fun Navigation() {
         Screen.RegisterOrg.route
     )
 
-    val currentRoute = remember { mutableStateOf(Screen.Start.route) }
-
-    LaunchedEffect(navController) {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            currentRoute.value = destination.route ?: Screen.Start.route
-        }
-    }
+    val currentRoute = remember{ mutableStateOf(navController.currentDestination?.route?:Screen.Logo.route)}
 
     Scaffold(
         bottomBar = {
@@ -79,7 +73,8 @@ fun Navigation() {
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
                     onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
-                    onAccountClick = { /*Todo*/ }
+                    onAccountClick = { /*Todo*/ },
+                    currentRoute = currentRoute
                 )
 
 

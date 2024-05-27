@@ -15,12 +15,14 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.frivillig_eksamens_projekt.navigation.Screen
 
 @Composable
 fun BottomNavigationBar(
@@ -28,7 +30,8 @@ fun BottomNavigationBar(
     onCalenderClick: () -> Unit,
     onHomePageClick: () -> Unit,
     onChatPageClick: () -> Unit,
-    onAccountClick: () -> Unit
+    onAccountClick: () -> Unit,
+    currentRoute: MutableState<String>
 
 ) {
         Row(
@@ -38,23 +41,18 @@ fun BottomNavigationBar(
                 .padding(4.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            NavigationButton(iconType = Icons.Default.Search, description = "Search page", onClick = onSearchClick)
-            NavigationButton(iconType = Icons.Default.DateRange, description = "Calender page", onClick = onCalenderClick)
-            NavigationButton(iconType = Icons.Default.Home, description = "Home page", onClick = onHomePageClick)
-            NavigationButton(iconType = Icons.Default.Email, description = "Chat page", onClick = onChatPageClick)
-            NavigationButton(iconType = Icons.Default.AccountCircle, description = "My profile page", onClick = onAccountClick)
+            NavigationButton(iconType = Icons.Default.Search, description = "Search page", onClick = onSearchClick, currentRoute = currentRoute, route = Screen.Activity.route)
+            NavigationButton(iconType = Icons.Default.DateRange, description = "Calender page", onClick = onCalenderClick, currentRoute = currentRoute, route = Screen.Calendar.route)
+            NavigationButton(iconType = Icons.Default.Home, description = "Home page", onClick = onHomePageClick, currentRoute = currentRoute, route = Screen.Home.route)
+            NavigationButton(iconType = Icons.Default.Email, description = "Chat page", onClick = onChatPageClick, currentRoute = currentRoute, route = Screen.ConversationScreen.route)
+            NavigationButton(iconType = Icons.Default.AccountCircle, description = "My profile page", onClick = onAccountClick, currentRoute = currentRoute, route = Screen.MyProfile.route)
         }
 
 
 
 }
 
-@Preview (showBackground = true )
-@Composable
-fun Preview() {
-    BottomNavigationBar({},{},{},{},{})
 
-}
 // LIST OF ICON NAME TO USE
 // Use Icons.Default.<Name> as parameter
 
