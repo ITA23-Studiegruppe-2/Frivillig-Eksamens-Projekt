@@ -33,9 +33,9 @@ fun Shortcut(
 
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(vertical = 6.dp, horizontal = 22.dp)
             .height(50.dp)
-            .width(400.dp)
+            .width(350.dp)
             .clickable(onClick = onClick)
             .border(
                 width = 2.dp,

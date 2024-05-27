@@ -11,8 +11,8 @@ class LoginViewModel : ViewModel() {
 
     var rememberMe by mutableStateOf(false)
 
-    var email by mutableStateOf("plantefesttest3@hotmail.com")
-    var password by mutableStateOf("Bassehund123")
+    var email by mutableStateOf("ida@email.dk")
+    var password by mutableStateOf("IdaGramkow2")
 
 
     //Error Handling

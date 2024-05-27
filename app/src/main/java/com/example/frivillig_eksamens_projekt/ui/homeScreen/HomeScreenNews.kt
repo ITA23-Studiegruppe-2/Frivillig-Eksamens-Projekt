@@ -32,7 +32,7 @@ fun HomeScreenNews(
     Card(
         modifier = Modifier
             .fillMaxSize()
-            .padding(12.dp)
+            .padding(6.dp)
             .width(400.dp)
             .border(
                 width = 2.dp,

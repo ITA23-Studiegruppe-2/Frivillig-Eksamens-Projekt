@@ -18,52 +18,37 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 
 @Composable
 fun StartScreen(
     onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit
 ) {
-    val backgroundColor = Color(0xFFC8D5B9) // Set your desired background color
-    val buttonColor = Color(0xFF364830) // Set to the new dark green color for buttons
-    val buttonHeight = 48.dp // Standard material design button height
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = backgroundColor), // Set background color using Modifier.background()
+            .background(Color(0xFFC8D5B9)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text(text = "Velkommen til Volunify", fontSize = 30.sp)
         Spacer(modifier = Modifier.height(20.dp))
-
-        val buttonWidth = 150.dp
-
+        
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.wrapContentWidth()
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(
-                onClick = onLoginClick,
-                modifier = Modifier
-                    .width(buttonWidth)
-                    .height(buttonHeight),
-                colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
-            ) {
-                Text(text = "Login")
+            CustomButton(text = "Login") {
+                onLoginClick()
             }
             Spacer(modifier = Modifier.height(10.dp))
             Text(text = "Eller")
             Spacer(modifier = Modifier.height(10.dp))
-            Button(
-                onClick = onRegisterClick,
-                modifier = Modifier
-                    .width(buttonWidth)
-                    .height(buttonHeight),
-                colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
-            ) {
-                Text(text = "Opret")
+
+            CustomButton(text = "Opret") {
+                onRegisterClick()
             }
         }
     }

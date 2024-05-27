@@ -56,7 +56,7 @@ fun InputFieldShift(
                 .fillMaxWidth(width)
                 .fillMaxHeight(height)
                 .border(1.5.dp, color = secondaryColor, shape = RoundedCornerShape(12.dp))
-                .shadow(6.dp, shape = RoundedCornerShape(12.dp)),
+                .shadow(4.dp, shape = RoundedCornerShape(12.dp)),
             shape = RoundedCornerShape(12.dp),
             colors = textFieldColors
         )

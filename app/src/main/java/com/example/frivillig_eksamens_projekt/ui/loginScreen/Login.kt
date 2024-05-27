@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -94,10 +95,11 @@ fun LoginScreen(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier.weight(0.2f))
+            Spacer(modifier = Modifier.weight(0.1f))
             Checkbox(
                 checked = loginViewModel.rememberMe,
-                onCheckedChange = { loginViewModel.rememberMe = it }
+                onCheckedChange = { loginViewModel.rememberMe = it },
+                colors = CheckboxDefaults.colors(Color(0xFF364830))
             )
             Spacer(modifier = Modifier.width(1.dp))
             Text(
@@ -110,7 +112,7 @@ fun LoginScreen(
                 fontSize = 10.sp,
                 modifier = Modifier
                     .clickable { /* Handle click */ }
-                    .padding(end = 15.dp)
+                    .padding(end = 20.dp)
             )
         }
 
@@ -125,13 +127,14 @@ fun LoginScreen(
         val googleIcon: Painter = painterResource(id = R.drawable.google_logo)
         val twitterIcon: Painter = painterResource(id = R.drawable.twitter_logo)
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer (modifier = Modifier.height(80.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Spacer(modifier = Modifier.height(80.dp))
 
-
-                Spacer(modifier = Modifier.width(25.dp))
                 Icon(
                     painter = faceBookIcon,
                     contentDescription = "Facebook logo",
@@ -161,16 +164,17 @@ fun LoginScreen(
                         .clickable { /* Twitter icon clicked */ }
                 )
             }
-        //Login knappen
-        Spacer(modifier = Modifier.height(20.dp))
-        CustomButton(text = "Login") {
-            loginViewModel.login(
-                loginViewModel.email,
-                loginViewModel.password,
-                onUserSuccessLogin = onUserSuccessLogin,
-                onOrgSuccessLogin = onOrgSuccessLogin,
-                onFailure = { loginViewModel.errorMessage = it}
-            )
+            //Login knappen
+            Spacer(modifier = Modifier.height(20.dp))
+            CustomButton(text = "Login") {
+                loginViewModel.login(
+                    loginViewModel.email,
+                    loginViewModel.password,
+                    onUserSuccessLogin = onUserSuccessLogin,
+                    onOrgSuccessLogin = onOrgSuccessLogin,
+                    onFailure = { loginViewModel.errorMessage = it }
+                )
+            }
         }
     }
 }

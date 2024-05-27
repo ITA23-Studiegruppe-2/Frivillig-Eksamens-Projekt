@@ -27,7 +27,7 @@ fun DateSelector(
             .fillMaxWidth(0.38f)
             .height(50.dp)
             .border(1.5.dp, Color(0xFF364830), RoundedCornerShape(23.dp))
-            .shadow(6.dp, shape = RoundedCornerShape(23.dp)),
+            .shadow(4.dp, shape = RoundedCornerShape(23.dp)),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White)

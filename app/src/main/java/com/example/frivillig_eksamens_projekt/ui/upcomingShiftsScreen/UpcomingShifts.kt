@@ -32,7 +32,6 @@ fun UpcomingShifts(
     onBackButtonClick: () -> Unit
 ){
     val viewModel: UpcomingShiftsViewModel = viewModel()
-    val secondaryColor = Color(0xFF364830)
 
     Surface (
         modifier = Modifier

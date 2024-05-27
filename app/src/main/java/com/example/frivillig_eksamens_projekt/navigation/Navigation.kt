@@ -49,7 +49,7 @@ fun Navigation() {
 
 
     /* Bottom Navigation bar */
-    // List of all the screens that shouldnt have a bottom navigation bar
+    // List of all the screens that shouldn't have a bottom navigation bar
     val screensWithNoBottomNavigation: List<String> = listOf(
         Screen.Start.route,
         Screen.Login.route,
@@ -87,7 +87,7 @@ fun Navigation() {
     ){
         paddingValues -> NavHost(
         navController = navController,
-        startDestination = Screen.OrgHomeScreen.route,
+        startDestination = Screen.Logo.route,
             modifier = Modifier.padding(paddingValues)
         ) {
 
@@ -123,7 +123,8 @@ fun Navigation() {
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed") },
                 viewModel = registerViewModel,
-                onBackButtonClick = { navController.popBackStack() }
+                onBackButtonClick = { navController.popBackStack() },
+                onLoginHyperLink = {navController.navigate(Screen.Login.route)}
             )
             currentRoute.value = Screen.RegisterUser.route
         }
@@ -157,7 +158,8 @@ fun Navigation() {
             HomeScreen(
                 navController,
                 onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
-                onActivityScreenClick = {navController.navigate(Screen.Activity.route)})
+                onActivityScreenClick = {navController.navigate(Screen.Activity.route)},
+                onChatScreenClick = {navController.navigate(Screen.ChatPage.route)})
 
             currentRoute.value = Screen.Home.route
         }
@@ -166,20 +168,24 @@ fun Navigation() {
         composable(Screen.UserOrOrg.route) {
             UserOrOrganisation(
                 onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
-                onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)}
+                onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)},
+                onBackButtonClick = {navController.popBackStack()}
             )
             currentRoute.value = Screen.UserOrOrg.route
         }
 
         // Calendar Screen
         composable(Screen.Calendar.route) {
-            CalendarScreen2(navController)
+            CalendarScreen2(
+                onBackButtonClick = {navController.popBackStack()}
+            )
             currentRoute.value = Screen.Calendar.route
         }
 
         //Badges Screen
         composable(Screen.Badges.route) {
-            BadgesScreen(onBackButtonClick = {navController.popBackStack()})
+            BadgesScreen(
+                onBackButtonClick = {navController.popBackStack()})
 
             currentRoute.value = Screen.Badges.route
         }
@@ -210,7 +216,9 @@ fun Navigation() {
             composable(Screen.OrgHomeScreen.route) {
                 OrgHomeScreen(
                     navController,
-                    onMyActivitiesClick = { navController.navigate(Screen.OrgOwnActivities.route)}
+                    onMyActivitiesClick = { navController.navigate(Screen.OrgOwnActivities.route)},
+                    onChatScreenClick = {navController.navigate(Screen.Home.route)},
+                    onCreateShiftClick = {navController.navigate(Screen.CreateShift.route)}
                 )
 
                 currentRoute.value = Screen.OrgHomeScreen.route

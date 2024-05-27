@@ -20,10 +20,10 @@ fun CustomButton(text: String, onClick: () -> Unit) {
         onClick = onClick,
         colors = buttonColors,
         modifier = Modifier
-            .width(180.dp)
-            .height(60.dp)
+            .width(150.dp)
+            .height(50.dp)
 
     ) {
-        Text(text = text, fontSize = 18.sp)
+        Text(text = text, fontSize = 16.sp)
     }
 }
