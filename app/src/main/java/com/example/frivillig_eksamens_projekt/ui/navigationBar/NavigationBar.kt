@@ -47,9 +47,6 @@ fun BottomNavigationBar(
             NavigationButton(iconType = Icons.Default.Email, description = "Chat page", onClick = onChatPageClick, currentRoute = currentRoute, route = Screen.ConversationScreen.route)
             NavigationButton(iconType = Icons.Default.AccountCircle, description = "My profile page", onClick = onAccountClick, currentRoute = currentRoute, route = Screen.MyProfile.route)
         }
-
-
-
 }
 
 

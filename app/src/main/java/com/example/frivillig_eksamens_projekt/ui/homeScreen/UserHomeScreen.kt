@@ -35,7 +35,8 @@ fun HomeScreen(
     navController: NavController,
     onBadgeScreenClick: () -> Unit,
     onActivityScreenClick: () -> Unit,
-    onChatScreenClick: () -> Unit
+    onChatScreenClick: () -> Unit,
+    onAccountTypeChange: (String) -> Unit
 ) {
 
     val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
@@ -46,7 +47,7 @@ fun HomeScreen(
     val secondaryColor = Color(0xFF364830)
     val viewModel = UserViewModel()
 
-
+    viewModel.getAccountType()?.let { onAccountTypeChange(it) }
 
     Surface (
         modifier = Modifier

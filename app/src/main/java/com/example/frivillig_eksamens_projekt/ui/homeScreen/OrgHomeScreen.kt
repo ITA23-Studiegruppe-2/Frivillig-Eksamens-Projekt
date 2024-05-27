@@ -34,6 +34,7 @@ fun OrgHomeScreen(
     onMyActivitiesClick: () -> Unit,
     onCreateShiftClick: () -> Unit,
     onChatScreenClick: () -> Unit,
+    onAccountTypeChange: (String) -> Unit
 ){
 
     val secondaryColor = Color(0xFF364830)
@@ -44,6 +45,7 @@ fun OrgHomeScreen(
     val chatIcon: Painter = painterResource(id = R.drawable.chat)
 
     val viewModel: OrgViewModel = OrgViewModel()
+    viewModel.getAccountType()?.let { onAccountTypeChange(it) }
 
     Surface (
         modifier = Modifier

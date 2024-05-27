@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.navigationBar
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -8,6 +9,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
@@ -28,13 +30,18 @@ fun NavigationButton(
     route: String
 ) {
     //Maybe not have it here?
-    val tintColor = if (currentRoute.value == route) Color.Red else Color(0xFF364830)
+    val buttonColors = if (currentRoute.value == route) ButtonDefaults.elevatedButtonColors(containerColor = Color(0xFFC8D5B9)) else ButtonDefaults.elevatedButtonColors(containerColor = Color.White)
+    val buttonBorder = if (currentRoute.value == route) BorderStroke(2.dp,Color.Black) else null
     ElevatedButton(
-        onClick = onClick) {
+        onClick = onClick,
+        colors = buttonColors,
+        border = buttonBorder
+
+    ) {
         Icon(
             imageVector = iconType,
             contentDescription = description,
-            tint = tintColor
+            tint = Color(0xFF364830)
         )
     }
 }
