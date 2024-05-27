@@ -18,6 +18,7 @@ class OrgAllActivitiesViewmodel: ViewModel() {
 
     val currentOrgUID = Firebase.auth.currentUser?.uid
 
+
     init {
         fetchActivities()
     }

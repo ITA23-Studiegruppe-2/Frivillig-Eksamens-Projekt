@@ -4,13 +4,13 @@ import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 
 class ActivitiesRepository() {
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
+
 
     suspend fun getActivities(): MutableList<Activity> =
         db.collection("Activites")
@@ -24,6 +24,13 @@ class ActivitiesRepository() {
              .get()
              .await()
              .toObjects(Activity::class.java)
+
+    suspend fun getActivityById(activityId: String): Activity? =
+        db.collection("Activites")
+            .document(activityId)
+            .get()
+            .await()
+            .toObject(Activity::class.java)
 
     suspend fun getActivitiesForUser(listOfActivities: MutableList<Activity>, userUID: String): MutableList<Activity> {
         // Initialize a return list
@@ -71,7 +78,9 @@ class ActivitiesRepository() {
                     .map { userDocument -> userDocument.id }
             }
             // Append the list of userIDs to the return list
-            activity.listOfUsersApplied.add(currentActivityListOfUsers.toString())
+            if (currentActivityListOfUsers != null) {
+                activity.listOfUsersApplied = currentActivityListOfUsers.toMutableList()
+            }
             listOfActivitesWithUsers.add(activity)
         }
         return listOfActivitesWithUsers
@@ -123,7 +132,8 @@ class ActivitiesRepository() {
             description = description,
             location = location,
             organisationId = orgId,
-            organization = organisation
+            organization = organisation,
+            city = city
         )
         // Create the activity in the database
         db.collection("Activites")
@@ -163,7 +173,6 @@ class ActivitiesRepository() {
     }
 
     suspend fun getListOfApprovedUserIdByActivityId(activityId: String): MutableList<String>{
-
         val listOfUserIds = db.collection("Activites")
             .document(activityId)
             .collection("userApproved")
@@ -196,4 +205,29 @@ class ActivitiesRepository() {
     }
 
 
+    suspend fun getAllActivitiesIdCompletedByUser(userUId: String): MutableList<String> =
+            db.collection("Users")
+                .document(userUId)
+                .collection("MyActivities")
+                .get()
+                .await()
+                .documents
+                .map { documentId -> documentId.id }
+                .toMutableList()
+
+    suspend fun getAllActivityDataFromListOfId(listOfActivityIds: MutableList<String>): MutableList<Activity> {
+        val listOfActivityObjects: MutableList<Activity> = mutableListOf()
+        listOfActivityIds.forEach {activityId ->
+            val currentActivityData = db.collection("Activites")
+                .document(activityId)
+                .get()
+                .await()
+                .toObject(Activity::class.java)
+
+            if (currentActivityData != null) {
+                listOfActivityObjects.add(currentActivityData)
+            }
+        }
+        return listOfActivityObjects
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.frivillig_eksamens_projekt.ui.homeScreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,11 +46,26 @@ fun HomeScreen(
     val secondaryColor = Color(0xFF364830)
     val viewModel = UserViewModel()
 
+
+
     Surface (
         modifier = Modifier
             .fillMaxSize(),
         color = Color(0xFFC8D5B9)
     ){
+        //Dialog for notifications
+        if (viewModel.dialogShow) {
+            NotificationsDialog(
+                onDismissRequest = { viewModel.dialogShow = false},
+                listOfNotifications = viewModel.listOfNotifications,
+                onMarkAsReadButtonClick = {
+                    viewModel.markNotificationsAsRead()
+                    viewModel.dialogShow = false
+
+                }
+            )
+        }
+
         Column() {
             Box(
                 modifier = Modifier
@@ -74,8 +90,11 @@ fun HomeScreen(
                         imageVector = Icons.Outlined.Notifications,
                         contentDescription = "Notification icon",
                         modifier = Modifier
-                            .size(36.dp),
-                        tint = Color.White
+                            .size(36.dp)
+                            .clickable {
+                                       viewModel.dialogShow = true
+                            },
+                        tint = viewModel.bellColor
                     )
                 }
             }
