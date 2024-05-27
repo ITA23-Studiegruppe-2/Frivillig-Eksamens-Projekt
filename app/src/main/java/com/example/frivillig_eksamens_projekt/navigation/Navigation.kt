@@ -17,6 +17,7 @@ import androidx.navigation.navArgument
 import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity.ListOfUsersApplied
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.OrgAllActivitiesScreen
+import com.example.frivillig_eksamens_projekt.ui.OrganisationProfile.OrganisationScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
@@ -72,7 +73,7 @@ fun Navigation() {
                     onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                     onHomePageClick = { navController.navigate(Screen.Home.route) },
                     onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
-                    onAccountClick = { /*Todo*/ }
+                    onAccountClick = { navController.navigate(Screen.OrganisationProfile.route) }
                 )
 
 
@@ -289,6 +290,9 @@ fun Navigation() {
                     ListOfUsersApplied(activityId = activityId, onBackButtonClick = {navController.popBackStack()})
                 }
             }
+        composable(Screen.OrganisationProfile.route) {
+            OrganisationScreen()
+        }
         }
     }
 }

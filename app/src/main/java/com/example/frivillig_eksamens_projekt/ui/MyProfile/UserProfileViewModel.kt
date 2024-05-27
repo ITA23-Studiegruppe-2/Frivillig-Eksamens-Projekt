@@ -43,7 +43,7 @@ class UserProfileViewModel : ViewModel() {
         getUser()
     }
 
-    fun getUser() {
+    private fun getUser() {
         viewModelScope.launch {
             val currentUserInformation: User? = usersRepository.getUser()
             if (currentUserInformation != null) {
