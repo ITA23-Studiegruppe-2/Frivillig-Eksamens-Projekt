@@ -20,14 +20,28 @@ class CreateOrgViewModel {
     var password by mutableStateOf("")
     var cvrNumber by mutableStateOf("")
 
+    var errorMessage by mutableStateOf("")
+
+
     fun registerOrgAuthAndDatabase(onSuccess: () -> Unit, onFail: (String) -> Unit) {
-        accountService.registerOrganisationAuth(
-            email = email,
-            password = password,
-            onSuccess = onSuccess,
-            onFail = onFail,
-            cvrNumber = cvrNumber,
-            name = orgName
-        )
+        val listOfInputFieldsToCheck: List<String> = listOf(orgName,email,password,cvrNumber)
+        if (checkAllFieldsNotBlank(listOfInputFieldsToCheck)) {
+            accountService.registerOrganisationAuth(
+                email = email,
+                password = password,
+                onSuccess = onSuccess,
+                onFail = onFail,
+                cvrNumber = cvrNumber,
+                name = orgName
+            )
+        } else {
+            errorMessage = "Udfyld venligst alle felterne!"
+        }
+
+    }
+
+    // Function to check if provided list doesnt contain empty fields
+    private fun checkAllFieldsNotBlank(listOfInputs: List<String>): Boolean {
+        return listOfInputs.all { value -> !value.isNullOrBlank() }
     }
 }

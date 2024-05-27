@@ -38,6 +38,8 @@ sealed class Screen (val route: String) {
 
     object MyProfile: Screen(route = "my_profile_screen")
 
+    object Advice: Screen(route = "advice_screen")
+
 //<<<<<<< HEAD
 
 

@@ -79,8 +79,9 @@ fun ConversationList(
                     ConversationItem(
                         conversation = conversation,
                         onResumeClick = { Conversation, organizationName ->
-                            onResumeClick(conversation.conversationId, conversation.organizationName )
-                        }
+                            onResumeClick(conversation.conversationId, conversation.organizationName)
+                        },
+                        onClick = { onResumeClick(conversation.conversationId, conversation.organizationName) }
                     )
                 }
             }

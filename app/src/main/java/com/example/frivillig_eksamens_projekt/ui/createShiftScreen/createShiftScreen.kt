@@ -22,7 +22,6 @@ fun CreateShift(
     onBackButtonClick: () -> Unit,
     onSuccess: () -> Unit
 ) {
-    val secondaryColor = Color(0xFF364830)
 
     val viewModel: CreateShiftViewModel = viewModel()
 
@@ -43,13 +42,10 @@ fun CreateShift(
             .fillMaxSize()
     ) {
         Column {
-
-
             TopBarCreateShift(
                 onBackButtonClick = onBackButtonClick,
                 text = "Opret vagt"
             )
-
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -109,7 +105,7 @@ fun CreateShift(
                     InputFieldShift(
                         label = "By",
                         value = viewModel.city,
-                        onValueChange = {viewModel.description = it},
+                        onValueChange = {viewModel.city = it},
                         height = 0.3f
                     )
                     Spacer(modifier = Modifier.height(18.dp))
@@ -118,7 +114,6 @@ fun CreateShift(
                         onClick = {viewModel.createActivity(onSuccess = onSuccess)}
                     )
                 }
-
             }
         }
     }

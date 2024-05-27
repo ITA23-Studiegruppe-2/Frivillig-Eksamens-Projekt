@@ -66,7 +66,11 @@ class UserViewModel: ViewModel() {
         }
         }
 
-    
+
+    // Set the account type
+    fun getAccountType(): String? {
+        return Firebase.auth.currentUser?.displayName
+    }
     // Get the notifications if there is any
     private fun getUserNotification() {
         viewModelScope.launch {

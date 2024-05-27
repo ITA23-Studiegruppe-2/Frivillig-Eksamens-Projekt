@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.frivillig_eksamens_projekt.repositories.OrganisationRepository
+import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
@@ -31,6 +32,10 @@ class OrgViewModel: ViewModel() {
                 }
             }
         }
+    }
+
+    fun getAccountType(): String? {
+        return Firebase.auth.currentUser?.displayName
     }
 
 }

@@ -5,7 +5,6 @@ import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 
 class ActivitiesRepository() {
@@ -229,5 +228,28 @@ class ActivitiesRepository() {
             }
         }
         return listOfActivityObjects
+    }
+
+    suspend fun addListOfAppliedToActivities(listOfActivities: MutableList<Activity>): MutableList<Activity>{
+        var listOfAllActivities: MutableList<Activity> = mutableListOf()
+
+        listOfActivities.forEach { activity ->
+            val listOfAllUserId = activity.documentId?.let {
+                db.collection("Activites")
+                    .document(it)
+                    .collection("usersApplied")
+                    .get()
+                    .await()
+                    .documents
+                    .map { userId -> userId.id }
+            }
+            activity.listOfUsersApplied = listOfAllUserId as MutableList<String>
+            listOfAllActivities.add(activity)
+
+
+
+        }
+        return listOfAllActivities
+
     }
 }
