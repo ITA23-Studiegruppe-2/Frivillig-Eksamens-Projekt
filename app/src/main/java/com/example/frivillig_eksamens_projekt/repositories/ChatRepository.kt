@@ -212,7 +212,7 @@ class ChatRepository {
 
 
 
-    // Get OrgId for the chosen organisation on Chatscreen
+    // Get OrgId for the chosen organisation on ChatScreen
     suspend fun getOrgId(orgId: String): Organization? {
         val snapshot = db.collection("Organizations")
             .whereEqualTo("orgID", orgId)

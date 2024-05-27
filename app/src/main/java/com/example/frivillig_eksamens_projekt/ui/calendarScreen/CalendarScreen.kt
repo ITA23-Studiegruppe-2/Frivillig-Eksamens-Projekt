@@ -1,6 +1,5 @@
 package com.example.frivillig_eksamens_projekt.ui.calendarScreen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -34,7 +33,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import java.time.LocalDate
 import java.time.YearMonth
@@ -43,48 +44,41 @@ import java.util.Locale
 
 @Composable
 fun CalendarScreen2 (
-    navController: NavController
+    onBackButtonClick: () -> Unit
 ) {
     val secondaryColor = Color(0xFF364830)
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
     val daysOfWeek = listOf("M", "T", "O", "T", "F", "L", "S")
     var showDialog by remember { mutableStateOf(false) }
-    var selectedDate by remember { mutableStateOf<LocalDate?>(null)}
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+    val calendarViewModel: CalendarViewModel = viewModel()
+
+    //Current days
+    var dayFormat: String
+    var monthFormat: String
+    var yearFormat: String
 
     // Define dialog
     if (showDialog && selectedDate != null) {
-        DateDetailsDialog(selectedDate) {
+        val activity = calendarViewModel.getActivityForDate(selectedDate!!)
+        DateDetailsDialog(selectedDate, activity) {
             showDialog = false
             selectedDate = null
         }
     }
 
-    Surface(
+    Box(
         modifier = Modifier
-            .fillMaxSize(),
-        color = Color(0xFFC8D5B9)
+            .background(Color(0xFFC8D5B9))
+            .fillMaxSize()
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .height(70.dp)
-                    .width(390.dp)
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                BackButton(onClick = { navController.popBackStack() })
-                androidx.compose.material3.Text(
-                    text = "Kalender",
-                    fontSize = 28.sp,
-                    color = secondaryColor
-                )
-            }
+            TopBarCreateShift(
+                onBackButtonClick = onBackButtonClick,
+                text = "Kalender"
+            )
             Spacer(modifier = Modifier.height(50.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -105,7 +99,9 @@ fun CalendarScreen2 (
 
 
                 Text(
-                    text = currentMonth.format(DateTimeFormatter.ofPattern("MMM yyyy").withLocale(Locale("da", "DK"))),
+                    text = currentMonth.format(
+                        DateTimeFormatter.ofPattern("MMM yyyy").withLocale(Locale("da", "DK"))
+                    ),
                     fontSize = 22.sp
                 )
 
@@ -165,29 +161,57 @@ fun CalendarScreen2 (
                     for (week in 0 until (totalDays / 7 + if (totalDays % 7 > 0) 1 else 0)) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.Bottom,
+
+                            ) {
                             for (day in 0 until 7) {
                                 val dateNumber = week * 7 + day - daysOffset + 1
                                 if (dateNumber > 0 && dateNumber <= daysInMonth) {
-                                    Text(
-                                        text = dateNumber.toString(),
+
+
+                                    val dateToBeFormatted = currentMonth.atDay(dateNumber).toString()
+
+                                    dayFormat = dateToBeFormatted.substring(8,10)
+                                    monthFormat = dateToBeFormatted.substring(6,7)
+                                    yearFormat = dateToBeFormatted.substring(0,4)
+
+                                    val currentDateFormatted: String  = "$dayFormat/$monthFormat/$yearFormat"
+
+
+                                    Column(
                                         modifier = Modifier
                                             .weight(1f)
                                             .clickable {
                                                 selectedDate = currentMonth.atDay(dateNumber)
                                                 showDialog = true
-                                            }
-                                            .padding(vertical = 20.dp),
+                                            },
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Text(
+                                            text = dateNumber.toString(),
+                                            modifier = Modifier.padding(top = 30.dp),
+                                            fontSize = 19.sp,
+                                            textAlign = TextAlign.Center,
+                                        )
 
-                                        fontSize = 19.sp,
-                                        textAlign = TextAlign.Center
-                                    )
+                                        calendarViewModel.userActivities.forEach { activity ->
+
+                                            if (activity.date == currentDateFormatted) {
+                                                Box(modifier = Modifier
+                                                    .background(Color.Black)
+                                                    .width(26.dp)
+                                                    .height(1.dp)
+                                                    )
+
+                                            }
+                                        }
+                                    }
+
                                 } else {
                                     Spacer(modifier = Modifier.weight(1f))
                                 }
                             }
-
                         }
                     }
                 }

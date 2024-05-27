@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.loginScreen
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +34,7 @@ import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
+
 
 @Composable
 fun LoginScreen(
@@ -130,12 +132,14 @@ fun LoginScreen(
             val googleIcon: Painter = painterResource(id = R.drawable.google_logo)
             val twitterIcon: Painter = painterResource(id = R.drawable.twitter_logo)
 
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Spacer(modifier = Modifier.height(80.dp))
 
-                Spacer(modifier = Modifier.width(25.dp))
                 Icon(
                     painter = faceBookIcon,
                     contentDescription = "Facebook logo",
@@ -165,8 +169,7 @@ fun LoginScreen(
                         .clickable { /* Twitter icon clicked */ }
                 )
             }
-
-            // Login knappen
+            //Login knappen
             Spacer(modifier = Modifier.height(20.dp))
             CustomButton(text = "Login") {
                 loginViewModel.login(

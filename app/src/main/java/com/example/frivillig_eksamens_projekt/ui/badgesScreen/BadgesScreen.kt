@@ -41,18 +41,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.painter.Painter
 import com.example.frivillig_eksamens_projekt.Models.Badge
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 import java.io.File
 
 
 @Composable
-fun BadgesScreen(navController: NavController)
-{
+fun BadgesScreen(
+    onBackButtonClick: () -> Unit) {
 
     val viewModel: BadgesViewModel = viewModel()
     val secondaryColor = Color(0xFF364830)
+    //?????????????????
     val badges = viewModel.badges.observeAsState(listOf())
 
-    //Dialog
+    //Dialog SKAL RYKKES TIL VIEWMODEL
     var showDialog by remember { mutableStateOf(false) }
     var selectedBadge by remember { mutableStateOf<Badge?>(null) }
 
@@ -73,57 +75,54 @@ fun BadgesScreen(navController: NavController)
         )
     }
 
-    Surface (
+    Box(
         modifier = Modifier
-            .fillMaxSize(),
-        color = Color(0xFFC8D5B9)
-    ){
-        Column (
-            modifier = Modifier,
+            .background(Color(0xFFC8D5B9))
+            .fillMaxSize()
+    ) {
+        Column(
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Box(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .height(70.dp)
-                    .width(390.dp)
-                    .background(color = Color.White, shape = RoundedCornerShape(8.dp)),
-                contentAlignment = Alignment.Center
-                ) {
-                BackButton (onClick = {navController.popBackStack()})
-                Text(text = "Badges", fontSize = 28.sp, color = secondaryColor)
-            }
-            Spacer(modifier = Modifier.height(8.dp))
+        ) {
+            TopBarCreateShift(
+                onBackButtonClick = onBackButtonClick,
+                text = "Badges"
+            )
             Box(
                 modifier = Modifier
                     .padding(26.dp),
                 contentAlignment = Alignment.Center
-            ){
-                Text(
-                    text = "Saml mærkater i Volunify ved at tage " +
-                            "forskellige vagter og se dine belønninger vokse!",
-                    fontSize = 16.sp,
-                    color = secondaryColor
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
+            ) {
+                Column {
+                    Text(
+                        text = "Saml mærkater i Volunify ved at tage " +
+                                "forskellige vagter og se dine belønninger vokse!",
+                        fontSize = 16.sp,
+                        color = secondaryColor
+                    )
+                    
+                    Spacer(modifier = Modifier.height(28.dp))
 
-            Box(
-                modifier = Modifier
-                    .width(380.dp)
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(8.dp))
-                    .padding(20.dp)
-            ){
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    contentPadding = PaddingValues(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp) )
-                {
-                    items(badges.value) {badge ->
-                        BadgeIcon(badge = badge, onClick = { onBadgeClick(badge) })
+                    Box(
+                        modifier = Modifier
+                            .width(380.dp)
+                            .background(
+                                color = Color.White,
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .padding(20.dp)
+                    ) {
+
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(4),
+                            contentPadding = PaddingValues(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        )
+                        {
+                            items(badges.value) { badge ->
+                                BadgeIcon(badge = badge, onClick = { onBadgeClick(badge) })
+                            }
+                        }
                     }
                 }
             }

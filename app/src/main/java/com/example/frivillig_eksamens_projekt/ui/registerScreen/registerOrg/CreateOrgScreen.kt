@@ -67,6 +67,7 @@ fun CreateOrgScreen(
                 InputfieldUser(
                     label = "Adgangskode",
                     icon = Icons.Outlined.Lock,
+                    isPassword = true,
                     value = viewModel.password,
                     onValueChange = { viewModel.password = it})
                 InputfieldUser(

@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.registerScreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,7 +31,8 @@ fun CreateUserScreen(
     onSuccess: () -> Unit,
     onFail: () -> Unit,
     viewModel: CreateUserViewModel,
-    onBackButtonClick: () -> Unit
+    onBackButtonClick: () -> Unit,
+    onLoginHyperLink:() -> Unit
 ){
 
 
@@ -102,7 +104,13 @@ fun CreateUserScreen(
             Row {
                 Text(text = "Har du allerede en bruger?", fontSize = 12.sp)
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "Log ind", fontSize = 12.sp, textDecoration = TextDecoration.Underline)
+                Box(modifier = Modifier.clickable { onLoginHyperLink() }) {
+                    Text(
+                        text = "Log ind",
+                        fontSize = 12.sp,
+                        textDecoration = TextDecoration.Underline
+                    )
+                }
             }
             }
         }

@@ -33,7 +33,8 @@ import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 fun HomeScreen(
     navController: NavController,
     onBadgeScreenClick: () -> Unit,
-    onActivityScreenClick: () -> Unit
+    onActivityScreenClick: () -> Unit,
+    onChatScreenClick: () -> Unit
 ) {
 
     val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
@@ -109,7 +110,7 @@ fun HomeScreen(
                         .padding(12.dp)
                 ){
                     Shortcut(onClick = onActivityScreenClick, label = "Ledige vagter")
-                    Shortcut(onClick = { /*TODO*/ }, label = "Mine organisationer")
+                    Shortcut(onClick = onChatScreenClick, label = "Mine samtaler")
                 }
             Box(
                 modifier = Modifier

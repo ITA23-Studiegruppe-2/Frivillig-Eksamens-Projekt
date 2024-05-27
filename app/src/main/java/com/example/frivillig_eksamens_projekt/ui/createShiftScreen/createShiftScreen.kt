@@ -6,16 +6,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
 fun CreateShift(
@@ -43,10 +43,13 @@ fun CreateShift(
             .fillMaxSize()
     ) {
         Column {
+
+
             TopBarCreateShift(
                 onBackButtonClick = onBackButtonClick,
                 text = "Opret vagt"
             )
+
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -54,14 +57,22 @@ fun CreateShift(
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(19.dp)
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    InputFieldShift(label = "Titel", value = viewModel.title, onValueChange = {viewModel.title = it})
+                    Spacer(modifier = Modifier.height(9.dp))
+                    InputFieldShift(
+                        label = "Titel",
+                        value = viewModel.title,
+                        onValueChange = {viewModel.title = it},
+                        height = 0.075f
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
 
                     DateSelector(
                         onClick = { datePickerDialog.show()},
                         value = viewModel.date
                     )
+                    Spacer(modifier = Modifier.height(10.dp))
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(0.8f),
@@ -81,21 +92,27 @@ fun CreateShift(
                             onDismiss = {viewModel.isEndExpanded = false},
                             onValueClick = {viewModel.endTime = it}
                         )
-
                     }
+                    Spacer(modifier = Modifier.height(8.dp))
                     InputFieldShift(
                         label = "Beskrivelse",
                         value = viewModel.description,
                         onValueChange = {viewModel.description = it},
-                        height = 0.5f
+                        height = 0.35f
                     )
-
                     InputFieldShift(
                         label = "Adresse",
                         value = viewModel.location,
                         onValueChange = {viewModel.location = it },
+                        height = 0.2f
+                    )
+                    InputFieldShift(
+                        label = "By",
+                        value = viewModel.city,
+                        onValueChange = {viewModel.description = it},
                         height = 0.3f
                     )
+                    Spacer(modifier = Modifier.height(18.dp))
 
                     CreateShiftButton(
                         onClick = {viewModel.createActivity(onSuccess = onSuccess)}

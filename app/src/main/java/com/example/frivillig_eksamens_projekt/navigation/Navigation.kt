@@ -8,14 +8,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.fragment.app.FragmentManager.BackStackEntry
+import androidx.navigation.NavType
+import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
+import androidx.navigation.navArgument
+import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity.ListOfUsersApplied
+import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.OrgAllActivitiesScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
+import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
+
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
@@ -34,6 +41,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.frivillig_eksamens_projekt.ui.OrganisationScreen
+import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 
 @Composable
 fun Navigation() {
@@ -43,7 +51,7 @@ fun Navigation() {
 
 
     /* Bottom Navigation bar */
-    // List of all the screens that shouldnt have a bottom navigation bar
+    // List of all the screens that shouldn't have a bottom navigation bar
     val screensWithNoBottomNavigation: List<String> = listOf(
         Screen.Start.route,
         Screen.Login.route,
@@ -53,9 +61,15 @@ fun Navigation() {
         Screen.Logo.route,
         Screen.RegisterOrg.route
     )
-    // Store the current route - Should only be logo route, but just to make sure we get the current destination
-    val currentRoute =
-        remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
+
+    val currentRoute = remember { mutableStateOf(Screen.Start.route) }
+
+    LaunchedEffect(navController) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            currentRoute.value = destination.route ?: Screen.Start.route
+        }
+    }
+
     Scaffold(
         bottomBar = {
             // If the currentRoute (Screen) isn't in the list of screensWithNoBottomNavigation render the navigation bar
@@ -112,7 +126,8 @@ fun Navigation() {
                 // TEMP () ADD INDICATOR
                 onFail = { println("Failed") },
                 viewModel = registerViewModel,
-                onBackButtonClick = { navController.popBackStack() }
+                onBackButtonClick = { navController.popBackStack() },
+                onLoginHyperLink = {navController.navigate(Screen.Login.route)}
             )
             currentRoute.value = Screen.RegisterUser.route
         }
@@ -146,7 +161,8 @@ fun Navigation() {
             HomeScreen(
                 navController,
                 onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
-                onActivityScreenClick = {navController.navigate(Screen.Activity.route)})
+                onActivityScreenClick = {navController.navigate(Screen.Activity.route)},
+                onChatScreenClick = {navController.navigate(Screen.ChatPage.route)})
 
             currentRoute.value = Screen.Home.route
         }
@@ -156,20 +172,23 @@ fun Navigation() {
             UserOrOrganisation(
                 onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
                 onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)},
-                onBackButtonClick = { navController.popBackStack() }
+                onBackButtonClick = {navController.popBackStack()}
             )
             currentRoute.value = Screen.UserOrOrg.route
         }
 
         // Calendar Screen
         composable(Screen.Calendar.route) {
-            CalendarScreen2(navController)
+            CalendarScreen2(
+                onBackButtonClick = {navController.popBackStack()}
+            )
             currentRoute.value = Screen.Calendar.route
         }
 
         //Badges Screen
         composable(Screen.Badges.route) {
-            BadgesScreen(navController)
+            BadgesScreen(
+                onBackButtonClick = {navController.popBackStack()})
 
             currentRoute.value = Screen.Badges.route
         }
@@ -196,20 +215,24 @@ fun Navigation() {
             currentRoute.value = Screen.Hours.route
         }
 
-        // Organisation Home Screen
-        composable(Screen.OrgHomeScreen.route) {
-            OrgHomeScreen(navController)
+            // Organisation Home Screen
+            composable(Screen.OrgHomeScreen.route) {
+                OrgHomeScreen(
+                    navController,
+                    onMyActivitiesClick = { navController.navigate(Screen.OrgOwnActivities.route)},
+                    onChatScreenClick = {navController.navigate(Screen.Home.route)},
+                    onCreateShiftClick = {navController.navigate(Screen.CreateShift.route)}
+                )
 
-            currentRoute.value = Screen.OrgHomeScreen.route
-        }
+                currentRoute.value = Screen.OrgHomeScreen.route
+            }
 
-        // Create Shift Screen
-        composable(Screen.CreateShift.route) {
-            CreateShift(
-                onBackButtonClick = {navController.popBackStack()},
-                onSuccess = {navController.popBackStack()}
-            )
-
+            // Create Shift Screen
+            composable(Screen.CreateShift.route) {
+                CreateShift(
+                    onBackButtonClick = {navController.popBackStack()},
+                    onSuccess = {navController.popBackStack()}
+                )
                 currentRoute.value = Screen.CreateShift.route
             }
 
@@ -245,13 +268,35 @@ fun Navigation() {
 
         }
 
-        /*
        composable(Screen.MyProfile.route) {
            ProfileScreen()
            currentRoute.value = Screen.MyProfile.route
        }
+            composable(Screen.MyProfile.route) {
+                ProfileScreen()
+                currentRoute.value = Screen.MyProfile.route
+            }
 
-        */
+            //Orgs list of own activities
+            composable(Screen.OrgOwnActivities.route) {
+                OrgAllActivitiesScreen(
+                    onBackButtonClick = {navController.popBackStack()},
+                    onActivityListClick = { activityId ->
+                        navController.navigate(Screen.ListOfUsersAppliedActivity.createRoute(activityId))}
+                )
+            }
+
+            //List of users applied - org admin view
+            composable(Screen.ListOfUsersAppliedActivity.route,
+                arguments = listOf(navArgument("activityId") {type = NavType.StringType})
+            )
+            {
+                    backStackEntry ->
+                val activityId = backStackEntry.arguments?.getString("activityId")
+                if (activityId != null) {
+                    ListOfUsersApplied(activityId = activityId, onBackButtonClick = {navController.popBackStack()})
+                }
+            }
         }
     }
 }

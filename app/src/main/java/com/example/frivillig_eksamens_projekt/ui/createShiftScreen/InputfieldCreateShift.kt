@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.createShiftScreen
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TextFieldDefaults.textFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -33,6 +35,8 @@ fun InputFieldShift(
     height: Float = 0.1f
 )
 {
+    val secondaryColor = Color(0xFF364830)
+
     val textFieldColors = textFieldColors(
         containerColor = Color.White,
         unfocusedIndicatorColor = Color.Transparent, // Remove underline when unfocused
@@ -40,14 +44,19 @@ fun InputFieldShift(
     )
     Column {
         Text(
-            text = label
+            text = label,
+            color = secondaryColor,
+            modifier = Modifier
+                .padding(4.dp)
         )
         TextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth(width)
-                .fillMaxHeight(height),
+                .fillMaxHeight(height)
+                .border(1.5.dp, color = secondaryColor, shape = RoundedCornerShape(12.dp))
+                .shadow(4.dp, shape = RoundedCornerShape(12.dp)),
             shape = RoundedCornerShape(12.dp),
             colors = textFieldColors
         )

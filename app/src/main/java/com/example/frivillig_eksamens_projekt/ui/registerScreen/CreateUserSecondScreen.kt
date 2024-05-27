@@ -89,7 +89,6 @@ fun CreateUserSecondScreen(
                         icon = Icons.Outlined.DateRange,
                         onClick = {
                             datePickerDialog.show()
-
                         }
                     )
                     Box(
