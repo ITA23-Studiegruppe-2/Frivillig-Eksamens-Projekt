@@ -6,6 +6,7 @@ import com.example.frivillig_eksamens_projekt.Models.Conversation
 import com.example.frivillig_eksamens_projekt.Models.Message
 import com.example.frivillig_eksamens_projekt.Models.Organization
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
@@ -18,7 +19,7 @@ import kotlinx.coroutines.tasks.await
 class ChatRepository {
     val db = Firebase.firestore
 
-/*
+
     ///--- ORGANISATIONER ---(Chat)///
 
     // Get a list of organisations
@@ -88,8 +89,6 @@ class ChatRepository {
         }.addOnFailureListener(onFailure)
     }
 
- */
-
 
     // ------------------ GET MESSAGE ON SCREEN ---------------//
     // Function to get messages on screen to chat in realtime
@@ -121,7 +120,28 @@ class ChatRepository {
     //------------------ GET MESSAGES ---(ConversationList)//
     // Function to fetch chat rooms for a user
     // Fetch conversations by user ID
+    suspend fun getConversationsByUserId(userId: String): List<Conversation> {
 
+        Log.d("ChatRepository", "Fetching conversations for user ID: $userId")
+        // Fetch chat rooms for the specified user
+        val chatRooms = fetchChatRooms(userId)
+        Log.d("FetchConversations", "Number of chat rooms for user $userId: ${chatRooms.size}")
+
+        // Map each chat room to a Conversation object, including fetching the organization name
+        return chatRooms.mapNotNull { chatRoom ->
+            val lastMessage = chatRoom.messages.maxByOrNull { it.timestamp } // Find the latest message based on timestamp
+            chatRoom.documentId?.let { conversationId ->  // Ensure the chat room ID is not null
+                lastMessage?.let { message ->
+                    // Create a new Conversation object with all required fields
+                    Conversation(
+                        organizationName = chatRoom.organizationName,
+                        lastMessage = message,
+                        conversationId = chatRoom.documentId ?: ""
+                    )
+                }
+            }
+        }
+    }
 
     // Function to fetch chat rooms for a user
     suspend fun fetchChatRooms(userIds: String): List<ChatRoom> {
@@ -131,72 +151,37 @@ class ChatRepository {
             .get()
             .await()
 
-
-        Log.d("FetchChatRooms", "Number of chat rooms fetched: ${querySnapshot.size()}")
-        return querySnapshot.toObjects(ChatRoom::class.java)
-    }
-
-
-
-    // Function to fetch chat rooms for an organization
-    suspend fun fetchChatRoomsByOrgId(orgId: String): List<ChatRoom> {
-        val querySnapshot = db.collection("Chat")
-            .whereEqualTo("orgId", orgId)
-            .orderBy("time", Query.Direction.DESCENDING)
-            .get()
-            .await()
-
         // Log antallet af fundne dokumenter
         Log.d("FetchChatRooms", "Number of chat rooms fetched: ${querySnapshot.size()}")
+
         return querySnapshot.toObjects(ChatRoom::class.java)
     }
 
 
 
+    /*
+        // Function to fetch the organization name by orgId
+        suspend fun fetchOrganizationName(orgId: String): String {
+            // Log the orgId that is being fetched
+            Log.d("FetchOrg", "Fetching name for orgId: $orgId")
 
-    suspend fun getConversationsByUserId(userId: String): List<Conversation> {
-        Log.d("ChatRepository", "Fetching conversations for user ID: $userId")
-        // Fetch chat rooms for the specified user
-        val chatRooms = fetchChatRooms(userId)
-        Log.d("FetchConversations", "Number of chat rooms for user $userId: ${chatRooms.size}")
+            // Attempt to fetch the organization document from Firestore
+            val orgDocument = db.collection("Organizations")
+                .document(orgId)
+                .get()
+                .await()
 
-        // Map each chat room to a Conversation object, including fetching the organization name
-        return chatRooms.mapNotNull { chatRoom ->
-            val lastMessage = chatRoom.messages.maxByOrNull { it.timestamp }
+            // Convert the document to Organization object
+            val organization = orgDocument.toObject(Organization::class.java)
 
-            chatRoom.documentId?.let { conversationId -> // Ensure the chat room ID is not null
-                // Create a new Conversation object with all required fields
-                Conversation(
-                    organizationName = chatRoom.organizationName,
-                    lastMessage = lastMessage ?: Message("","", "",0),
-                    conversationId = chatRoom.documentId!!
-                )
-            }
+            // Log the fetched organization name, or log "null" if not found
+            Log.d("FetchOrg", "Fetched Organization: ${organization?.name ?: "null"}")
+
+            // Return the organization name if available, otherwise return "Unknown Organization"
+            return organization?.name ?: "Unknown Organization"
         }
-    }
 
-
-    // Function to fetch chat room for an organisation
-    suspend fun getConversationsByOrgId(orgId: String): List<Conversation> {
-        Log.d("ChatRepository", "Fetching conversations for org ID: $orgId")
-        // Fetch chat rooms for the specified organization
-        val chatRooms = fetchChatRoomsByOrgId(orgId)
-        Log.d("FetchConversations", "Number of chat rooms for org $orgId: ${chatRooms.size}")
-
-        // Map each chat room to a Conversation object, including fetching the organization name
-        return chatRooms.mapNotNull { chatRoom ->
-            val lastMessage = chatRoom.messages.maxByOrNull { it.timestamp }
-
-            chatRoom.documentId?.let { conversationId -> // Ensure the chat room ID is not null
-                // Create a new Conversation object with all required fields
-                Conversation(
-                    organizationName = chatRoom.organizationName,
-                    lastMessage = lastMessage ?: Message("","", "",0),
-                    conversationId = chatRoom.documentId!!
-                )
-            }
-        }
-    }
+     */
 
 
 

@@ -67,12 +67,9 @@ fun ConversationList(
                 )
             }
 
-            LaunchedEffect(viewModel.currentUserId, viewModel.currentOrgId) {
+            LaunchedEffect(viewModel.currentUserId) {
                 viewModel.currentUserId?.let {
                     viewModel.fetchMessages(it)
-                }
-                viewModel.currentOrgId?.let {
-                    viewModel.fetchMessagesForOrg(it)
                 }
             }
 
