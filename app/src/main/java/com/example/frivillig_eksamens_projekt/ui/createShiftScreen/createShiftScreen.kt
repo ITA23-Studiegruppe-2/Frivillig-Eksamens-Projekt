@@ -109,7 +109,7 @@ fun CreateShift(
                     InputFieldShift(
                         label = "By",
                         value = viewModel.city,
-                        onValueChange = {viewModel.description = it},
+                        onValueChange = {viewModel.city = it},
                         height = 0.3f
                     )
                     Spacer(modifier = Modifier.height(18.dp))

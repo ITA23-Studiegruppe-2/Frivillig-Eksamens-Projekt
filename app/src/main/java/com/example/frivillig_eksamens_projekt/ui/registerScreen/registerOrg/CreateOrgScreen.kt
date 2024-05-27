@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
@@ -76,6 +77,12 @@ fun CreateOrgScreen(
                     value = viewModel.cvrNumber,
                     onValueChange = { viewModel.cvrNumber = it})
             }
+            Text(
+                text = viewModel.errorMessage,
+                style = TextStyle(
+                    color = Color.Red
+                )
+            )
             Spacer(modifier = Modifier.height(28.dp))
 
             //TermsAndConditionsCheckbox(checkboxViewModel = viewModel)
@@ -90,7 +97,7 @@ fun CreateOrgScreen(
                     text = "Tilmeld",
                     onClick = {
                         viewModel.registerOrgAuthAndDatabase(
-                            onSuccess = onSuccess, onFail = { println("Failed")}
+                            onSuccess = onSuccess, onFail = { viewModel.errorMessage = it}
                         )
                     })
             }

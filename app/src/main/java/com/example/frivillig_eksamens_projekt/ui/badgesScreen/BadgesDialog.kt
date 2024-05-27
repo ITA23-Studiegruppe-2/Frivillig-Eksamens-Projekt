@@ -19,7 +19,7 @@ fun BadgeDialog(
         containerColor = Color(0xFF364830)
     )
     AlertDialog(
-        onDismissRequest = { onDismiss },
+        onDismissRequest = onDismiss,
         title = {
             Text(text = title)
         },
