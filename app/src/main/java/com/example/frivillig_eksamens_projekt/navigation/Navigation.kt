@@ -55,13 +55,7 @@ fun Navigation() {
         Screen.RegisterOrg.route
     )
 
-    val currentRoute = remember { mutableStateOf(Screen.Start.route) }
-
-    LaunchedEffect(navController) {
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            currentRoute.value = destination.route ?: Screen.Start.route
-        }
-    }
+    val currentRoute = remember { mutableStateOf(navController.currentDestination?.route ?: Screen.Start.route) }
 
     Scaffold(
         bottomBar = {
@@ -132,11 +126,6 @@ fun Navigation() {
                 )
             }
 
-            // User Home Screen
-            composable(Screen.Home.route) {
-                HomeScreen(navController = navController, onBadgeScreenClick = {}, onActivityScreenClick = {})
-            }
-
             // Choose what type of account (Bruger)
             composable(Screen.UserOrOrg.route) {
                 UserOrOrganisation(
@@ -188,19 +177,13 @@ fun Navigation() {
                 )
             }
 
-
-            currentRoute.value = Screen.RegisterOrg.route
-
-
-
             //User Home Screen
             composable(Screen.Home.route) {
-                HomeScreen(navController,
+                HomeScreen(
+                    navController,
                     onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
-                    onActivityScreenClick = {navController.navigate(Screen.Activity.route)}
+                    onActivityScreenClick = {navController.navigate(Screen.Activities.route)}
                 )
-
-
                 currentRoute.value = Screen.Home.route
             }
 

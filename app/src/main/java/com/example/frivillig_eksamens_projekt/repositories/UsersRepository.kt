@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
+import com.example.frivillig_eksamens_projekt.Models.Notification
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
@@ -19,7 +20,6 @@ class UsersRepository() {
          .await()
          .toObject(User::class.java)
      }
-
 
 
 
@@ -59,5 +59,44 @@ class UsersRepository() {
             .document(activityId)
             .delete()
     }
+
+
+    /* COULD BE ITS OWN REPOSITORY -- NOTIFICATION CENTER */
+
+    fun sendNotificationToUser(userUId: String, title: String, message: String) {
+        //Create the notification object
+        val notification: Notification = Notification(
+            title = title,
+            message = message
+        )
+        db.collection("Users")
+            .document(userUId)
+            .collection("MyNotifications")
+            .add(notification)
+    }
+
+    suspend fun retrieveNotificationsByUserUId(userUId: String): MutableList<Notification> =
+        db.collection("Users")
+            .document(userUId)
+            .collection("MyNotifications")
+            .get()
+            .await()
+            .toObjects(Notification::class.java)
+
+    suspend fun deleteNotificationsForUser(userUId: String) {
+        //Deletes every document inside of the collection using batch - Which can allow up to 500 at a time
+        val batch = Firebase.firestore.batch()
+        db.collection("Users")
+            .document(userUId)
+            .collection("MyNotifications")
+            .get()
+            .await()
+            .forEach{document ->
+                batch.delete(document.reference)
+            }
+        // Commit the batch - Aka delete from the collection
+        batch.commit().await()
+    }
+
 }
 

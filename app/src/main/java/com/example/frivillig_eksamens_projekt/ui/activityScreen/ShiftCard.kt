@@ -43,7 +43,7 @@ fun ShiftCard(title: String, organization: String, date: String, time: String, a
 
     //Check to see if the list of users applied to the activity contains the current user
     // If it does, initialize the request to be true.
-    if (listOfUsers.contains("[${Firebase.auth.uid}]")) {
+    if (listOfUsers.contains(Firebase.auth.uid)) {
         viewModel.setRequested(true)
     }
 

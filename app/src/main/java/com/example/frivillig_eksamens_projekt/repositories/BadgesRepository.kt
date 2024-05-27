@@ -28,6 +28,16 @@ class BadgesRepository() {
             .get()
             .await()
             .toObjects(Badge::class.java)
+
+    suspend fun getBadgesForSpecificUser(userUId: String): MutableList<Badge> =
+        db.collection("Users")
+            .document(userUId)
+            .collection("Badges")
+            .get()
+            .await()
+            .toObjects(Badge::class.java)
+
+
 }
 
     /*

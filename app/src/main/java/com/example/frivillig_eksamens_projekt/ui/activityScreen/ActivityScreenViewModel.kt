@@ -89,16 +89,12 @@ class ActivityScreenViewModel: ViewModel() {
                 tempListOfAllCities.add(city.city)
             }
         }
-
         listOfCities = tempListOfAllCities
-        println(tempListOfAllCities + " Temp")
-        println(listOfCities + " list of all")
     }
 
     fun filterActivitiesByLocation(city: String) {
         if (selectedCity != "Lokation") {
-            listOfActivities =
-                listOfActivities.filter { activity -> activity.city == city }.toMutableList()
+            listOfActivities = listOfActivities.filter { activity -> activity.city == city }.toMutableList()
         }
     }
 }
