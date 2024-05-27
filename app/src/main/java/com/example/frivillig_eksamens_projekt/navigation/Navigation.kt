@@ -33,6 +33,7 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.Crea
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
 import androidx.navigation.NavType
+import com.example.frivillig_eksamens_projekt.ui.adviceScreen.AdviceScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.OrgBottomNavigationBar
 
 @Composable
@@ -219,11 +220,11 @@ fun Navigation() {
             // Organisation Home Screen
             composable(Screen.OrgHomeScreen.route) {
                 OrgHomeScreen(
-                    navController,
                     onMyActivitiesClick = { navController.navigate(Screen.OrgOwnActivities.route)},
                     onChatScreenClick = {navController.navigate(Screen.Home.route)},
                     onCreateShiftClick = {navController.navigate(Screen.CreateShift.route)},
-                    onAccountTypeChange = {it -> currentUserType.value = it}
+                    onAccountTypeChange = {it -> currentUserType.value = it},
+                    onVolunteersClick = {navController.navigate(Screen.Advice.route)}
                 )
 
                 currentRoute.value = Screen.OrgHomeScreen.route
@@ -238,8 +239,11 @@ fun Navigation() {
                 currentRoute.value = Screen.CreateShift.route
             }
 
-
-
+        // Volunteers Screen
+        composable(Screen.Advice.route) {
+            AdviceScreen (
+                onBackButtonClick = {navController.popBackStack()})
+        }
 
 
             // Resume a conversation
