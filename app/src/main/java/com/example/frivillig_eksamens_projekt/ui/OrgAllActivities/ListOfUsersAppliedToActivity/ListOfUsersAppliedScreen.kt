@@ -53,6 +53,7 @@ fun ListOfUsersApplied(
                 onClick = {
                     listOfUsersAppliedViewmodel.addOrRemoveActivityForUsers()
                     onBackButtonClick()
+
                 }) {
                 Text(text = "Notify Users")
 
