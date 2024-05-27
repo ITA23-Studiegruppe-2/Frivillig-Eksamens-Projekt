@@ -3,6 +3,7 @@ package com.example.frivillig_eksamens_projekt.ui.calendarScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,11 +13,16 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 class CalendarViewModel(): ViewModel() {
     private val activitiesRepository = ActivitiesRepository()
     var userActivities: MutableList<Activity> by mutableStateOf(mutableStateListOf())
+
+    var currentMonth by mutableStateOf(YearMonth.now())
+    var showDialog by mutableStateOf(false)
+    var selectedDate by mutableStateOf<LocalDate?>(null)
 
     init {
         getUserActivities()

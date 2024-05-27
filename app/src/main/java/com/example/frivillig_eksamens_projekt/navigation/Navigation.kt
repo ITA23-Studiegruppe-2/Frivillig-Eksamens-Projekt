@@ -34,6 +34,7 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewMo
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
+import com.example.frivillig_eksamens_projekt.ui.adviceScreen.AdviceScreen
 
 @Composable
 fun Navigation() {
@@ -210,10 +211,10 @@ fun Navigation() {
             // Organisation Home Screen
             composable(Screen.OrgHomeScreen.route) {
                 OrgHomeScreen(
-                    navController,
                     onMyActivitiesClick = { navController.navigate(Screen.OrgOwnActivities.route)},
                     onChatScreenClick = {navController.navigate(Screen.Home.route)},
-                    onCreateShiftClick = {navController.navigate(Screen.CreateShift.route)}
+                    onCreateShiftClick = {navController.navigate(Screen.CreateShift.route)},
+                    onVolunteersClick = {navController.navigate(Screen.Advice.route)}
                 )
 
                 currentRoute.value = Screen.OrgHomeScreen.route
@@ -227,6 +228,12 @@ fun Navigation() {
                 )
                 currentRoute.value = Screen.CreateShift.route
             }
+
+        // Volunteers Screen
+        composable(Screen.Advice.route) {
+            AdviceScreen (
+                onBackButtonClick = {navController.popBackStack()})
+        }
 
 
 

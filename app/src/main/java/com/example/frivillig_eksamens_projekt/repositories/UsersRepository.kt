@@ -1,8 +1,8 @@
 package com.example.frivillig_eksamens_projekt.repositories
 
-import android.app.Notification
-import com.example.frivillig_eksamens_projekt.Models.Notification
+
 import com.example.frivillig_eksamens_projekt.Models.News
+import com.example.frivillig_eksamens_projekt.Models.Notification
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
@@ -95,6 +95,7 @@ class UsersRepository() {
             .document(userUId)
             .collection("MyNotifications")
             .add(notification)
+    }
 
 
     suspend fun retrieveNotificationsByUserUId(userUId: String): MutableList<Notification> =
@@ -122,6 +123,6 @@ class UsersRepository() {
         batch.commit().await()
     }
 }
-    }
+
 
 
