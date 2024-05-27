@@ -57,7 +57,7 @@ fun ProfileScreen() {
                         Icon(
                             imageVector = if (isEditing) Icons.Filled.Check else Icons.Filled.Edit, // Toggle icon between edit and save
                             modifier = Modifier
-                                .size(30.dp)
+                                .size(40.dp)
                                 .padding(top = 10.dp),
                             contentDescription = if (isEditing) "Save" else "Edit",
                             tint = Color.Black
@@ -120,19 +120,22 @@ fun ProfileScreen() {
                     label = "Zip Code",
                     value = updatedProfile.value.zipCode,
                     onValueChange = { updatedProfile.value = updatedProfile.value.copy(zipCode = it) },
-                    mainIcon = Icons.Default.LocationOn
+                    mainIcon = Icons.Default.LocationOn,
+
                 )
                 Spacer(modifier = Modifier.height(14.dp))
                 Button(
                     onClick = {
                         viewModel.updateUserProfile(updatedProfile.value) // Update user profile
                     },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF364830)),
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .width(110.dp)
-                        .height(40.dp),
-                ) {
-                    Text("Save")
+                        .height(40.dp)
+                )
+                    {
+                        Text("Save")
                 }
             } else {
                 // Display user profile information
@@ -140,7 +143,7 @@ fun ProfileScreen() {
                 Spacer(modifier = Modifier.height(14.dp))
                 InputFieldUser(label = viewModel.phoneNumber, mainIcon = Icons.Default.Phone)
                 Spacer(modifier = Modifier.height(14.dp))
-                InputFieldUser(label = viewModel.birthDate, mainIcon = Icons.Default.ArrowDropDown)
+                InputFieldUser(label = viewModel.birthDate, mainIcon = Icons.Default.DateRange)
                 Spacer(modifier = Modifier.height(14.dp))
                 InputFieldUser(label = viewModel.zipCode, mainIcon = Icons.Default.LocationOn)
             }
