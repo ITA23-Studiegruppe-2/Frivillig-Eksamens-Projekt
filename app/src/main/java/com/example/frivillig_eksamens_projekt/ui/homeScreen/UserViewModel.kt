@@ -5,29 +5,42 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.frivillig_eksamens_projekt.Models.User
+import com.example.frivillig_eksamens_projekt.Models.News
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
+
 
 class UserViewModel: ViewModel() {
     val usersRepository: UsersRepository = UsersRepository()
 
-    init {
-        viewModelScope.launch {
-            getUserData()
-        }
-
-    }
+    // Using mutableStateOf to hold the news data
+    var news by mutableStateOf<News?>(null)
 
     var name by mutableStateOf("")
 
 
-    suspend fun getUserData(){
+    init {
+        viewModelScope.launch {
+            getUserData()
+            fetchRandomNews()
+        }
+
+    }
+
+
+
+
+    suspend fun getUserData() {
         val userData = usersRepository.getUser()
         if (userData != null) {
             name = userData.fullName
         }
     }
-}
+
+
+
+    suspend fun fetchRandomNews() {
+        val fetchedNews = usersRepository.fetchRandomNews()
+        news = fetchedNews
+        }
+    }

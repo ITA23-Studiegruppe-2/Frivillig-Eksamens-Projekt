@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -95,12 +96,13 @@ fun LoginScreen(
                 )
             )
 
-            // Checkbox & glemt adgangskode
+            // Checkbox & forgotten password
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(modifier = Modifier.weight(0.2f))
                 Checkbox(
+                    colors = CheckboxDefaults.colors(checkedColor = Color(0xFF364830)),
                     checked = loginViewModel.rememberMe,
                     onCheckedChange = { loginViewModel.rememberMe = it }
                 )

@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +14,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
@@ -41,96 +41,90 @@ fun GroupChatScreen(
     organizationName: String,
     onBackButtonClick: () -> Unit
 ) {
-    val viewModel: OrgChatViewModel = OrgChatViewModel(conversationId)
-    // val viewModel: OrgChatViewModel = viewModel()
-    val messages by viewModel.messages.collectAsState()
+    val viewModel: OrgChatViewModel = OrgChatViewModel(conversationId, activityId)
+    val messages by viewModel.messages.collectAsState() // Convert "StateFlow" to a compose-friendly "state". Listens to new messages, and updates the UI automatic.
     var messageText by remember { mutableStateOf("") }
-    val orgId = viewModel.currentUserId
-    val secondaryColor = Color(0xFF364830)
+    val orgId by viewModel::orgId
 
-    LaunchedEffect(conversationId) {
-        viewModel.loadMessages(conversationId)
-        viewModel.listenToMessages(conversationId) // Ensure real-time updates
-        viewModel.initializeChatForApprovedUsers(activityId, orgId)
+
+
+    // Listen for changes in conversationId, and start again
+    LaunchedEffect (conversationId) {
+        viewModel.initializeChat(conversationId, activityId)
     }
 
-    Surface (
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color(0xFFC8D5B9))
+    Surface(
+        modifier = Modifier.fillMaxSize()
     ) {
-
-
-
-    // Building the UI layout for the group chat screen
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)
-    ) {
-        Box(
+        Column(
             modifier = Modifier
-                .padding(8.dp)
-                .height(70.dp)
-                .width(390.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(8.dp)
-                ),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .background(viewModel.backgroundColor)
         ) {
-            BackButton(onClick = onBackButtonClick)
-            androidx.compose.material3.Text(
-                text = organizationName,
-                fontSize = 28.sp,
-                color = secondaryColor,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-
-        // LazyColumn to display messages efficiently
-        LazyColumn(
-            modifier = Modifier.weight(1f)
-        ) {
-            items(messages) { message ->
-                // MessageBubble to display each message with sender identification
-                MessageBubble(message = message, isOwnMessage = message.senderId == viewModel.currentUserId)
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp)) // Adds space between messages and input
-
-        // Row for input and send button
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            OutlinedTextField(
-                value = messageText,
-                onValueChange = { messageText = it },
-                label = { Text("Besked") },
+            Box(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 8.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = MaterialTheme.colors.onSurface,
-                )
-            )
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = secondaryColor,
-                    contentColor = Color.White
-                ),
-                onClick = {
-                    // Send message using ViewModel and clear text field
-                    viewModel.sendGroupMessage(activityId, messageText, orgId)
-                    messageText = ""
-                }
+                    .padding(8.dp)
+                    .height(70.dp)
+                    .width(390.dp)
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+                contentAlignment = Alignment.Center
             ) {
-                Text("Send")
+                BackButton(onClick = onBackButtonClick)
+                androidx.compose.material3.Text(
+                    text = "$organizationName",
+                    fontSize = 28.sp,
+                    color = viewModel.secondaryColor,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            LazyColumn(
+                modifier = Modifier.weight(1f)
+            ) {
+                items(messages) { message ->
+                    MessageBubble(message = message, isOwnMessage = message.senderId == viewModel.currentUserId)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = messageText,
+                    onValueChange = { messageText = it },
+                    label = { Text("Besked") },
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
+                        .padding(4.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = viewModel.secondaryColor,
+                        backgroundColor = Color.White,
+                    )
+                )
+                Button(
+                    modifier = Modifier.padding(5.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = viewModel.secondaryColor,
+                        contentColor = Color.White,
+                    ),
+                    onClick = {
+                        viewModel.sendGroupMessage(activityId, messageText, orgId)
+                        messageText = ""
+                    }
+                ) {
+                    Text("Send")
+                }
             }
         }
-    }
     }
 }
+

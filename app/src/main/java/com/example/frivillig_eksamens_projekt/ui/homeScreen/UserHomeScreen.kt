@@ -12,17 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Build
-import androidx.compose.material.icons.outlined.CheckCircle
-import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.navigation.Screen
-import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 
 @Composable
@@ -49,7 +42,6 @@ fun HomeScreen(
     val calendarIcon: Painter = painterResource(id = R.drawable.calendar)
 
     val secondaryColor = Color(0xFF364830)
-
     val viewModel = UserViewModel()
 
     Surface (
@@ -123,9 +115,8 @@ fun HomeScreen(
                 modifier = Modifier
                     .padding(12.dp)
             ) {
-                HomeScreenNews(title = "New News", news = "hej hej hej hej hej" +
-                        "hej hej hejh eejh hej hej hej hej hej hej")
 
+                HomeScreenNews()
             }
         }
     }

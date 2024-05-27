@@ -8,14 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
+import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
@@ -30,7 +30,10 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewMo
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
-
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.example.frivillig_eksamens_projekt.ui.OrganisationScreen
 
 @Composable
 fun Navigation() {
@@ -153,7 +156,7 @@ fun Navigation() {
             UserOrOrganisation(
                 onSuccesUserSelection = { navController.navigate(Screen.RegisterUser.route) },
                 onSuccesOrgSelection = { navController.navigate(Screen.RegisterOrg.route)},
-                onBackButtonClick = { navController.popBackStack()}
+                onBackButtonClick = { navController.popBackStack() }
             )
             currentRoute.value = Screen.UserOrOrg.route
         }
@@ -218,9 +221,9 @@ fun Navigation() {
         composable(Screen.GroupChat.route,
             arguments = listOf(
                 navArgument("conversationId"){ type = NavType.StringType },
-                navArgument("organizationName"){ type = NavType.StringType }
+                navArgument("organizationName"){ type = NavType.StringType})
             )
-        )
+
         {
             backStackEntry ->
             val conversationId = backStackEntry.arguments?.getString("conversationId")
@@ -230,22 +233,17 @@ fun Navigation() {
                    conversationId = conversationId,
                    activityId = conversationId,
                    organizationName = organizationName,
-                   onBackButtonClick = { navController.popBackStack() }
-               )
+                   onBackButtonClick = { navController.popBackStack() } )
             }
         }
 
         composable(Screen.ConversationScreen.route) {
             ConversationList(
                 onResumeClick = { conversationId, organizationName ->
-                    navController.navigate(Screen.GroupChat.createRoute(conversationId, organizationName))
-                },
-                onBackButtonClick = { navController.popBackStack() }
-            )
+                    navController.navigate(Screen.GroupChat.createRoute(conversationId, organizationName))},
+                onBackButtonClick = { navController.popBackStack()})
 
         }
-
-
 
         /*
        composable(Screen.MyProfile.route) {

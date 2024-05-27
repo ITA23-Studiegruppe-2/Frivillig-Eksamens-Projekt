@@ -110,9 +110,7 @@ fun OrgHomeScreen(navController: NavController){
                 modifier = Modifier
                     .padding(12.dp)
             ) {
-                HomeScreenNews(title = "New News", news = "hej hej hej hej hej" +
-                        "hej hej hejh eejh hej hej hej hej hej hej")
-
+                HomeScreenNews()
             }
         }
     }

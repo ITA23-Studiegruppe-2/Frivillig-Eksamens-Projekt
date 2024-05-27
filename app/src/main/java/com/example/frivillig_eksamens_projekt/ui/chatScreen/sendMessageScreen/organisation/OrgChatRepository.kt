@@ -1,6 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation
 
-import android.util.Log
+import  android.util.Log
 import com.example.frivillig_eksamens_projekt.DTO.ChatRoom
 import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.example.frivillig_eksamens_projekt.Models.Message
@@ -55,6 +55,31 @@ class OrgChatRepository {
         return organizationName
     }
 
+
+    //-------------------- FETCH FULLNAME OF USERS -------------------//
+    suspend fun fetchFullNameOfUsers(userIds: String): String {
+        val userDocument = db.collection("Users")
+            .document(userIds)
+            .get()
+            .await()
+        return userDocument.getString("fullName") ?: "Unknown User"
+    }
+
+
+
+    //--------------------- FETCH ORGANIZATIONS ID ------------------//
+
+    suspend fun fetchOrganizationsId(activityId: String): String {
+        val activityDocument = db.collection("Activites")
+            .document(activityId)
+            .get()
+            .await()
+        return activityDocument.getString("organisationId") ?: "unknownOrgId"
+    }
+
+
+
+
     // -------------------- CREATE OR UPDATE CHATROOM ---------------------//
     // Function to create or update a chatroom with userIds
     suspend fun createOrUpdateChatroomWithUsers(
@@ -102,11 +127,14 @@ class OrgChatRepository {
         activityId: String,
         messageText: String,
         senderId: String,
+        senderName: String,
         orgId: String,
         timestamp: Long
     ): Boolean {
         val chatRoomRef = db.collection("Chat").document(activityId)
-        val document = chatRoomRef.get().await()
+        val document = chatRoomRef
+            .get()
+            .await()
         val organizationName = fetchNameOfOrganization(activityId)
 
         return if (document.exists()) {
@@ -116,7 +144,9 @@ class OrgChatRepository {
                 "content" to messageText,
                 "timestamp" to timestamp,
                 "senderId" to senderId,
+                "senderName" to senderName,
                 "orgId" to orgId
+
             )
             chatRoomRef
                 .update(
@@ -137,7 +167,9 @@ class OrgChatRepository {
                         "content" to messageText,
                         "timestamp" to timestamp,
                         "senderId" to senderId,
+                        "senderName" to senderName,
                         "orgId" to orgId
+
                     )
                 ),
                 "time" to timestamp,
@@ -163,16 +195,10 @@ class OrgChatRepository {
                 close(exception)
                 return@addSnapshotListener
             }
-            // If the snapshot exists and is not null, process the messages
-            if (snapshot != null && snapshot.exists()) {
-                // Convert the snapshot to a ChatRoom object and get the list of messages
-                val messages = snapshot.toObject(ChatRoom::class.java)?.messages ?: listOf()
-                // Send the messages list through the flow
-                trySend(messages)
-            } else {
-                // If the snapshot is null or doesn't exist, send an empty list
-                trySend(listOf())
-            }
+            // Return empty list if there isn't any messages
+            val messages = snapshot?.toObject(ChatRoom::class.java)?.messages.orEmpty()
+            trySend(messages).isSuccess
+
         }
         // Ensure the listener is removed when the flow is closed
         awaitClose { listener.remove() }
