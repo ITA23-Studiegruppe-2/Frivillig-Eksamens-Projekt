@@ -23,9 +23,12 @@ class UsersRepository() {
     }
 
 
-
-
-     fun addUserToDatabase(user: User, userUID: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
+    fun addUserToDatabase(
+        user: User,
+        userUID: String,
+        onSuccess: () -> Unit,
+        onFail: (String) -> Unit
+    ) {
         db.collection("Users")
             .document(userUID)
             .set(user)
@@ -54,7 +57,7 @@ class UsersRepository() {
             .set(activityIdObject)
     }
 
-    fun removeActivityIdFromUserSubCollection(activityId: String,userId: String) {
+    fun removeActivityIdFromUserSubCollection(activityId: String, userId: String) {
         db.collection("Users")
             .document(userId)
             .collection("MyActivities")
@@ -79,6 +82,6 @@ class UsersRepository() {
             null
         }
     }
-    }
+}
 
 

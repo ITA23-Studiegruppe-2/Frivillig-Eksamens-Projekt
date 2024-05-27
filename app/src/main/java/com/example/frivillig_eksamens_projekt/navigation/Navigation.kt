@@ -5,24 +5,21 @@ import GroupChatScreen
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.fragment.app.FragmentManager.BackStackEntry
 import androidx.navigation.NavType
-import androidx.navigation.activity
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity.ListOfUsersApplied
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.OrgAllActivitiesScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
-import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
-import com.example.frivillig_eksamens_projekt.ui.calender.CalendarScreen
-
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
@@ -37,11 +34,6 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewMo
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
-import androidx.compose.runtime.LaunchedEffect
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
-import com.example.frivillig_eksamens_projekt.ui.OrganisationScreen
-import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 
 @Composable
 fun Navigation() {
@@ -162,7 +154,7 @@ fun Navigation() {
                 navController,
                 onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
                 onActivityScreenClick = {navController.navigate(Screen.Activity.route)},
-                onChatScreenClick = {navController.navigate(Screen.ChatPage.route)})
+                onChatScreenClick = { navController.navigate(Screen.ConversationScreen.route) })
 
             currentRoute.value = Screen.Home.route
         }
