@@ -132,53 +132,54 @@ fun LoginScreen(
             val googleIcon: Painter = painterResource(id = R.drawable.google_logo)
             val twitterIcon: Painter = painterResource(id = R.drawable.twitter_logo)
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(80.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Spacer(modifier = Modifier.height(80.dp))
 
-                Icon(
-                    painter = faceBookIcon,
-                    contentDescription = "Facebook logo",
-                    tint = Color.Unspecified,
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clickable { /* Facebook icon clicked */ }
-                )
+                    Icon(
+                        painter = faceBookIcon,
+                        contentDescription = "Facebook logo",
+                        tint = Color.Unspecified,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable { /* Facebook icon clicked */ }
+                    )
 
-                Spacer(modifier = Modifier.width(25.dp))
-                Icon(
-                    painter = googleIcon,
-                    contentDescription = "Google logo",
-                    tint = Color.Unspecified,
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clickable { /* Google icon clicked */ }
-                )
+                    Spacer(modifier = Modifier.width(25.dp))
+                    Icon(
+                        painter = googleIcon,
+                        contentDescription = "Google logo",
+                        tint = Color.Unspecified,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable { /* Google icon clicked */ }
+                    )
 
-                Spacer(modifier = Modifier.width(25.dp))
-                Icon(
-                    painter = twitterIcon,
-                    contentDescription = "Twitter logo",
-                    tint = Color.Unspecified,
-                    modifier = Modifier
-                        .size(20.dp)
-                        .clickable { /* Twitter icon clicked */ }
-                )
-            }
-            //Login knappen
-            Spacer(modifier = Modifier.height(20.dp))
-            CustomButton(text = "Login") {
-                loginViewModel.login(
-                    loginViewModel.email,
-                    loginViewModel.password,
-                    onUserSuccessLogin = onUserSuccessLogin,
-                    onOrgSuccessLogin = onOrgSuccessLogin,
-                    onFailure = { loginViewModel.errorMessage = it }
-                )
+                    Spacer(modifier = Modifier.width(25.dp))
+                    Icon(
+                        painter = twitterIcon,
+                        contentDescription = "Twitter logo",
+                        tint = Color.Unspecified,
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable { /* Twitter icon clicked */ }
+                    )
+                }
+                //Login knappen
+                Spacer(modifier = Modifier.height(20.dp))
+                CustomButton(text = "Login") {
+                    loginViewModel.login(
+                        loginViewModel.email,
+                        loginViewModel.password,
+                        onUserSuccessLogin = onUserSuccessLogin,
+                        onOrgSuccessLogin = onOrgSuccessLogin,
+                        onFailure = { loginViewModel.errorMessage = it }
+                    )
+                }
             }
         }
     }

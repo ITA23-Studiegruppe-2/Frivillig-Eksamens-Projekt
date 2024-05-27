@@ -59,7 +59,6 @@ class UserViewModel: ViewModel() {
     }
 
 
-
      fun fetchRandomNews() {
         viewModelScope.launch {
             val fetchedNews = usersRepository.fetchRandomNews()
@@ -174,8 +173,8 @@ class UserViewModel: ViewModel() {
                 val badge = Badge(
                     description = "Dette mærkat får du hvis du har arbejdet som frivillig i over $threshold timer!",
                     name = "hour$threshold",
-                    path = "hour${threshold}_locked",
-                    pathLocked = "hour$threshold",
+                    path = "hour${threshold}",
+                    pathLocked = "hour${threshold}_locked",
                     title = "$threshold timer",
                     documentId = "${threshold}hour"
                 )
@@ -191,7 +190,8 @@ class UserViewModel: ViewModel() {
             val badge = Badge(
                 description = "Dette mærkat får du når du har haft din første vagt som frivillig. Velkommen til!",
                 name = "newbie",
-                path = "newbie_locked",
+                path = "newbie",
+                pathLocked = "newbie_locked",
                 title = "Newbie",
                 documentId = "Newbie"
             )
