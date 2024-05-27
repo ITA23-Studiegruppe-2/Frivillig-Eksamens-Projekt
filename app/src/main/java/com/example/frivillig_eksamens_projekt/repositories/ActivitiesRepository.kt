@@ -4,8 +4,6 @@ import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserId
 import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
@@ -202,12 +200,29 @@ class ActivitiesRepository() {
     }
 
 
-    suspend fun getAllActivitiesCompletedByUser(userUId: String): MutableList<Activity> =
+    suspend fun getAllActivitiesIdCompletedByUser(userUId: String): MutableList<String> =
             db.collection("Users")
                 .document(userUId)
-                .collection("MyActivites")
+                .collection("MyActivities")
                 .get()
                 .await()
-                .toObjects(Activity::class.java)
+                .documents
+                .map { documentId -> documentId.id }
+                .toMutableList()
+
+    suspend fun getAllActivityDataFromListOfId(listOfActivityIds: MutableList<String>): MutableList<Activity> {
+        val listOfActivityObjects: MutableList<Activity> = mutableListOf()
+        listOfActivityIds.forEach {activityId ->
+            val currentActivityData = db.collection("Activites")
+                .document(activityId)
+                .get()
+                .await()
+                .toObject(Activity::class.java)
+
+            if (currentActivityData != null) {
+                listOfActivityObjects.add(currentActivityData)
+            }
         }
+        return listOfActivityObjects
+    }
 }

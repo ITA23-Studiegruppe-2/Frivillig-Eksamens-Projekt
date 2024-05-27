@@ -38,6 +38,16 @@ class BadgesRepository() {
             .toObjects(Badge::class.java)
 
 
+    fun addBadgeToUser(badgeToAdd: Badge, badgeId: String) {
+        val currentUserUId = currentUser?.uid
+        if (currentUserUId != null) {
+            db.collection("Users")
+                .document(currentUserUId)
+                .collection("Badges")
+                .document(badgeId)
+                .set(badgeToAdd)
+        }
+    }
 }
 
     /*

@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.example.frivillig_eksamens_projekt.Models.Badge
 import com.example.frivillig_eksamens_projekt.Models.Notification
-import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.Models.UserStats
 import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 import com.example.frivillig_eksamens_projekt.repositories.BadgesRepository
@@ -30,6 +29,7 @@ class UserViewModel: ViewModel() {
     init {
         getUserData()
         getUserNotification()
+        awardUsersWithBadgeCheck()
 
     }
 
@@ -92,15 +92,20 @@ class UserViewModel: ViewModel() {
                 val listOfAllBadges: MutableList<Badge> = badgesRepository.getAllBadges()
 
                 //Get the list of all activities for the user
-                val listOfAllActivitiesCompletedByUser: MutableList<Activity> = activitiesRepository.getAllActivitiesCompletedByUser(currentUserUId)
+                val listOfAllActivitiesIdCompletedByUser: MutableList<String> = activitiesRepository.getAllActivitiesIdCompletedByUser(currentUserUId)
+                val listOfAllActivitiesCompleted: MutableList<Activity> = activitiesRepository.getAllActivityDataFromListOfId(listOfAllActivitiesIdCompletedByUser)
 
                 // Go through the list of all activities and calculate hours + the amount of activities (size of list)
 
-                val currentUserStats: UserStats = formatStatsFromActivities(listOfAllActivitiesCompletedByUser)
+                val currentUserStats: UserStats = formatStatsFromActivities(listOfAllActivitiesCompleted)
 
+                val listOfAwardBadgeFunctions: List<(UserStats) -> Unit> = listOf(::awardHoursBadge,::awardAmountBadge)
+                listOfAwardBadgeFunctions.forEach {function ->
+                    function(currentUserStats)
 
-
+                }
                 // Have functions that takes a value as parameter, and uses that to award (If the threshold is crossed) a badge
+                // See functions further down
             }
         }
     }
@@ -140,8 +145,40 @@ class UserViewModel: ViewModel() {
     }
 
     // List Of award badge functions.
-    // 5 20 30 50 75 100 150
+    // 5 20 50 75 100 150
     fun awardHoursBadge(currentUserStats: UserStats) {
+        val listOfHoursThreshold: List<Int> = listOf(5,20,50,75,100,150)
+
+        listOfHoursThreshold.forEach{threshold ->
+
+            if (threshold <= currentUserStats.hours) {
+                //Create the badge
+                val badge = Badge(
+                    description = "Dette mærkat får du hvis du har arbejdet som frivillig i over $threshold timer!",
+                    name = "hour$threshold",
+                    path = "hour${threshold}_locked",
+                    pathLocked = "hour$threshold",
+                    title = "$threshold timer",
+                    documentId = "${threshold}hour"
+                )
+
+                badge.documentId?.let { badgesRepository.addBadgeToUser(badge, badgeId = it) }
+            }
+
+        }
+    }
+
+    fun awardAmountBadge(currentUserStats: UserStats) {
+        if (currentUserStats.amountOfActivities >= 1) {
+            val badge = Badge(
+                description = "Dette mærkat får du når du har haft din første vagt som frivillig. Velkommen til!",
+                name = "newbie",
+                path = "newbie_locked",
+                title = "Newbie",
+                documentId = "Newbie"
+            )
+            badge.documentId?.let { badgesRepository.addBadgeToUser(badge, badgeId = it) }
+        }
     }
 
 
