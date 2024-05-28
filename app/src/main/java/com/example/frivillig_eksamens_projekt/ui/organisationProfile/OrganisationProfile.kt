@@ -1,6 +1,5 @@
-package com.example.frivillig_eksamens_projekt.ui.OrganisationProfile
+package com.example.frivillig_eksamens_projekt.ui.organisationProfile
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -17,23 +16,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
+// Composable function to display the organisation profile screen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OrganisationScreen() {
     val viewModel: OrganisationProfileViewModel = viewModel()
-
     Scaffold(
         topBar = {
             SmallTopAppBar(
                 title = {
                     Column {
                         Text(
-                            "Din profil:",
+                            "Din profil:", // Display profile title
                             color = Color.Black,
                             modifier = Modifier.padding(top = 20.dp)
                         )
                         Text(
-                            viewModel.name,
+                            viewModel.name, // Display organisation name
                             color = Color.Black
                         )
                     }
@@ -72,6 +71,7 @@ fun OrganisationScreen() {
             )
             Spacer(modifier = Modifier.height(20.dp))
 
+            // Display input fields with corresponding icons and labels
             InputFieldUser(label = viewModel.name, mainIcon = Icons.Default.Person)
             Spacer(modifier = Modifier.height(14.dp))
             InputFieldUser(label = viewModel.cvrNumber, mainIcon = Icons.Default.Info)
@@ -81,6 +81,7 @@ fun OrganisationScreen() {
     }
 }
 
+// Composable function for input fields
 @Composable
 fun InputFieldUser(label: String, mainIcon: ImageVector) {
     Row(
@@ -106,6 +107,7 @@ fun InputFieldUser(label: String, mainIcon: ImageVector) {
     }
 }
 
+// Preview function for the organisation profile screen
 @Preview(showBackground = true)
 @Composable
 fun OrganisationScreenPreview() {

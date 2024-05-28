@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+// Data class to hold user profile information
 data class UserProfile(
     val fullName: String = "",
     val phoneNumber: String = "",
@@ -21,28 +22,36 @@ data class UserProfile(
     val userUID: String? = ""
 )
 
+// ViewModel class for managing user profile data
 class UserProfileViewModel : ViewModel() {
 
+    // MutableStateFlow to hold the user profile data
     private val _userProfile = MutableStateFlow(User())
     val userProfile: StateFlow<User> get() = _userProfile
 
+    // MutableStateFlow to hold the editing state
     private val _isEditing = MutableStateFlow(false)
     val isEditing: StateFlow<Boolean> get() = _isEditing
 
+    // Firebase Authentication and Firestore instances
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
+    // Instance of UsersRepository for data operations
     val usersRepository: UsersRepository = UsersRepository()
 
+    // Mutable state properties for user profile fields
     var name by mutableStateOf("")
     var birthDate by mutableStateOf("")
     var phoneNumber by mutableStateOf("")
     var zipCode by mutableStateOf("")
 
+    // Initialization block to fetch the user data when ViewModel is created
     init {
         getUser()
     }
 
+    // Function to fetch the current user data
     private fun getUser() {
         viewModelScope.launch {
             val currentUserInformation: User? = usersRepository.getUser()
@@ -56,10 +65,12 @@ class UserProfileViewModel : ViewModel() {
         }
     }
 
+    // Function to toggle the editing state
     fun toggleEdit() {
         _isEditing.value = !_isEditing.value
     }
 
+    // Function to update the user profile
     fun updateUserProfile(updatedProfile: User) {
         val userUID = auth.currentUser?.uid
         if (userUID != null) {

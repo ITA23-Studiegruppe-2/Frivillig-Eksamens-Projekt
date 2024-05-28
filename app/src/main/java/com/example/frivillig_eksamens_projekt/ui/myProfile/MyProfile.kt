@@ -1,4 +1,4 @@
-package com.example.frivillig_eksamens_projekt.ui.MyProfile
+package com.example.frivillig_eksamens_projekt.ui.myProfile
 
 import UserProfileViewModel
 import android.util.Log
@@ -120,8 +120,7 @@ fun ProfileScreen() {
                     label = "Zip Code",
                     value = updatedProfile.value.zipCode,
                     onValueChange = { updatedProfile.value = updatedProfile.value.copy(zipCode = it) },
-                    mainIcon = Icons.Default.LocationOn,
-
+                    mainIcon = Icons.Default.LocationOn
                 )
                 Spacer(modifier = Modifier.height(14.dp))
                 Button(
@@ -133,9 +132,8 @@ fun ProfileScreen() {
                         .align(Alignment.CenterHorizontally)
                         .width(110.dp)
                         .height(40.dp)
-                )
-                    {
-                        Text("Save")
+                ) {
+                    Text("Save")
                 }
             } else {
                 // Display user profile information
