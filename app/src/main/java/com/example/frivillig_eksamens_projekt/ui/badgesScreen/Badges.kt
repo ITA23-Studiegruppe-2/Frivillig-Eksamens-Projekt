@@ -16,19 +16,17 @@ import com.example.frivillig_eksamens_projekt.Models.Badge
 fun BadgeIcon(badge: Badge, onClick: () -> Unit, size: Dp) {
 
     val context = LocalContext.current
-    val resourceName = if (badge.path.contains(".")) badge.path.substringBeforeLast('.') else badge.path
+    val resourceName = badge.path
     val drawableId = context.resources.getIdentifier(resourceName, "drawable", context.packageName)
 
     //Dialog
     if (drawableId != 0) {
-
         Image(
             painter = painterResource(id = drawableId),
             contentDescription = "Badge icon for ${badge.name}",
             modifier = Modifier
                 .clickable(onClick = onClick)
                 .size(size)
-
         )
     } else {
         Text(text = badge.name)

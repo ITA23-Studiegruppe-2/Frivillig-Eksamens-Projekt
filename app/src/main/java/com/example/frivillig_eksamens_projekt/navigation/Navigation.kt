@@ -71,7 +71,7 @@ fun Navigation() {
                         onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                         onHomePageClick = { navController.navigate(Screen.Home.route) },
                         onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
-                        onAccountClick = { /*Todo*/ },
+                        onAccountClick = { navController.navigate(Screen.MyProfile.route) },
                         currentRoute = currentRoute
                     )
                 } else {
@@ -160,11 +160,12 @@ fun Navigation() {
         //User Home Screen
         composable(Screen.Home.route) {
             HomeScreen(
-                navController,
                 onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
                 onActivityScreenClick = {navController.navigate(Screen.Activity.route)},
                 onChatScreenClick = {navController.navigate(Screen.ChatPage.route)},
-                onAccountTypeChange = {it -> currentUserType.value = it})
+                onAccountTypeChange = {it -> currentUserType.value = it},
+                onUpcomingShiftsClick = {navController.navigate(Screen.UpcomingShifts.route)},
+                onCalendarClick = {navController.navigate(Screen.Calendar.route)})
 
             currentRoute.value = Screen.Home.route
         }

@@ -22,11 +22,10 @@ fun CreateShift(
     onBackButtonClick: () -> Unit,
     onSuccess: () -> Unit
 ) {
-    val secondaryColor = Color(0xFF364830)
 
     val viewModel: CreateShiftViewModel = viewModel()
 
-    // Date Picker - Can only be created inside of a composeable function
+    // Date Picker - Can only be created inside of a composable function
     val datePickerDialog = android.app.DatePickerDialog(
         androidx.compose.ui.platform.LocalContext.current,
         { _, year, month, dayOfMonth ->
@@ -43,13 +42,10 @@ fun CreateShift(
             .fillMaxSize()
     ) {
         Column {
-
-
             TopBarCreateShift(
                 onBackButtonClick = onBackButtonClick,
                 text = "Opret vagt"
             )
-
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -118,7 +114,6 @@ fun CreateShift(
                         onClick = {viewModel.createActivity(onSuccess = onSuccess)}
                     )
                 }
-
             }
         }
     }

@@ -45,9 +45,13 @@ class UserViewModel: ViewModel() {
     var news by mutableStateOf<News?>(null)
     var name by mutableStateOf("")
     var bellColor by mutableStateOf(Color.White)
+    var totalHours by mutableStateOf(0)
 
-    //Dialog
+    //Notifications dialog
     var dialogShow by mutableStateOf(false)
+
+    //Hours dialog
+    var showHoursDialog by mutableStateOf(false)
 
     private fun getUserData(){
         viewModelScope.launch {
@@ -150,8 +154,10 @@ class UserViewModel: ViewModel() {
             hours = hours,
             amountOfActivities = amountOfActivities
         )
+        totalHours = hours
         return userStats
     }
+
 
     private fun calculateHours(startTime: String, endTime: String): Int {
         val start = LocalTime.parse(startTime, DateTimeFormatter.ofPattern("HH:mm"))

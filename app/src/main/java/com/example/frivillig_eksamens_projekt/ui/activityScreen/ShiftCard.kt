@@ -40,7 +40,7 @@ import com.google.firebase.ktx.Firebase
 @Composable
 fun ShiftCard(title: String, organization: String, date: String, time: String, activityID: String, listOfUsers: List<String>, description: String, location: String) {
 
-    val viewModel = RequestShiftViewModel()
+    val viewModel: RequestShiftViewModel = RequestShiftViewModel()
 
     //Check to see if the list of users applied to the activity contains the current user
     // If it does, initialize the request to be true.

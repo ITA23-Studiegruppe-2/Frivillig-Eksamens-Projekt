@@ -10,8 +10,8 @@ class LoginViewModel : ViewModel() {
     private var accountService: AccountService = AccountService()
 
     var rememberMe by mutableStateOf(false)
-    var email by mutableStateOf("ida@email.dk")
-    var password by mutableStateOf("IdaGramkow2")
+    var email by mutableStateOf("christine@gmail.com")
+    var password by mutableStateOf("Eksamen17")
 
     //Error Handling
     var errorMessage by mutableStateOf("")

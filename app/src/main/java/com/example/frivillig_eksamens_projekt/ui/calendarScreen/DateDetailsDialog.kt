@@ -44,7 +44,7 @@ fun DateDetailsDialog(
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier
                                     .padding(bottom = 4.dp))
-                            Text(text = "Du har en vagt som ${activity.title} hos ${activity.organization}. Din vagt er klokken: ${activity.timeStamp}.")
+                            Text(text = "Du har en vagt som ${activity.title} hos ${activity.organization}. Din vagt er fra: ${activity.timeStamp}.")
                             Text(text = "Du kan finde flere detaljer under dine kommende vagter.",
                                 modifier = Modifier
                                     .padding(top = 8.dp))

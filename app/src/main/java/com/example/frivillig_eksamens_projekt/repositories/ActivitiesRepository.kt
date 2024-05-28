@@ -39,7 +39,7 @@ class ActivitiesRepository() {
             val currentActivityList = activity.documentId?.let {
                 db.collection("Activites")
                     .document(it)
-                    .collection("usersApplied")
+                    .collection("userApproved")
                     .get()
                     .await()
                     .documents
@@ -47,14 +47,14 @@ class ActivitiesRepository() {
             }
 
             if (currentActivityList != null) {
-                activity.listOfUsersApplied = currentActivityList.toMutableList()
+                activity.listOfUsersApproved = currentActivityList.toMutableList()
             }
-            if (activity.listOfUsersApplied.contains(userUID)) {
+
+            if (activity.listOfUsersApproved.contains(userUID)) {
                 listOfActivitiesWithUsers.add(activity)
             }
 
         }
-        println(listOfActivitiesWithUsers)
         return listOfActivitiesWithUsers
     }
 

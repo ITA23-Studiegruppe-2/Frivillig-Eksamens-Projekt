@@ -28,7 +28,6 @@ class UpcomingShiftsViewModel(): ViewModel() {
 
     private fun getUserActivities(){
         val currentUser = Firebase.auth.currentUser?.uid
-        println(currentUser)
         if (currentUser != null) {
             viewModelScope.launch {
                 upcomingActivities = activitiesRepository.getActivitiesForUser(activitiesRepository.getActivities(), currentUser)
