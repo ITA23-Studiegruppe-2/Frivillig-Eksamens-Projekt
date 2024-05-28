@@ -65,6 +65,7 @@ fun ListOfUsersApplied(
                 colors = ButtonDefaults.buttonColors(Color(0xFF364830)),
                 onClick = {
                     listOfUsersAppliedViewmodel.addOrRemoveActivityForUsers()
+                    listOfUsersAppliedViewmodel.chatRoomForApprovedUsers(activityId)
                     onBackButtonClick()
 
                 }) {

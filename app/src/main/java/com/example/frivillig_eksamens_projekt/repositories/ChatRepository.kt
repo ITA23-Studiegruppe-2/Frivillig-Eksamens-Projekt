@@ -159,29 +159,29 @@ class ChatRepository {
 
 
 
-/*
-    // Function to fetch the organization name by orgId
-    suspend fun fetchOrganizationName(orgId: String): String {
-        // Log the orgId that is being fetched
-        Log.d("FetchOrg", "Fetching name for orgId: $orgId")
+    /*
+        // Function to fetch the organization name by orgId
+        suspend fun fetchOrganizationName(orgId: String): String {
+            // Log the orgId that is being fetched
+            Log.d("FetchOrg", "Fetching name for orgId: $orgId")
 
-        // Attempt to fetch the organization document from Firestore
-        val orgDocument = db.collection("Organizations")
-            .document(orgId)
-            .get()
-            .await()
+            // Attempt to fetch the organization document from Firestore
+            val orgDocument = db.collection("Organizations")
+                .document(orgId)
+                .get()
+                .await()
 
-        // Convert the document to Organization object
-        val organization = orgDocument.toObject(Organization::class.java)
+            // Convert the document to Organization object
+            val organization = orgDocument.toObject(Organization::class.java)
 
-        // Log the fetched organization name, or log "null" if not found
-        Log.d("FetchOrg", "Fetched Organization: ${organization?.name ?: "null"}")
+            // Log the fetched organization name, or log "null" if not found
+            Log.d("FetchOrg", "Fetched Organization: ${organization?.name ?: "null"}")
 
-        // Return the organization name if available, otherwise return "Unknown Organization"
-        return organization?.name ?: "Unknown Organization"
-    }
+            // Return the organization name if available, otherwise return "Unknown Organization"
+            return organization?.name ?: "Unknown Organization"
+        }
 
- */
+     */
 
 
 

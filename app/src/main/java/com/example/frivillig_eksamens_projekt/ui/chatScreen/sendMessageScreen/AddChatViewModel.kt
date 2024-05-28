@@ -1,5 +1,5 @@
 package com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen
-
+/*
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -110,5 +110,7 @@ class AddChatViewModel : ViewModel() {
         }
     }
 }
+
+ */
 
 
