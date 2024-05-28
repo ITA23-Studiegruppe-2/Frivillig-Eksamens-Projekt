@@ -71,7 +71,7 @@ fun Navigation() {
                         onCalenderClick = { navController.navigate(Screen.Calendar.route) },
                         onHomePageClick = { navController.navigate(Screen.Home.route) },
                         onChatPageClick = { navController.navigate(Screen.ConversationScreen.route) },
-                        onAccountClick = { /*Todo*/ },
+                        onAccountClick = { navController.navigate(Screen.MyProfile.route)},
                         currentRoute = currentRoute
                     )
                 } else {
