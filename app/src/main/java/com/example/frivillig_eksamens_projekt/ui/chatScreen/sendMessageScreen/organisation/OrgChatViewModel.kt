@@ -29,6 +29,7 @@ class OrgChatViewModel(
 
 
 
+    // Fetches the organization ID based on conversationId and sets up the chat
     init {
         viewModelScope.launch {
             orgId = orgChatRepository.fetchOrganizationsId(conversationId)
@@ -36,7 +37,8 @@ class OrgChatViewModel(
         }
     }
 
-    // Listen for changes in conversationId, and start again
+    // sets up the chat by loading the messages, listening for real-time updates,
+    // and setting up the chat for approved users
     fun initializeChat(conversationId: String, activityId: String) {
         loadMessages(conversationId)
         listenToMessages(conversationId)
@@ -45,7 +47,8 @@ class OrgChatViewModel(
 
 
 
-    //------------------RESUME CONVERSATION-----------------//
+    // Loads the messages for a given conversation from ChatRepository
+    // and updates the messages state with the loaded messages
     fun loadMessages(conversationId: String) {
         viewModelScope.launch {
             chatRepository.getMessagesForConversation(conversationId).collect { newMessages ->
@@ -55,7 +58,8 @@ class OrgChatViewModel(
     }
 
     //-------------------------- SHOW MESSAGES AND ADD NEW MESSAGES TO CHAT -------------------//
-    // Listen to messages in real-time
+    // Listens to messages in real-time for a given conversation from OrgChatRepository
+    // and updates the messages state with the new messages
     fun listenToMessages(conversationId: String) {
         viewModelScope.launch {
             orgChatRepository.getMessages(conversationId).collect { newMessages ->
@@ -64,7 +68,7 @@ class OrgChatViewModel(
         }
     }
 
-    //----------------------- CREATE CHATROOM ---------------------//
+    // Creates or updates a chatroom with a list of user ID's and the organization's ID.
     fun createChatroomWithUsers(activityId: String, userIds: List<String>, orgId: String) {
         if (userIds.isEmpty()) {
             println("User IDs list is empty, cannot create/update chatroom")
@@ -91,6 +95,8 @@ class OrgChatViewModel(
         }
     }
 
+    // Fetches approved user IDs for a given activity and
+    // creates or updates the chatroom with these users
     fun initializeChatForApprovedUsers(activityId: String, orgId: String) {
         orgChatRepository.fetchApprovedUserIds(activityId,
             onSuccess = { userIds ->
@@ -106,15 +112,18 @@ class OrgChatViewModel(
         )
     }
 
-    //--------------------- SEND GROUP MESSAGE ----------------------//
-    // Send a group message
+
+
+    // Sends a group message to a given activity's chatroom.
+    // It fetches the sender's name and sends the message
+
     fun sendGroupMessage(activityId: String, messageText: String, orgId: String) {
         if (messageText.isNotBlank()) {
             val timestamp = System.currentTimeMillis()
             viewModelScope.launch {
                 try {
                     val senderName =
-                        orgChatRepository.fetchFullNameOfUsers(currentUserId) // Fetch the sender's full name
+                        orgChatRepository.fetchFullNameById(currentUserId) // Fetch the sender's full name
                     val result = orgChatRepository.sendGroupMessage(
                         activityId,
                         messageText,

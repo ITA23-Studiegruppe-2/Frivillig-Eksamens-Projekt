@@ -24,6 +24,9 @@ class ConversationViewModel : ViewModel() {
 
 
 
+
+    // sets up an authentication state listener to get the current user ID and calls
+    // fetchMessages to retrieve messages whenever the user changes
     init {
         // Get current user
         FirebaseAuth.getInstance().addAuthStateListener { firebaseAuth ->
@@ -50,3 +53,5 @@ class ConversationViewModel : ViewModel() {
         }
     }
 }
+
+
