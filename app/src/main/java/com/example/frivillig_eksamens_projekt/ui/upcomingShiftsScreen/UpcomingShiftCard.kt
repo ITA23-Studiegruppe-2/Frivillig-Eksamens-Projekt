@@ -1,14 +1,13 @@
-package com.example.frivillig_eksamens_projekt.ui.activityScreen
+package com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,30 +22,33 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.example.frivillig_eksamens_projekt.ui.activityScreen.RequestShiftCheckbox
+import com.example.frivillig_eksamens_projekt.ui.activityScreen.RequestShiftViewModel
 
 @Composable
-fun ShiftCard(title: String, organization: String, date: String, time: String, activityID: String, listOfUsers: List<String>, description: String, location: String) {
+fun UpcomingShiftCard(
+    description: String,
+    location: String,
+    city: String,
+    title: String,
+    organization: String,
+    date: String,
+    time: String
+) {
 
     val viewModel: RequestShiftViewModel = RequestShiftViewModel()
-
-    //Check to see if the list of users applied to the activity contains the current user
-    // If it does, initialize the request to be true.
-    if (listOfUsers.contains(Firebase.auth.uid)) {
-        viewModel.setRequested(true)
-    }
+    val fontStyle = MaterialTheme.typography.labelSmall.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp)
 
     Card(
         modifier = Modifier
@@ -98,48 +100,32 @@ fun ShiftCard(title: String, organization: String, date: String, time: String, a
             }
         }
 
-        // Change text if shift is requested
-        val dropdownText = if (viewModel.isRequested.value) {
-            "Du har anmodet om vagten"
-        } else {
-            "Anmod om vagt:"
-        }
-
-
         // Dropdown menu that appears when the icon is clicked
         DropdownMenu(
             expanded = viewModel.isExpanded,
             onDismissRequest = { viewModel.isExpanded = false },
             modifier = Modifier.width(382.dp)
+                .border(1.5.dp, color = Color(0xFF364830), shape = RoundedCornerShape(8.dp))
                 .background(Color.White)
-            ) {
+        ) {
 
             DropdownMenuItem(
                 text = {
                     Column {
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = dropdownText,
-                            fontSize = 14.sp,
-                            modifier = Modifier.padding(10.dp)
-                        )
-                        RequestShiftCheckbox(viewModel, activityID = activityID)
-                    }
                         Text(
                             text = description,
                             fontSize = 14.sp,
-                            modifier = Modifier.padding(10.dp))
+                            modifier = Modifier.padding(10.dp),
+                            style = fontStyle
+                        )
                         Text(
-                            text = "Adresse: $location",
+                            text = "Adresse: $location, $city",
                             fontSize = 14.sp,
-                            modifier = Modifier.padding(10.dp))
-
-                    } },
+                            modifier = Modifier.padding(10.dp),
+                            style = fontStyle
+                        )
+                    }
+                },
                 onClick = { viewModel.isExpanded = false }
             )
         }

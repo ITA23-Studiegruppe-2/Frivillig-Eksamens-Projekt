@@ -25,13 +25,6 @@ fun UserOrOrganisation (
     onBackButtonClick: () -> Unit
     ) {
 
-    BackButton(
-        onClick = onBackButtonClick,
-        modifier = Modifier
-            .padding(16.dp)
-    )
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()

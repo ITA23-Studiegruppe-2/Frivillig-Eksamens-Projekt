@@ -68,12 +68,12 @@ fun CitySelectDropdown(
                     .height(50.dp),
 
                 shape = RoundedCornerShape(24.dp),
-                textStyle = LocalTextStyle.current.copy(
+                textStyle = MaterialTheme.typography.labelSmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold)
-                )
+                    color = Color.White))
+
             ExposedDropdownMenu(
                 expanded = isExpanded,
                 onDismissRequest = onDismiss

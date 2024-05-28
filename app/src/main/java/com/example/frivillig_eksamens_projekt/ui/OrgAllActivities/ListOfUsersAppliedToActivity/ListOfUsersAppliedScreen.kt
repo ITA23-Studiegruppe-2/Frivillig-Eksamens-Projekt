@@ -13,11 +13,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -59,16 +61,19 @@ fun ListOfUsersApplied(
             }
             Button(
                 modifier = Modifier
-                    .width(200.dp)
+                    .width(220.dp)
                     .height(80.dp)
                     .padding(12.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xFF364830)),
                 onClick = {
                     listOfUsersAppliedViewmodel.addOrRemoveActivityForUsers()
+                    listOfUsersAppliedViewmodel.chatRoomForApprovedUsers(activityId)
                     onBackButtonClick()
 
                 }) {
-                Text(text = "Godkend frivillige", color = Color.White, fontSize = 16.sp)
+                Text(text = "Godkend frivillige", color = Color.White, fontSize = 16.sp, style = MaterialTheme.typography.labelSmall.copy(
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp))
 
             }
         }

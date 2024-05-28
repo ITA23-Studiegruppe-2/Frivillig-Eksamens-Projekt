@@ -1,6 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity
 
-import androidx.compose.runtime.MutableState
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,6 +10,7 @@ import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.example.frivillig_eksamens_projekt.Models.User
 import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
+import com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation.OrgChatRepository
 import kotlinx.coroutines.launch
 
 class ListOfUsersAppliedViewmodel(
@@ -21,6 +22,7 @@ class ListOfUsersAppliedViewmodel(
     //Repositories
     val activitiesRepository: ActivitiesRepository = ActivitiesRepository()
     val usersRepository: UsersRepository = UsersRepository()
+    val orgChatRepository: OrgChatRepository = OrgChatRepository()
 
 
     // List
@@ -92,7 +94,56 @@ class ListOfUsersAppliedViewmodel(
     }
 
 
+    // Create ChatRoom for approved users
+    fun chatRoomForApprovedUsers(
+        activityId: String
+    ) {
+        viewModelScope.launch {
+            val approvedUsersIds = listOfUsersApproved
+            val orgId = orgChatRepository.fetchOrganizationsId(activityId)
+            Log.d("chatRoomForApprovedUsers", "Approved users: $approvedUsersIds, OrgId: $orgId")
+            if (approvedUsersIds.isNotEmpty()) {
+                val result = orgChatRepository.createOrUpdateChatroomWithUsers(
+                    activityId = activityId,
+                    userIds = approvedUsersIds,
+                    orgId = orgId,
+                    timestamp = System.currentTimeMillis()
+                )
+                Log.d("chatRoomForApprovedUsers", "Chat room creation result: $result")
+                if (result) {
+                    sendSystemMessage(activityId, orgId)
+                }
+            } else {
+                Log.d("chatRoomForApprovedUsers", "No approved users found.")
+            }
+            }
+        }
 
+    // Send an automatic message
+    fun sendSystemMessage(activityId: String, orgId: String) {
+        viewModelScope.launch {
+            try {
+                val senderId = orgId
+                val senderName = "System"
+                val messageText = "Velkommen til allesammen! - Mere information kommer snarest muligt <3"
+                val timestamp = System.currentTimeMillis()
 
-
-}
+                val result = orgChatRepository.sendGroupMessage(
+                    activityId = activityId,
+                    messageText = messageText,
+                    senderId = senderId,
+                    senderName = senderName,
+                    orgId = orgId,
+                    timestamp = timestamp
+                )
+                if (result) {
+                    Log.d("sendInitialMessage", "Initial message sent successfully.")
+                } else {
+                    Log.d("sendInitialMessage", "Failed to send initial message.")
+                }
+            } catch (e: Exception) {
+                Log.e("sendInitialMessage", "Error sending initial message: ${e.message}")
+            }
+        }
+    }
+    }

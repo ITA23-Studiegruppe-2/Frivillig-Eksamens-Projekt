@@ -11,6 +11,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -28,12 +29,18 @@ fun DateDetailsDialog(
     val buttonColors = ButtonDefaults.buttonColors(
         containerColor = Color(0xFF364830)
     )
+    val fontStyle = MaterialTheme.typography.labelSmall.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp)
 
     if (date != null) {
         AlertDialog(
             onDismissRequest = { onDismiss() },
             title = {
-                    Text(text = date.format(DateTimeFormatter.ofPattern("dd MMM yyyy").withLocale(Locale("da", "DK"))))
+                    Text(text = date.format(DateTimeFormatter.ofPattern("dd MMM yyyy").withLocale(Locale("da", "DK"))),
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 24.sp))
             },
             text = {
                 if (activity != null) {
@@ -41,16 +48,20 @@ fun DateDetailsDialog(
                             Text("Vagt detaljer:",
                                 fontSize = 15.sp,
                                 textDecoration = TextDecoration.Underline,
-                                fontWeight = FontWeight.SemiBold,
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 18.sp),
                                 modifier = Modifier
                                     .padding(bottom = 4.dp))
-                            Text(text = "Du har en vagt som ${activity.title} hos ${activity.organization}. Din vagt er klokken: ${activity.timeStamp}.")
+                            Text(text = "Du har en vagt som ${activity.title} hos ${activity.organization}. Din vagt er fra: ${activity.timeStamp}.",
+                                style = fontStyle)
                             Text(text = "Du kan finde flere detaljer under dine kommende vagter.",
+                                style = fontStyle,
                                 modifier = Modifier
                                     .padding(top = 8.dp))
                         }
                     } else {
-                        Text(text = "Du har ikke nogen vagter denne dag." )
+                        Text(text = "Du har ikke nogen vagter denne dag.", style = fontStyle)
                     }
             },
             confirmButton = {
@@ -58,7 +69,7 @@ fun DateDetailsDialog(
                     modifier = Modifier,
                     colors = buttonColors,
                     onClick = { onDismiss() }) {
-                    Text(text = "Luk", color = Color.White)
+                    Text(text = "Luk", color = Color.White, style = fontStyle)
                 }
             })
     }

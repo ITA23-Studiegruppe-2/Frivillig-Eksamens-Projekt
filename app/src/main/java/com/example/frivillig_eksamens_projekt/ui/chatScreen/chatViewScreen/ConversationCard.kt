@@ -26,7 +26,8 @@ import com.example.frivillig_eksamens_projekt.Models.Conversation
 @Composable
 fun ConversationItem(
     conversation: Conversation,
-    onResumeClick: (String, String) -> Unit
+    onResumeClick: (String, String) -> Unit,
+    onClick: () -> Unit
 ) {
     Surface(
         shape = RoundedCornerShape(8.dp),

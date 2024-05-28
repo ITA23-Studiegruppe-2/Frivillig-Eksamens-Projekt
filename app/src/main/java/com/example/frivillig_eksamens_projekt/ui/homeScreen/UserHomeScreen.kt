@@ -32,11 +32,12 @@ import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
     onBadgeScreenClick: () -> Unit,
     onActivityScreenClick: () -> Unit,
     onChatScreenClick: () -> Unit,
-    onAccountTypeChange: (String) -> Unit
+    onAccountTypeChange: (String) -> Unit,
+    onUpcomingShiftsClick: () -> Unit,
+    onCalendarClick: () -> Unit
 ) {
 
     val bagdesIcon: Painter = painterResource(id = R.drawable.badges)
@@ -67,6 +68,12 @@ fun HomeScreen(
             )
         }
 
+        //Dialog for hours
+        if (viewModel.showHoursDialog) {
+            HoursDialog(onDismiss = { viewModel.showHoursDialog = false},
+                title = "Tak for dig!", text = "Du har brugt ${viewModel.totalHours} timer på at være frivillig. Det kan du godt være stolt af!")
+        }
+
         Column() {
             Box(
                 modifier = Modifier
@@ -93,7 +100,7 @@ fun HomeScreen(
                         modifier = Modifier
                             .size(36.dp)
                             .clickable {
-                                       viewModel.dialogShow = true
+                                viewModel.dialogShow = true
                             },
                         tint = viewModel.bellColor
                     )
@@ -108,18 +115,25 @@ fun HomeScreen(
                 )
                 {
                     Column {
-                        InfoCards(label = "Badges", icon = bagdesIcon, onClick = onBadgeScreenClick)
-                        InfoCards(label = "Kommende vagter", icon = shiftsIcon) {
-                            navController.navigate(Screen.UpcomingShifts.route)
-                        }
+                        InfoCards(
+                            label = "Badges",
+                            icon = bagdesIcon,
+                            onClick = onBadgeScreenClick
+                        )
+                        InfoCards(
+                            label = "Kommende vagter",
+                            icon = shiftsIcon,
+                            onClick = onUpcomingShiftsClick
+                        )
                     }
                     Column {
-                        InfoCards(label = "Timer", icon = hoursIcon) {
-                            navController.navigate(Screen.Hours.route)
+                        InfoCards(label = "${viewModel.totalHours} Timer", icon = hoursIcon) {
+                            viewModel.showHoursDialog = true
                         }
-                        InfoCards(label = "Kalender", icon = calendarIcon) {
-                            navController.navigate(Screen.Calendar.route)
-                        }
+                        InfoCards(
+                            label = "Kalender",
+                            icon = calendarIcon,
+                            onClick = onCalendarClick)
                     }
                 }
             }

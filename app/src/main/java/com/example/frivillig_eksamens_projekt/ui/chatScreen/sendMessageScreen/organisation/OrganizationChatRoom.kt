@@ -17,6 +17,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +46,10 @@ fun GroupChatScreen(
     val messages by viewModel.messages.collectAsState() // Convert "StateFlow" to a compose-friendly "state". Listens to new messages, and updates the UI automatic.
     var messageText by remember { mutableStateOf("") }
     val orgId by viewModel::orgId
+    val fontStyle = MaterialTheme.typography.labelSmall.copy(
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp)
+
 
 
 
@@ -74,7 +79,7 @@ fun GroupChatScreen(
             ) {
                 BackButton(onClick = onBackButtonClick)
                 androidx.compose.material3.Text(
-                    text = "$organizationName",
+                    text = organizationName,
                     fontSize = 28.sp,
                     color = viewModel.secondaryColor,
                     fontWeight = FontWeight.Bold
@@ -100,7 +105,7 @@ fun GroupChatScreen(
                 OutlinedTextField(
                     value = messageText,
                     onValueChange = { messageText = it },
-                    label = { Text("Besked") },
+                    label = { Text("Besked", style = fontStyle)},
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -121,7 +126,7 @@ fun GroupChatScreen(
                         messageText = ""
                     }
                 ) {
-                    Text("Send")
+                    Text("Send", style = fontStyle)
                 }
             }
         }
