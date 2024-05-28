@@ -15,6 +15,7 @@ import kotlinx.coroutines.tasks.await
 class OrgChatRepository {
     val db = Firebase.firestore
 
+
     // ----------------------- FETCH APPROVED USERS -------------------------//
     // Fetch approved user IDs from the 'userApproved' subcollection for a specified activity
     fun fetchApprovedUserIds(
@@ -38,7 +39,10 @@ class OrgChatRepository {
             }
     }
 
+
     //--------------- FETCH ORGANISATION'S NAME ----------------------------//
+    //retrieves the name of an organization based on the provided organizationName document ID
+    // from the Activites collection
     suspend fun fetchNameOfOrganization(organizationName: String): String {
         val activityDocument = db.collection("Activites")
             .document(organizationName)
@@ -56,19 +60,36 @@ class OrgChatRepository {
     }
 
 
+
     //-------------------- FETCH FULLNAME OF USERS -------------------//
-    suspend fun fetchFullNameOfUsers(userIds: String): String {
-        val userDocument = db.collection("Users")
-            .document(userIds)
+    // Function to fetch the full name of users or organization name.
+    suspend fun fetchFullNameById(id: String): String {
+        // Try to fetch the user first
+        val userSnapshot = db.collection("Users")
+            .document(id)
             .get()
             .await()
-        return userDocument.getString("fullName") ?: "Unknown User"
+
+        if (userSnapshot.exists()) {
+            return userSnapshot.getString("fullName") ?: "Unknown User"
+        }
+
+        // If user does not exist, try to fetch the organization
+        val orgSnapshot = db.collection("Organizations")
+            .document(id)
+            .get()
+            .await()
+
+        if (orgSnapshot.exists()) {
+            return orgSnapshot.getString("name") ?: "Unknown Organization"
+        }
+
+        return "Unknown User"
     }
 
 
-
     //--------------------- FETCH ORGANIZATIONS ID ------------------//
-
+    // retrieves the organization ID for a specified activity from the Activites collection
     suspend fun fetchOrganizationsId(activityId: String): String {
         val activityDocument = db.collection("Activites")
             .document(activityId)
@@ -80,8 +101,12 @@ class OrgChatRepository {
 
 
 
+
+
+
     // -------------------- CREATE OR UPDATE CHATROOM ---------------------//
-    // Function to create or update a chatroom with userIds
+    // Function to create or update a chatroom with userIds and organization ID.
+    // It also sets the organization name and the timestamp
     suspend fun createOrUpdateChatroomWithUsers(
         activityId: String,
         userIds: List<String>,
@@ -122,7 +147,9 @@ class OrgChatRepository {
     }
 
     // ----------------------- SEND GROUP MESSAGE -------------------------- //
-    // Send a group message to a specific activity's chatroom
+    //  adds the new message to the existing messages array in the
+    //  chatroom document or creates a new chatroom
+    //  document with the message if it does not already exist
     suspend fun sendGroupMessage(
         activityId: String,
         messageText: String,
@@ -183,7 +210,7 @@ class OrgChatRepository {
     }
 
     // --------------------- GET MESSAGES ON SCREEN -----------------//
-    // Function to get messages on screen to chat in real time
+    // sets up a real-time listener for a specified activity's chatroom to listen for updates to messages
     fun getMessages(activityId: String): Flow<List<Message>> = callbackFlow {
         val query = db.collection("Chat")
             .document(activityId)
