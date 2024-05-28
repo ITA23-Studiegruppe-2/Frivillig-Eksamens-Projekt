@@ -2,7 +2,9 @@ package com.example.frivillig_eksamens_projekt.ui.homeScreen
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,14 +48,16 @@ fun HomeScreenNews(
         ) {
             Text(
                 text = "Dagens Nyhed",
-                fontSize = 28.sp,
+                fontSize = 19.sp,
                 fontWeight = FontWeight.Bold,
                 color = secondaryColor
             )
+           Spacer(modifier = Modifier.height(5.dp))
+
             news?.let {
                 Text(
                     text = it.newsText,
-                    fontSize = 20.sp,
+                    fontSize = 15.sp,
                     color = Color.Black,
                     modifier = Modifier.padding(vertical = 4.dp)
                 )

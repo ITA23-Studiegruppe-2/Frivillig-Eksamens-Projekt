@@ -202,8 +202,8 @@ class AccountService {
                     is FirebaseNetworkException -> "Netværksfejl, kontroller venligst om du har internet adgang"
                     else -> "Ukendt fejl, prøv venligst igen senere!"
 
-
                 }
+                onFail(errorMessage)
             }
     }
 }
