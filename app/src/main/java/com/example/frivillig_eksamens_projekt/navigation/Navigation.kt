@@ -104,8 +104,7 @@ fun Navigation() {
         composable(Screen.Start.route) {
             StartScreen(
                 onLoginClick = { navController.navigate(Screen.Login.route) },
-                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route) },
-                onBackButtonClick = { navController.popBackStack() }
+                onRegisterClick = { navController.navigate(Screen.UserOrOrg.route) }
             )
             currentRoute.value = Screen.Start.route
 
