@@ -25,9 +25,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
-import com.example.frivillig_eksamens_projekt.navigation.Screen
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
 
 @Composable
@@ -67,12 +65,14 @@ fun HomeScreen(
                 }
             )
         }
-
+/*
         //Dialog for hours
         if (viewModel.showHoursDialog) {
             HoursDialog(onDismiss = { viewModel.showHoursDialog = false},
                 title = "Tak for dig!", text = "Du har brugt ${viewModel.totalHours} timer på at være frivillig. Det kan du godt være stolt af!")
         }
+
+ */
 
         Column() {
             Box(

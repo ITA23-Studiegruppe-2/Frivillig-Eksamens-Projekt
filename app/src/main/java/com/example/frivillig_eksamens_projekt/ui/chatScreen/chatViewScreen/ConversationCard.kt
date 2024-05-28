@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
@@ -30,9 +29,7 @@ fun ConversationItem(
     onClick: () -> Unit
 ) {
     Surface(
-        shape = RoundedCornerShape(8.dp),
         color = Color.White,
-        shadowElevation = 4.dp,
         modifier = Modifier
             .padding(8.dp)
             .clickable { onResumeClick(conversation.conversationId, conversation.organizationName) }

@@ -33,7 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation.OrgChatViewModel
-import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
+import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 
 @Composable
 fun GroupChatScreen(
@@ -66,25 +66,8 @@ fun GroupChatScreen(
                 .fillMaxSize()
                 .background(viewModel.backgroundColor)
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .height(70.dp)
-                    .width(390.dp)
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                BackButton(onClick = onBackButtonClick)
-                androidx.compose.material3.Text(
-                    text = organizationName,
-                    fontSize = 28.sp,
-                    color = viewModel.secondaryColor,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = "$organizationName")
+
 
             Spacer(modifier = Modifier.height(20.dp))
 
