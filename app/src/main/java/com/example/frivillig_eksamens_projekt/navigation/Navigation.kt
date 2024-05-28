@@ -8,16 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity.ListOfUsersApplied
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.OrgAllActivitiesScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
+import com.example.frivillig_eksamens_projekt.ui.adviceScreen.AdviceScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
 import com.example.frivillig_eksamens_projekt.ui.calendarScreen.CalendarScreen2
-import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
 import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
@@ -26,15 +28,13 @@ import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
+import com.example.frivillig_eksamens_projekt.ui.navigationBar.OrgBottomNavigationBar
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserSecondScreen
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CreateUserViewModel
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.CreateOrgScreen
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
-import androidx.navigation.NavType
-import com.example.frivillig_eksamens_projekt.ui.adviceScreen.AdviceScreen
-import com.example.frivillig_eksamens_projekt.ui.navigationBar.OrgBottomNavigationBar
 
 @Composable
 fun Navigation() {
@@ -162,7 +162,7 @@ fun Navigation() {
             HomeScreen(
                 onBadgeScreenClick = {navController.navigate(Screen.Badges.route)},
                 onActivityScreenClick = {navController.navigate(Screen.Activity.route)},
-                onChatScreenClick = {navController.navigate(Screen.ChatPage.route)},
+                onChatScreenClick = {navController.navigate(Screen.ConversationScreen.route)},
                 onAccountTypeChange = {it -> currentUserType.value = it},
                 onUpcomingShiftsClick = {navController.navigate(Screen.UpcomingShifts.route)},
                 onCalendarClick = {navController.navigate(Screen.Calendar.route)})
