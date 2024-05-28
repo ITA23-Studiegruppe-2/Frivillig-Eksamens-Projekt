@@ -22,7 +22,6 @@ import com.example.frivillig_eksamens_projekt.ui.chooseScreen.UserOrOrganisation
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.CreateShift
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.HomeScreen
 import com.example.frivillig_eksamens_projekt.ui.homeScreen.OrgHomeScreen
-import com.example.frivillig_eksamens_projekt.ui.hoursScreen.HoursScreen
 import com.example.frivillig_eksamens_projekt.ui.loginScreen.LoginScreen
 import com.example.frivillig_eksamens_projekt.ui.logoScreen.LogoScreen
 import com.example.frivillig_eksamens_projekt.ui.navigationBar.BottomNavigationBar
@@ -210,13 +209,6 @@ fun Navigation() {
             currentRoute.value = Screen.UpcomingShifts.route
         }
 
-        // Hours Screen
-        composable(Screen.Hours.route) {
-            HoursScreen(navController)
-
-            currentRoute.value = Screen.Hours.route
-        }
-
             // Organisation Home Screen
             composable(Screen.OrgHomeScreen.route) {
                 OrgHomeScreen(
@@ -303,7 +295,6 @@ fun Navigation() {
             }
             currentRoute.value = Screen.ListOfUsersAppliedActivity.route
         }
-
         }
     }
 }

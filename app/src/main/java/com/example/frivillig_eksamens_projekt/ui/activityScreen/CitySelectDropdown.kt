@@ -1,6 +1,7 @@
 package com.example.frivillig_eksamens_projekt.ui.activityScreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,11 +21,13 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -51,6 +54,8 @@ fun CitySelectDropdown(
             onExpandedChange = onClick,
             modifier = Modifier
 
+
+
         ) {
             TextField(
                 value = value,
@@ -65,7 +70,8 @@ fun CitySelectDropdown(
                 modifier = Modifier
                     .menuAnchor()
                     .width(180.dp)
-                    .height(50.dp),
+                    .height(50.dp)
+                ,
 
                 shape = RoundedCornerShape(24.dp),
                 textStyle = MaterialTheme.typography.labelSmall.copy(
@@ -76,18 +82,27 @@ fun CitySelectDropdown(
 
             ExposedDropdownMenu(
                 expanded = isExpanded,
-                onDismissRequest = onDismiss
+                onDismissRequest = onDismiss,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(24.dp))
+                    .border(1.5.dp, color = Color(0xFF364830), shape = RoundedCornerShape(16.dp))
+                    .background(Color(0xFFEBEAF3))
             ){
                 listOfCities.forEach{city ->
                     DropdownMenuItem(
-                        text = { Text(text = city) },
+                        text = { Text(text = city, style = MaterialTheme.typography.labelSmall.copy(
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 14.sp)) },
                         onClick = {
                             onValueClick(city)
                             onDismiss()
-                        }
+                        },
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(16.dp))
                     )
                 }
             }
         }
     }
 }
+
