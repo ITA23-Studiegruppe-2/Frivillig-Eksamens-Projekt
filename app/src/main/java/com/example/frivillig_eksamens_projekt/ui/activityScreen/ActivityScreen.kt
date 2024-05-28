@@ -89,18 +89,21 @@ fun ActivityScreen(
 
                 LazyColumn {
                     items(viewModel.listOfActivities) { activity ->
-                        activity.documentId?.let {
-                            ShiftCard(
-                                title = activity.title,
-                                organization = activity.organization,
-                                date = activity.date,
-                                time = activity.timeStamp,
-                                activityID = it,
-                                listOfUsers = activity.listOfUsersApplied,
-                                description = activity.description,
-                                location = activity.location
-                            )
+                        if (!activity.listOfUsersApproved.contains(viewModel.currentUserUId)) {
+                            activity.documentId?.let {
+                                ShiftCard(
+                                    title = activity.title,
+                                    organization = activity.organization,
+                                    date = activity.date,
+                                    time = activity.timeStamp,
+                                    activityID = it,
+                                    listOfUsers = activity.listOfUsersApplied,
+                                    description = activity.description,
+                                    location = activity.location
+                                )
+                            }
                         }
+
                     }
                 }
             }
