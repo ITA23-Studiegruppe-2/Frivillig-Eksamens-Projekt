@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,8 +53,11 @@ fun FilterDialog(onDismiss: () -> Unit, viewModel: ActivityScreenViewModel, list
     )
 
     AlertDialog(
-        onDismissRequest = { onDismiss },
-        title = { Text(text = "Filtrer i aktiviteter") },
+        onDismissRequest = onDismiss,
+        title = { Text(text = "Filtrer i aktiviteter",
+            style = MaterialTheme.typography.labelSmall.copy(
+            fontWeight = FontWeight.Medium,
+            fontSize = 26.sp)) },
         text = {
                Column(
                    modifier = Modifier
@@ -71,8 +75,11 @@ fun FilterDialog(onDismiss: () -> Unit, viewModel: ActivityScreenViewModel, list
                        Text(
                            text = viewModel.selectedDate,
                            fontSize = 14.sp,
-                           fontWeight = FontWeight.Bold
-                           )
+                           fontWeight = FontWeight.Bold,
+                           style = MaterialTheme.typography.labelSmall.copy(
+                               fontWeight = FontWeight.Medium,
+                               fontSize = 14.sp)
+                       )
                    }
                    CitySelectDropdown(
                        isExpanded = viewModel.isExpanded,
@@ -93,7 +100,12 @@ fun FilterDialog(onDismiss: () -> Unit, viewModel: ActivityScreenViewModel, list
                     onDismiss()
                     viewModel.filterActivitiesByLocation(viewModel.selectedCity)
                 }) {
-                Text(text = "Filtrér", color = secondaryColor)
+                Text(text = "Filtrér",
+                    color = secondaryColor,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp)
+                )
             }
         }
     )

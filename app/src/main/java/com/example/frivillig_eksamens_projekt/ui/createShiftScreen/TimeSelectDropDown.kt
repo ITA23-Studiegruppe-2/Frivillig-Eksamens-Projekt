@@ -1,5 +1,6 @@
 package com.example.frivillig_eksamens_projekt.ui.createShiftScreen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -18,8 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,13 +83,19 @@ fun TimeSelectDropDown(
             )
             ExposedDropdownMenu(
                 expanded = isExpanded,
-                onDismissRequest = onDismiss
+                onDismissRequest = onDismiss,
+                modifier = Modifier
+                    .border(1.5.dp, color = Color(0xFF364830), shape = RoundedCornerShape(6.dp))
+                    .background(Color.White)
             ) {
                 listOfTimes.forEach { time ->
                     DropdownMenuItem(
                         text = { Text(
                             text = time,
-                            color = Color(0xFF364830)) },
+                            color = Color(0xFF364830),
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 14.sp)) },
                         onClick = {
                             onValueClick(time)
                             onDismiss()
