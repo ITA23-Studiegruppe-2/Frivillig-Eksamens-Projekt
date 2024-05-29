@@ -14,6 +14,12 @@ import com.example.frivillig_eksamens_projekt.Models.Badge
 import com.example.frivillig_eksamens_projekt.repositories.BadgesRepository
 import kotlinx.coroutines.launch
 
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 class BadgesViewModel: ViewModel() {
 
     private val badgesRepository = BadgesRepository()

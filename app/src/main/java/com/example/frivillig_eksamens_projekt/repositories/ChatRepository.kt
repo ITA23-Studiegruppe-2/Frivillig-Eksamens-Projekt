@@ -13,7 +13,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
-
+/**
+ *
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 class ChatRepository {
     val db = Firebase.firestore
 

@@ -7,6 +7,13 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
+
 class BadgesRepository() {
 
     private val db = Firebase.firestore
@@ -49,51 +56,3 @@ class BadgesRepository() {
         }
     }
 }
-
-    /*
-
-    suspend fun showBadges(
-        listOfUserBadges: MutableList<Badge>?,
-        listOfAllBadges: MutableList<Badge>
-    ): MutableList<String> {
-        val tempList: MutableList<String> = mutableListOf()
-        val userBadgeNames = listOfUserBadges?.map { it.name }?.toSet() ?: emptySet()
-
-        for (badge in listOfAllBadges) {
-            val badgePath =
-                if (userBadgeNames.contains(badge.name)) badge.path else badge.pathLocked
-            tempList.add(badgePath)
-        }
-        return tempList
-    }
-}
-       /*
-
-        if (listOfUserBadges != null) {
-            val userBadgeNames = listOfUserBadges.map { it.name }.toSet()
-            tempList.addAll(listOfAllBadges.map { badge ->
-                if (userBadgeNames.contains(badge.name)) {
-                    badge.path
-                } else {
-                    badge.pathLocked
-                }
-            })
-
-            val userMappedBadges = listOfUserBadges.map { it.name }
-            for (badge in listOfAllBadges) {
-                if (userMappedBadges.contains(badge.name)) {
-                    tempList.add(badge.path)
-                } else {
-                    tempList.add(badge.pathLocked)
-
-                }
-
-            }
-
-        }
-        return tempList
-        /*
-        var returnList: MutableList<Painter> = tempList.map {  }
-        return tempList
-
-         */

@@ -1,5 +1,14 @@
 package com.example.frivillig_eksamens_projekt.navigation
 
+
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ * @author Anders Keller
+ *
+ */
 sealed class Screen (val route: String) {
     object Home: Screen(route = "home_screen")
 
@@ -40,8 +49,6 @@ sealed class Screen (val route: String) {
 
     object Advice: Screen(route = "advice_screen")
 
-//<<<<<<< HEAD
-
 
     object GroupChat: Screen(route = "group_chat_screen/{conversationId}/{organizationName}") {
         fun createRoute(conversationId: String, organizationName: String) =
@@ -51,7 +58,6 @@ sealed class Screen (val route: String) {
     object ConversationScreen: Screen(route = "conversation_screen")
 
 
-//=======
     object OrgOwnActivities: Screen(route = "orgOwnActivities_screen")
 
     //Because we store the routes inside of a sealed class, we have to create a function that create a new route with the desired value
@@ -60,5 +66,5 @@ sealed class Screen (val route: String) {
     }
 
     object OrganisationProfile: Screen(route = "Organisation_Profile")
-//>>>>>>> origin/main
+
 }

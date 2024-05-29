@@ -14,6 +14,12 @@ import kotlinx.coroutines.launch
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+/**
+ *
+ * @author Anders Keller
+ *
+ */
+
 class OrganisationProfileViewModel : ViewModel() {
     var name: String by mutableStateOf("")
     var cvrNumber: String by mutableStateOf("")

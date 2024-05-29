@@ -11,6 +11,11 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
 
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ */
 class OrgAllActivitiesViewmodel: ViewModel() {
 
     val activitiesRepository: ActivitiesRepository = ActivitiesRepository()

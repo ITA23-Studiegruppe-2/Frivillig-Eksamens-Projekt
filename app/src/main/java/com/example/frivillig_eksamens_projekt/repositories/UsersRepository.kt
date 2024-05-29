@@ -9,6 +9,13 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ *
+ */
 class UsersRepository() {
     private val db = Firebase.firestore
 

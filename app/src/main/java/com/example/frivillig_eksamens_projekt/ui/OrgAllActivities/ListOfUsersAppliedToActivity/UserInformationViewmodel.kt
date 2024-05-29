@@ -10,6 +10,13 @@ import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 import com.example.frivillig_eksamens_projekt.repositories.BadgesRepository
 import kotlinx.coroutines.launch
 
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ *
+ */
+
 class UserInformationViewmodel(): ViewModel() {
 
 

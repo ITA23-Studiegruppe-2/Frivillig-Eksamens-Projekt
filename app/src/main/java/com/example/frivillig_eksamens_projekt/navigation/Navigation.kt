@@ -36,6 +36,15 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.registerOrg.Crea
 import com.example.frivillig_eksamens_projekt.ui.startScreen.StartScreen
 import com.example.frivillig_eksamens_projekt.ui.upcomingShiftsScreen.UpcomingShifts
 
+
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ * @author Anders Keller
+ *
+ */
 @Composable
 fun Navigation() {
     val navController = rememberNavController()

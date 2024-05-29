@@ -16,6 +16,12 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import java.util.Calendar
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 class ActivityScreenViewModel: ViewModel() {
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
 

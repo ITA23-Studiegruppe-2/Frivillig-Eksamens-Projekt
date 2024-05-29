@@ -6,6 +6,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.frivillig_eksamens_projekt.services.AccountService
 
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ */
 class LoginViewModel : ViewModel() {
     private var accountService: AccountService = AccountService()
 
