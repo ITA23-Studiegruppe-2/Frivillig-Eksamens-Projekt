@@ -7,6 +7,13 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
+
 class ActivitiesRepository() {
     private val db = Firebase.firestore
 
@@ -80,10 +87,26 @@ class ActivitiesRepository() {
             if (currentActivityListOfUsers != null) {
                 activity.listOfUsersApplied = currentActivityListOfUsers.toMutableList()
             }
+
+            // Do the same for approvedUsers
+            val currentApprovedListOfUsers = activity.documentId?.let {
+                db.collection("Activites")
+                    .document(it)
+                    .collection("userApproved")
+                    .get()
+                    .await()
+                    .documents
+                    .map { userDocument -> userDocument.id }
+            }
+            if (currentApprovedListOfUsers != null) {
+                activity.listOfUsersApproved = currentApprovedListOfUsers.toMutableList()
+            }
+
             listOfActivitesWithUsers.add(activity)
         }
         return listOfActivitesWithUsers
     }
+
 
     fun applyForActivity(appliedState: Boolean, userID: String, currentActivityID: String) {
         // Check to see if the user already has applied

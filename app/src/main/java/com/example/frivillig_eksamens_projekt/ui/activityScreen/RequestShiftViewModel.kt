@@ -10,6 +10,13 @@ import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
+
 class RequestShiftViewModel: ViewModel() {
     val activitiesRepository: ActivitiesRepository = ActivitiesRepository()
     private val _isRequested = mutableStateOf(false)

@@ -7,6 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import java.util.Calendar
 
+/**
+ *
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 class CalendarViewModel : ViewModel() {
     // Variabler til at holde styr på det nuværende år, måned og dag
     val currentYear: Int

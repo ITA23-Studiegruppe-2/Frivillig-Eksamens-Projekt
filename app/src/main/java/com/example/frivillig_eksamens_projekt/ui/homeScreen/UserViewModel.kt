@@ -21,6 +21,14 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ *
+ */
+
 
 class UserViewModel: ViewModel() {
 

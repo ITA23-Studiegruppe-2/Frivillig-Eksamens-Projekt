@@ -12,8 +12,16 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 import com.example.frivillig_eksamens_projekt.Models.Activity
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import java.util.Calendar
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 class ActivityScreenViewModel: ViewModel() {
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
 
@@ -36,15 +44,14 @@ class ActivityScreenViewModel: ViewModel() {
     var selectedCity by mutableStateOf("Lokation")
 
     var listOfCities: MutableList<String> by mutableStateOf(mutableStateListOf())
+    val currentUserUId by mutableStateOf(Firebase.auth.currentUser?.uid)
 
     init {
         getActivities()
-        val calendar = Calendar.getInstance() // Opret en instans af kalenderen, som vi kan bruge til at arbejde med datoer og tidspunkter
-        // Hent det nuværende år, måned og dag fra kalenderen
+        val calendar = Calendar.getInstance()
         currentYear = calendar.get(Calendar.YEAR)
         currentMonth = calendar.get(Calendar.MONTH)
         currentDay = calendar.get(Calendar.DAY_OF_MONTH)
-
 
     }
 

@@ -13,16 +13,11 @@ import com.google.firebase.auth.auth
 
 /**
  *
- * @author
+ * @author Rasmus Planteig
  *
  */
 class AccountService {
-    fun registerUserAuth(
-        email: String,
-        password: String,
-        onSuccess: () -> Unit,
-        onFail: (String) -> Unit
-    ) {
+    fun registerUserAuth(email: String, password: String, onSuccess: () -> Unit, onFail: (String) -> Unit) {
         Firebase.auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 // Make the User a user-class in the Auth Storage - Used to identify between orgs and users when loggin in
@@ -31,38 +26,19 @@ class AccountService {
                 val profileUpdate = UserProfileChangeRequest.Builder()
                     .setDisplayName("user")
                     .build()
-
                 currentUser?.updateProfile(profileUpdate)
-
-
                 //Give it the function of what to do
                 onSuccess()
-
             }
             .addOnFailureListener { exception ->
-                // Get the reason for the failure and pass it to the onFail callback
-                // - If password - Have password failure turn up. - Should be handled with regex in the viewmodel - todo
-                // Find all error codes and make a when? - todo
-
-
-                // List of Error codes
-                /*
-                auth/email-already-in-use - todo
-                auth/network-request-failed - todo
-                auth/weak-password - todo
-
-                Handle else - on unknown errors - todo
-                 */
                 val errorMessage = when (exception) {
                     is FirebaseAuthException -> when (exception.errorCode) {
                         "ERROR_EMAIL_ALREADY_IN_USE" -> "Denne email er allerede i brug"
                         "ERROR_WEAK_PASSWORD" -> "Brug venligst en stærkere adgangkode! Den skal mindst være 8 karaktere lang, indehold minimun et tal og et stort bogstav"
                         else -> "Ukendt fejl, prøv venligst igen senere!"
                     }
-
                     is FirebaseNetworkException -> "Netværksfejl, kontroller venligst om du har internet adgang"
                     else -> "Ukendt fejl, prøv venligst igen senere!"
-
                 }
                 // Provide the errorMessages to the Composable/ViewModel and let the user know whats wrong
                 onFail(errorMessage)
@@ -207,7 +183,3 @@ class AccountService {
             }
     }
 }
-
-// Agil udvikling - Hvis vi ville ligge op på appstore
-// Skriv hvem der har lavet hvad
-// K-DUCK

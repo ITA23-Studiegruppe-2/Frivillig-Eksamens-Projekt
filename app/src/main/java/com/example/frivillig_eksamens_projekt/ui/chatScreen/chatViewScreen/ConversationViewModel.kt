@@ -10,7 +10,12 @@ import com.example.frivillig_eksamens_projekt.Models.Conversation
 import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-
+/**
+ *
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 class ConversationViewModel : ViewModel() {
     private val chatRepository = ChatRepository()
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))

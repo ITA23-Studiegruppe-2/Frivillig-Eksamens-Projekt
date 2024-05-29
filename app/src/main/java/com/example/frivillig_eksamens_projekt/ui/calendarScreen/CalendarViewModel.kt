@@ -16,6 +16,12 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 class CalendarViewModel(): ViewModel() {
     private val activitiesRepository = ActivitiesRepository()
     var userActivities: MutableList<Activity> by mutableStateOf(mutableStateListOf())

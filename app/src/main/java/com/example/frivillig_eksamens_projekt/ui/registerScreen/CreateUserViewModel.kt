@@ -7,6 +7,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.frivillig_eksamens_projekt.services.AccountService
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
+
 class CreateUserViewModel : ViewModel() {
 
     // Account services - Firebase

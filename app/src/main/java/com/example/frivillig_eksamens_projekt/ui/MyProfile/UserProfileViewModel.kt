@@ -12,6 +12,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+/**
+ *
+ *
+ * @author Anders Keller
+ *
+ */
+
 data class UserProfile(
     val fullName: String = "",
     val phoneNumber: String = "",

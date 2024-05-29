@@ -6,6 +6,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import com.example.frivillig_eksamens_projekt.services.AccountService
 
+
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ *
+ */
+
 class CreateOrgViewModel {
 
     // Account services - Firebase

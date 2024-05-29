@@ -5,6 +5,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ */
 class OrganisationRepository {
     private val db = Firebase.firestore
 

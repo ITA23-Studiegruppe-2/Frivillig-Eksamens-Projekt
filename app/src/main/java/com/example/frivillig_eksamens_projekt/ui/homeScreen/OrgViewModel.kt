@@ -12,6 +12,15 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ * @author Anders Keller
+ *
+ */
+
 class OrgViewModel: ViewModel() {
     val organizationRepository: OrganisationRepository = OrganisationRepository()
 

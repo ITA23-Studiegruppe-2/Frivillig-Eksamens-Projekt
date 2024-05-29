@@ -13,6 +13,12 @@ import com.example.frivillig_eksamens_projekt.repositories.UsersRepository
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation.OrgChatRepository
 import kotlinx.coroutines.launch
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Lucas Jacobsen
+ *
+ */
 class ListOfUsersAppliedViewmodel(
     activityId: String
 ): ViewModel() {
@@ -54,7 +60,7 @@ class ListOfUsersAppliedViewmodel(
 
         // Function that adds or removes the activityId from the subCollection of activities inside of the user document
         viewModelScope.launch {
-            //Get the new list of users approved
+            //Get the new list of users approved - The list that we received when we first arrived, could be different from the one we need to check changes on
             val currentListOfUsersApproved: MutableList<String> = activitiesRepository.getListOfApprovedUserIdByActivityId(currentActivityId)
 
             // Compare between the two list of approved Users - list 1 (Before any changes), list 2 (after changes)
@@ -62,7 +68,7 @@ class ListOfUsersAppliedViewmodel(
             //Check if we need to add the activityId to the users subCollection
             currentListOfUsersApproved.forEach { userId ->
                 if (!(listOfUsersApproved.contains(userId))) {
-                    // The user isn't inside of the first list - We haven't added the data yet.
+                    // The user isn't inside of the first list, but inside of the new - We haven't added the data yet.
                     usersRepository.addActivityIdToUserSubCollection(activityId = currentActivityId, userId = userId)
 
                     // Send the notification
@@ -72,17 +78,15 @@ class ListOfUsersAppliedViewmodel(
                         message = "Din vagt som ${currentActivityData.title} hos ${currentActivityData.organization} er blevet godkendt. Du kan læse dine vagtdetaljer under kommende vagter"
                     )
                 }
-                // If the user already is in the list -> Do nothing
+                // If the user already is in the list, aka det user already have recieved a notfication and has the activity saved in the subCollection -> Do nothing
             }
-
             listOfUsersApproved.forEach { userId ->
                 if (!(currentListOfUsersApproved.contains(userId))) {
-                    // The user isn't in the new list -> Remove the activityId
+                    // The user isn't in the new list, but was inside of the old list -> Remove the activityId
                     usersRepository.removeActivityIdFromUserSubCollection(activityId = currentActivityId, userId = userId)
                 }
                 // The user is in the new list -> let the first forEach handle it.
             }
-
         }
     }
 

@@ -13,6 +13,11 @@ import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ */
 class CreateShiftViewModel(): ViewModel(
 ) {
 

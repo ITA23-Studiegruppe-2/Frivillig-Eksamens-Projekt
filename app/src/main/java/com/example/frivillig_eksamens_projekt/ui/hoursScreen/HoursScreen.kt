@@ -21,7 +21,7 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 
 @Composable
 fun HoursScreen(
-    navController: NavController
+    onBackButtonClick: () -> Unit
 ){
     val secondaryColor = Color(0xFF364830)
 
@@ -42,7 +42,7 @@ fun HoursScreen(
                     .background(color = Color.White, shape = RoundedCornerShape(8.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                BackButton(onClick = { navController.popBackStack() })
+                BackButton(onClick = onBackButtonClick)
                 Text(
                     text = "Dine timer",
                     fontSize = 28.sp,

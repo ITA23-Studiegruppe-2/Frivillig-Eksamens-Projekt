@@ -14,6 +14,12 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.launch
 
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ *
+ */
 class UpcomingShiftsViewModel(): ViewModel() {
 
     private val activitiesRepository = ActivitiesRepository()
@@ -31,8 +37,6 @@ class UpcomingShiftsViewModel(): ViewModel() {
         if (currentUser != null) {
             viewModelScope.launch {
                 upcomingActivities = activitiesRepository.getActivitiesForUser(activitiesRepository.getActivities(), currentUser)
-                println(upcomingActivities)
-                // Only get activities the user has applied(TO CHANGE) for
             }
         }
 
