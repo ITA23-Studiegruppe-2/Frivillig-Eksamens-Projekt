@@ -30,7 +30,6 @@ import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
 @Composable
 fun CreateUserSecondScreen(
     onSuccess: () -> Unit,
-    onFail: () -> Unit,
     onBackButtonClick: () -> Unit,
     viewModel: CreateUserViewModel
 ) {

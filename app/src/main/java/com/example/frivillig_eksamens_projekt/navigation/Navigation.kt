@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import com.example.frivillig_eksamens_projekt.ui.MyProfile.ProfileScreen
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.ListOfUsersAppliedToActivity.ListOfUsersApplied
 import com.example.frivillig_eksamens_projekt.ui.OrgAllActivities.OrgAllActivitiesScreen
+import com.example.frivillig_eksamens_projekt.ui.OrganisationProfile.OrganisationScreen
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.ActivityScreen
 import com.example.frivillig_eksamens_projekt.ui.adviceScreen.AdviceScreen
 import com.example.frivillig_eksamens_projekt.ui.badgesScreen.BadgesScreen
@@ -84,6 +85,7 @@ fun Navigation() {
                         currentRoute = currentRoute
                     )
                 } else {
+
                     OrgBottomNavigationBar(
                         onCreateShiftClick = {navController.navigate(Screen.CreateShift.route)},
                         onShiftPortalClick = { navController.navigate(Screen.OrgOwnActivities.route) },
@@ -132,8 +134,7 @@ fun Navigation() {
         composable(Screen.RegisterUser.route) {
             CreateUserScreen(
                 onSuccess = { navController.navigate(Screen.RegisterUserSecond.route) },
-                // TEMP () ADD INDICATOR
-                onFail = { println("Failed") },
+
                 viewModel = registerViewModel,
                 onBackButtonClick = { navController.popBackStack() },
                 onLoginHyperLink = {navController.navigate(Screen.Login.route)}
@@ -146,8 +147,6 @@ fun Navigation() {
                 // Its a user login -> Send it to the user homeScreen
                 CreateUserSecondScreen(
                     onSuccess = { navController.navigate(Screen.Home.route) },
-                    // TEMP () ADD INDICATOR
-                    onFail = { println("Failed") },
                     onBackButtonClick = { navController.popBackStack() },
                     viewModel = registerViewModel
                 )
@@ -221,7 +220,9 @@ fun Navigation() {
 
         // Hours Screen
         composable(Screen.Hours.route) {
-            HoursScreen(navController)
+            HoursScreen(
+                onBackButtonClick = { navController.popBackStack() }
+            )
 
             currentRoute.value = Screen.Hours.route
         }
@@ -288,6 +289,11 @@ fun Navigation() {
            ProfileScreen()
            currentRoute.value = Screen.MyProfile.route
        }
+
+        composable(Screen.OrganisationProfile.route) {
+            OrganisationScreen()
+            currentRoute.value = Screen.OrganisationProfile.route
+        }
 
 
         //Orgs list of own activities

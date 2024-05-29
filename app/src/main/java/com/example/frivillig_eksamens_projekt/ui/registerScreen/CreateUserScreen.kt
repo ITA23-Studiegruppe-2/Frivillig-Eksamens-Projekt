@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CreateUserScreen(
     onSuccess: () -> Unit,
-    onFail: () -> Unit,
     viewModel: CreateUserViewModel,
     onBackButtonClick: () -> Unit,
     onLoginHyperLink:() -> Unit
