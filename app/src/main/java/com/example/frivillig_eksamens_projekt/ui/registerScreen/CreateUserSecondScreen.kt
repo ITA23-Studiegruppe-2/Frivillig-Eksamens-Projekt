@@ -110,10 +110,6 @@ fun CreateUserSecondScreen(
                 Spacer(modifier = Modifier.height(28.dp))
                 
                 Text(text = viewModel.errorMessage)
-                Box {
-                    TermsAndConditionsCheckbox(checkboxViewModel = viewModel)
-                }
-
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center

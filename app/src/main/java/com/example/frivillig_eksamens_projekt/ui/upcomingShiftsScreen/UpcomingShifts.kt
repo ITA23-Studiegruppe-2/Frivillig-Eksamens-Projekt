@@ -42,7 +42,6 @@ fun UpcomingShifts(
                 Spacer(modifier = Modifier.height(30.dp))
                 LazyColumn {
                     items(viewModel.upcomingActivities) { activity ->
-                        println(viewModel.upcomingActivities)
                         activity.documentId?.let {
                             UpcomingShiftCard(
                                 title = activity.title,
@@ -52,8 +51,6 @@ fun UpcomingShifts(
                                 city = activity.city,
                                 description = activity.description,
                                 location = activity.location
-
-
                             )
                         }
                     }

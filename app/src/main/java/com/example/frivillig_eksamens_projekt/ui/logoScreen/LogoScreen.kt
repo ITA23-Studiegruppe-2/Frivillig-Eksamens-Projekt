@@ -19,17 +19,17 @@ import com.example.frivillig_eksamens_projekt.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun LogoScreen(navController: NavController) {
+fun LogoScreen(
+
+    navigation: () -> Unit
+) {
 
     val logo: Painter = painterResource(id = R.drawable.volunify_logo)
 
     // Effect to delay the logo screen
     LaunchedEffect(key1 = true) {
         delay(1200)
-        navController.navigate("start_screen") {
-            // Remove logoScreen from backstack
-            popUpTo("logoScreen") { inclusive = true }
-        }
+        navigation()
     }
     Surface(
         modifier = Modifier.fillMaxSize(),

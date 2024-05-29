@@ -108,7 +108,10 @@ fun Navigation() {
 
         // Logo Screen
         composable(Screen.Logo.route) {
-            LogoScreen(navController = navController)
+            LogoScreen(navigation = {navController.navigate("start_screen") {
+                // Remove logoScreen from backstack
+                popUpTo("logoScreen") { inclusive = true }
+            }})
         }
 
         // Start Screen
@@ -134,7 +137,6 @@ fun Navigation() {
         composable(Screen.RegisterUser.route) {
             CreateUserScreen(
                 onSuccess = { navController.navigate(Screen.RegisterUserSecond.route) },
-
                 viewModel = registerViewModel,
                 onBackButtonClick = { navController.popBackStack() },
                 onLoginHyperLink = {navController.navigate(Screen.Login.route)}
@@ -318,7 +320,6 @@ fun Navigation() {
             }
             currentRoute.value = Screen.ListOfUsersAppliedActivity.route
         }
-
         }
     }
 }
