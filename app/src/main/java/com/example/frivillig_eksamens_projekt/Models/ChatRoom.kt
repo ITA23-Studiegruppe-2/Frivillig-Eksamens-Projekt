@@ -3,6 +3,11 @@ package com.example.frivillig_eksamens_projekt.DTO
 import com.example.frivillig_eksamens_projekt.Models.Message
 import com.google.firebase.firestore.DocumentId
 
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 
 //Message med et object med message = String, og id for user
 

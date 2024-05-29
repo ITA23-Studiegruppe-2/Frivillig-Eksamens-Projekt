@@ -24,7 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.frivillig_eksamens_projekt.Models.Notification
-
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ */
 @Composable
 fun NotificationCardForDialog(currentNotification: Notification) {
     Box(modifier = Modifier

@@ -26,6 +26,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun CreateUserScreen(
     onSuccess: () -> Unit,

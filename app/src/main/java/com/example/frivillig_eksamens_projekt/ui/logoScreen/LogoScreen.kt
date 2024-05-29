@@ -18,6 +18,13 @@ import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import kotlinx.coroutines.delay
 
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
+
 @Composable
 fun LogoScreen(
 

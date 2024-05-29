@@ -1,7 +1,11 @@
 package com.example.frivillig_eksamens_projekt.Models
 
 import com.google.firebase.firestore.DocumentId
-
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ */
 data class Activity(
     val title: String = "",
     val organization: String = "",

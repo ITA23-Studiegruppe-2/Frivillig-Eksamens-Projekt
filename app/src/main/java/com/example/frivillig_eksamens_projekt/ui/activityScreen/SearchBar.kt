@@ -26,6 +26,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.frivillig_eksamens_projekt.R
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(

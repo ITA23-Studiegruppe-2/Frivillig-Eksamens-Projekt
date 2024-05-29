@@ -21,7 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.Models.Conversation
-
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 @Composable
 fun ConversationItem(
     conversation: Conversation,

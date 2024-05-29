@@ -19,7 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui_elements.theme.title
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun TopBarCreateShift(
     onBackButtonClick: () -> Unit,

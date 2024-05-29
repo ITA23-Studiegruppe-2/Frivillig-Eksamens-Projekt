@@ -12,7 +12,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun CustomButton(text: String, onClick: () -> Unit) {
     val buttonColors = ButtonDefaults.buttonColors(

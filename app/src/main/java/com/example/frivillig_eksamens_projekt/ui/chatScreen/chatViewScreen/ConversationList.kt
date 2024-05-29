@@ -23,6 +23,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.chatViewScreen.ConversationItem
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
 
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 @Composable
 fun ConversationList(
     onResumeClick: (String, String) -> Unit,

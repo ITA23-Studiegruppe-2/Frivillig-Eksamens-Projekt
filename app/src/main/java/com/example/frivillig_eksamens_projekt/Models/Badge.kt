@@ -2,6 +2,11 @@ package com.example.frivillig_eksamens_projekt.Models
 
 import com.google.firebase.firestore.DocumentId
 
+/**
+ *
+ * @author Christine Tofft
+ *
+ */
 data class Badge(
 
     @DocumentId var documentId: String? = null,

@@ -26,7 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.ui.calender.CalendarViewModel
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun CreateUserSecondScreen(
     onSuccess: () -> Unit,

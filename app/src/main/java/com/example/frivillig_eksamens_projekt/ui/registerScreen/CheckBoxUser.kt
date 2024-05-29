@@ -21,7 +21,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun TermsAndConditionsCheckbox(checkboxViewModel: CreateUserViewModel) {
     val isTermsAndConditionsChecked = checkboxViewModel.isTermsAndConditionsChecked

@@ -18,7 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ *
+ */
 
 @Composable
 fun HomeScreenNews(

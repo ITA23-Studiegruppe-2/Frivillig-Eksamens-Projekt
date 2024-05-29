@@ -15,7 +15,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.Models.Message
 
-
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 @Composable
 fun MessageBubble(
     message: Message,

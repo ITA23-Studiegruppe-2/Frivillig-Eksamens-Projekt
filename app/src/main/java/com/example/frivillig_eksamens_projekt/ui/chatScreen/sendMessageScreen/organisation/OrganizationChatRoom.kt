@@ -28,7 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.chatScreen.sendMessageScreen.organisation.OrgChatViewModel
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
-
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 @Composable
 fun GroupChatScreen(
     conversationId: String,

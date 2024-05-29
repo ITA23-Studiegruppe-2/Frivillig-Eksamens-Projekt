@@ -27,7 +27,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.frivillig_eksamens_projekt.R
 import com.example.frivillig_eksamens_projekt.navigation.Screen
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ *
+ */
 @Composable
 fun OrgHomeScreen(
     onMyActivitiesClick: () -> Unit,

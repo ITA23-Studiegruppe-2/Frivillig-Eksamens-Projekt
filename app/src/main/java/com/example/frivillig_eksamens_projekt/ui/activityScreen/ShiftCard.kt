@@ -36,6 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 
 @Composable
 fun ShiftCard(title: String, organization: String, date: String, time: String, activityID: String, listOfUsers: List<String>, description: String, location: String) {

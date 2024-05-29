@@ -7,6 +7,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.repositories.ActivitiesRepository
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 
 @Composable
 fun RequestShiftCheckbox(requestShiftViewModel: RequestShiftViewModel, activityID: String) {

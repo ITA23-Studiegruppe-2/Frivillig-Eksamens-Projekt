@@ -2,6 +2,11 @@ package com.example.frivillig_eksamens_projekt.Models
 
 import com.google.firebase.firestore.DocumentId
 
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 data class Message(
     var senderName: String = "",
     val content: String = "",

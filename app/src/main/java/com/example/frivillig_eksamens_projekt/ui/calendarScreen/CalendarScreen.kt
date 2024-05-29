@@ -41,7 +41,12 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun CalendarScreen2 (
     onBackButtonClick: () -> Unit
@@ -173,6 +178,9 @@ fun CalendarScreen2 (
                                     dayFormat = dateToBeFormatted.substring(8,10)
                                     monthFormat = dateToBeFormatted.substring(6,7)
                                     yearFormat = dateToBeFormatted.substring(0,4)
+                                    if (dayFormat[0] == '0') {
+                                        dayFormat = dayFormat[1].toString()
+                                    }
 
                                     val currentDateFormatted: String  = "$dayFormat/$monthFormat/$yearFormat"
 

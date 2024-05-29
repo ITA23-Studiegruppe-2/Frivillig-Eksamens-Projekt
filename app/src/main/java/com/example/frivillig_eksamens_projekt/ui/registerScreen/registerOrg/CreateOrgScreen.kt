@@ -26,7 +26,12 @@ import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.TermsAndConditionsCheckbox
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun CreateOrgScreen(
     onSuccess: () -> Unit,

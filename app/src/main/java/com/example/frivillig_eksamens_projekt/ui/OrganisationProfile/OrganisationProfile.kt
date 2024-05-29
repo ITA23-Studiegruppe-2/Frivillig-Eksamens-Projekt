@@ -16,7 +16,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+/**
+ *
+ * @author Anders Keller
+ *
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OrganisationScreen() {

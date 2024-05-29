@@ -34,6 +34,14 @@ import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.RequestShiftCheckbox
 import com.example.frivillig_eksamens_projekt.ui.activityScreen.RequestShiftViewModel
 
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
+
+
 @Composable
 fun UpcomingShiftCard(
     description: String,

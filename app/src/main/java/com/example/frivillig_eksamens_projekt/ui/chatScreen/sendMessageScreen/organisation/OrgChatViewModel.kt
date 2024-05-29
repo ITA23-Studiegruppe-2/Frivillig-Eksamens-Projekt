@@ -11,7 +11,11 @@ import com.example.frivillig_eksamens_projekt.repositories.ChatRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 class OrgChatViewModel(
     conversationId: String,
     activityId: String

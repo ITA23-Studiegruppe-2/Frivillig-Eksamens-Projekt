@@ -20,7 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ *
+ */
 @Composable
 fun NavigationButton(
     iconType: ImageVector,

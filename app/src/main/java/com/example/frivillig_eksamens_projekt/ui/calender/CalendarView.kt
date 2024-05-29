@@ -22,7 +22,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+/**
+ *
+ * @author Lucas Jacobsen
+ *
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter") // Undertrykker advarslen om ubrugte parametre
 @OptIn(ExperimentalMaterial3Api::class) // Indikerer brug af eksperimentelle Material3-API'er
 
@@ -56,6 +60,8 @@ fun CalendarScreen(
     )
 }
 
+
+//Inspireret fra Geeks for Geeks
 @Composable
 fun CalendarBody(selectedDate: String, datePickerDialog: android.app.DatePickerDialog) {
     Column(

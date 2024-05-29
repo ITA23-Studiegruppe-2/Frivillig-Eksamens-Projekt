@@ -10,7 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.DialogProperties
 import com.example.frivillig_eksamens_projekt.Models.Notification
-
+/**
+ *
+ * @author Rasmus Planteig
+ *
+ */
 @Composable
 fun NotificationsDialog(
     onDismissRequest: () -> Unit,

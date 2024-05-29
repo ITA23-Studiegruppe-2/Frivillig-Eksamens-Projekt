@@ -29,7 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.example.frivillig_eksamens_projekt.Models.Badge
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
-
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 
 @Composable
 fun BadgesScreen(

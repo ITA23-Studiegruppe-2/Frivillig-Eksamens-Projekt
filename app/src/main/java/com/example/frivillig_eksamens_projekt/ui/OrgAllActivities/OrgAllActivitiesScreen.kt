@@ -20,7 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.Models.Activity
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun OrgAllActivitiesScreen(
     onBackButtonClick: () -> Unit,

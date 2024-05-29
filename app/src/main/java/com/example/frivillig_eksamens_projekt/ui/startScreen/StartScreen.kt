@@ -22,7 +22,13 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Anders Keller
+ *
+ */
 @Composable
 fun StartScreen(
     onLoginClick: () -> Unit,

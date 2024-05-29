@@ -23,7 +23,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
-
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun AdviceScreen(
     onBackButtonClick: () -> Unit

@@ -28,7 +28,12 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 @OptIn(ExperimentalMaterial3Api::class) //To import textFieldColors
 
 @Composable

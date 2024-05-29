@@ -24,7 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.ui.createShiftScreen.TopBarCreateShift
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ *
+ */
 @Composable
 fun ListOfUsersApplied(
     activityId: String,

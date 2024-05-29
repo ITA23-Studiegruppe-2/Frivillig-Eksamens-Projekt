@@ -19,7 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.Models.Activity
 import java.util.Locale
-
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 @Composable
 fun DateDetailsDialog(
     date: LocalDate?,

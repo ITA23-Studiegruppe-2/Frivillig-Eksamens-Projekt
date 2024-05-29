@@ -26,7 +26,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
-
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ * @author Lucas Jacobsen
+ *
+ */
 
 @Composable
 fun LoginScreen(

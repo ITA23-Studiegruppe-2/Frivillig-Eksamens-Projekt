@@ -1,5 +1,11 @@
 package com.example.frivillig_eksamens_projekt.Models
 
+/**
+ *
+ * @author Rasmus Planteig
+ * @author Christine Tofft
+ *
+ */
 data class User(
     var fullName: String = "med dig",
     var phoneNumber: String = "",

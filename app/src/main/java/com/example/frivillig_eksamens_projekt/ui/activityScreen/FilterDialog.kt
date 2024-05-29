@@ -26,6 +26,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+/**
+ *
+ *
+ * @author Christine Tofft
+ *
+ */
 
 @Composable
 fun FilterDialog(onDismiss: () -> Unit, viewModel: ActivityScreenViewModel, listOfCities: MutableList<String>){

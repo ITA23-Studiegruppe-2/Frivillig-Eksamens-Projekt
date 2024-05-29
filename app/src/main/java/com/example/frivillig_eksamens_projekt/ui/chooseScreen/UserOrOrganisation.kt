@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 
+
+
 @Composable
 fun UserOrOrganisation (
     onSuccesUserSelection: () -> Unit,
