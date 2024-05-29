@@ -156,7 +156,7 @@ fun Navigation() {
         //Register Organisation Screen
         composable(Screen.RegisterOrg.route) {
             CreateOrgScreen(
-                onSuccess = { navController.navigate(Screen.OrgHomeScreen.route) }, //Skal laves om til Org Home Screen
+                onSuccess = { navController.navigate(Screen.OrgHomeScreen.route) },
                 onFail = { /*TODO*/ },
                 onBackButtonClick = {navController.popBackStack()}
             )
@@ -231,7 +231,7 @@ fun Navigation() {
             composable(Screen.OrgHomeScreen.route) {
                 OrgHomeScreen(
                     onMyActivitiesClick = { navController.navigate(Screen.OrgOwnActivities.route)},
-                    onChatScreenClick = {navController.navigate(Screen.Home.route)},
+                    onChatScreenClick = {navController.navigate(Screen.ConversationScreen.route)},
                     onCreateShiftClick = {navController.navigate(Screen.CreateShift.route)},
                     onAccountTypeChange = {it -> currentUserType.value = it},
                     onVolunteersClick = {navController.navigate(Screen.Advice.route)}

@@ -14,7 +14,6 @@ import com.example.frivillig_eksamens_projekt.services.AccountService
 class LoginViewModel : ViewModel() {
     private var accountService: AccountService = AccountService()
 
-    var rememberMe by mutableStateOf(false)
     var email by mutableStateOf("ida@email.dk")
     var password by mutableStateOf("IdaGramkow2")
 

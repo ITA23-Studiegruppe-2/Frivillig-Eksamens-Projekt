@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.BackButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.CustomButton
 import com.example.frivillig_eksamens_projekt.ui.registerScreen.InputfieldUser
@@ -33,7 +34,7 @@ fun LoginScreen(
     onOrgSuccessLogin: () -> Unit,
     onBackButtonClick: () -> Unit
 ) {
-    val loginViewModel: LoginViewModel = LoginViewModel()
+    val loginViewModel: LoginViewModel = viewModel()
 
 
     Box(
