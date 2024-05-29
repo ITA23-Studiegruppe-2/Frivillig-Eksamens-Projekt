@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 /**
  *
- * @author Rasmus Planteig
+ * @author Christine Tofft
  *
  *
  */

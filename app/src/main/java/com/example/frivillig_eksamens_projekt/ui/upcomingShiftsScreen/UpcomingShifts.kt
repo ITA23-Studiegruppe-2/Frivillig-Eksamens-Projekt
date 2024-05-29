@@ -44,7 +44,7 @@ fun UpcomingShifts(
                     items(viewModel.upcomingActivities) { activity ->
                         println(viewModel.upcomingActivities)
                         activity.documentId?.let {
-                            /*UpcomingShiftCard(
+                            UpcomingShiftCard(
                                 title = activity.title,
                                 organization = activity.organization,
                                 date = activity.date,
@@ -55,8 +55,6 @@ fun UpcomingShifts(
 
 
                             )
-
-                             */
                         }
                     }
                 }
