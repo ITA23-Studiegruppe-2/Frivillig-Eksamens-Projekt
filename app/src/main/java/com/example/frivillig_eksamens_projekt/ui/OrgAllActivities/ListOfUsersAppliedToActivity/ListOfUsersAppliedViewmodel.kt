@@ -94,7 +94,8 @@ class ListOfUsersAppliedViewmodel(
     }
 
 
-    // Create ChatRoom for approved users
+    // Designed to create or update a chat room for users
+    // who have been approved for a specific activity
     fun chatRoomForApprovedUsers(
         activityId: String
     ) {
@@ -119,13 +120,14 @@ class ListOfUsersAppliedViewmodel(
             }
         }
 
-    // Send an automatic message
+    // Designed to send an initial system message to a chat room
+    // associated with a specific activity and organization
     fun sendSystemMessage(activityId: String, orgId: String) {
         viewModelScope.launch {
             try {
                 val senderId = orgId
                 val senderName = "System"
-                val messageText = "Velkommen til allesammen! - Mere information kommer snarest muligt <3"
+                val messageText = "Velkommen til allesammen! - Mere information kommer snarest muligt"
                 val timestamp = System.currentTimeMillis()
 
                 val result = orgChatRepository.sendGroupMessage(

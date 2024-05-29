@@ -12,3 +12,5 @@ data class Message(
     val isOwn: Boolean = true,
     @DocumentId var documentId: String? = null
 )
+
+//

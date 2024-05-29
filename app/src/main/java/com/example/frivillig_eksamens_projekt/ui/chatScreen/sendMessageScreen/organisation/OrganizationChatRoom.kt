@@ -1,6 +1,5 @@
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,10 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
@@ -23,9 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,18 +37,14 @@ fun GroupChatScreen(
     onBackButtonClick: () -> Unit
 ) {
     val viewModel: OrgChatViewModel = OrgChatViewModel(conversationId, activityId)
-    val messages by viewModel.messages.collectAsState() // Convert "StateFlow" to a compose-friendly "state". Listens to new messages, and updates the UI automatic.
-    var messageText by remember { mutableStateOf("") }
-    val orgId by viewModel::orgId
+    val messages by viewModel.messages.collectAsState() // Observe messages state
     val fontStyle = MaterialTheme.typography.labelSmall.copy(
         fontWeight = FontWeight.Medium,
-        fontSize = 14.sp)
-
-
-
+        fontSize = 14.sp
+    )
 
     // Listen for changes in conversationId, and start again
-    LaunchedEffect (conversationId) {
+    LaunchedEffect(conversationId) {
         viewModel.initializeChat(conversationId, activityId)
     }
 
@@ -66,8 +56,7 @@ fun GroupChatScreen(
                 .fillMaxSize()
                 .background(viewModel.backgroundColor)
         ) {
-            TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = "$organizationName")
-
+            TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = organizationName)
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -86,9 +75,9 @@ fun GroupChatScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 OutlinedTextField(
-                    value = messageText,
-                    onValueChange = { messageText = it },
-                    label = { Text("Besked", style = fontStyle)},
+                    value = viewModel.messageText,
+                    onValueChange = { viewModel.messageText = it },
+                    label = { Text("Besked", style = fontStyle) },
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp)
@@ -105,8 +94,8 @@ fun GroupChatScreen(
                         contentColor = Color.White,
                     ),
                     onClick = {
-                        viewModel.sendGroupMessage(activityId, messageText, orgId)
-                        messageText = ""
+                        viewModel.sendGroupMessage(activityId, viewModel.messageText, viewModel.orgId)
+                        viewModel.messageText = ""
                     }
                 ) {
                     Text("Send", style = fontStyle)
@@ -115,4 +104,3 @@ fun GroupChatScreen(
         }
     }
 }
-

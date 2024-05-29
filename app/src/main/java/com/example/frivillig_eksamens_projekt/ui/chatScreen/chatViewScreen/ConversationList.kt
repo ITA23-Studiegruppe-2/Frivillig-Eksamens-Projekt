@@ -29,10 +29,8 @@ fun ConversationList(
     onBackButtonClick: () -> Unit
 
 ) {
-    val secondaryColor = Color(0xFF364830)
     val viewModel: ConversationViewModel = viewModel()
     val conversations = viewModel.conversations
-
 
 
     Surface(
@@ -49,6 +47,10 @@ fun ConversationList(
 
             TopBarCreateShift(onBackButtonClick = onBackButtonClick, text = "Dine samtaler")
 
+
+
+            // used to make sure, that when currentUserId changes,
+            // messages for the new user are fetched by calling fetchMessages with the new currentUserId.
             LaunchedEffect(viewModel.currentUserId) {
                 viewModel.currentUserId?.let {
                     viewModel.fetchMessages(it)

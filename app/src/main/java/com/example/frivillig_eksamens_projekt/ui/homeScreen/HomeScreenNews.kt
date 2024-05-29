@@ -52,7 +52,7 @@ fun HomeScreenNews(
                 fontWeight = FontWeight.Bold,
                 color = secondaryColor
             )
-           Spacer(modifier = Modifier.height(5.dp))
+           Spacer(modifier = Modifier.height(20.dp))
 
             news?.let {
                 Text(

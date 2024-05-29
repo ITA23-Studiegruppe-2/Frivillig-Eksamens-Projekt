@@ -14,12 +14,11 @@ import kotlinx.coroutines.launch
 class ConversationViewModel : ViewModel() {
     private val chatRepository = ChatRepository()
     var backgroundColor by mutableStateOf(Color(0xFFC8D5B9))
+    val secondaryColor = Color(0xFF364830)
 
 
-    // Mutable state to hold the list of conversations
+    // Mutable state to hold the list of conversations and user's ID
     var conversations by mutableStateOf<List<Conversation>>(listOf())
-
-    // Mutable state to hold the current user's ID
     var currentUserId by mutableStateOf<String?>(null)
 
 

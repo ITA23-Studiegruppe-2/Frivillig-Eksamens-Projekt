@@ -21,6 +21,7 @@ class OrgChatViewModel(
     val chatRepository: ChatRepository = ChatRepository()
     val messages = MutableStateFlow<List<Message>>(emptyList())
     var orgId by mutableStateOf("")
+    var messageText by mutableStateOf("")
     val secondaryColor = Color(0xFF364830)
     val backgroundColor = Color(0xFFC8D5B9)
 
@@ -144,3 +145,4 @@ class OrgChatViewModel(
         }
     }
 }
+
