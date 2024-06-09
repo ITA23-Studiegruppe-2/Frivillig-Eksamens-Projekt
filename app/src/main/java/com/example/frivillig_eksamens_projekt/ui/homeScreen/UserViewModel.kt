@@ -121,8 +121,6 @@ class UserViewModel: ViewModel() {
         viewModelScope.launch {
             val currentUserUId: String? = Firebase.auth.currentUser?.uid
             if (currentUserUId != null) {
-                //Get the list of all badges
-                val listOfAllBadges: MutableList<Badge> = badgesRepository.getAllBadges()
 
                 //Get the list of all activities for the user
                 val listOfAllActivitiesIdCompletedByUser: MutableList<String> = activitiesRepository.getAllActivitiesIdCompletedByUser(currentUserUId)
@@ -132,13 +130,13 @@ class UserViewModel: ViewModel() {
 
                 val currentUserStats: UserStats = formatStatsFromActivities(listOfAllActivitiesCompleted)
 
+                // List of all function that awards the user with badges - if the treshold has been met
                 val listOfAwardBadgeFunctions: List<(UserStats) -> Unit> = listOf(::awardHoursBadge,::awardAmountBadge)
                 listOfAwardBadgeFunctions.forEach {function ->
                     function(currentUserStats)
 
                 }
-                // Have functions that takes a value as parameter, and uses that to award (If the threshold is crossed) a badge
-                // See functions further down
+
             }
         }
     }
