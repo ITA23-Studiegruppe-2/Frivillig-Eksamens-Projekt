@@ -65,12 +65,12 @@ class CreateUserViewModel : ViewModel() {
 
             } else {
                 // The password isnt in valid format -
-                errorMessage = "Please use a stronger password"
+                errorMessage = "Brug venligst en mere sikker adgangskode"
             }
 
         } else {
             // Some of the fields are null or blank -
-            errorMessage = "Please fill out all fields"
+            errorMessage = "Vær sød at udfylde alle felter!"
         }
     }
 
@@ -87,7 +87,6 @@ class CreateUserViewModel : ViewModel() {
 
     fun registerUserToDatabase(onSuccess: () -> Unit, onFail: (String) -> Unit) {
         //Check to see if the fields are empty - fullName has already been checked in the function before
-        // TODO ADD GENDER
         val listOfInputs: List<String> = listOf(phoneNumber, zipCode, birthDate)
         if (checkAllFieldsNotBlank(listOfInputs)) {
             accountService.createUserDB(
@@ -100,7 +99,7 @@ class CreateUserViewModel : ViewModel() {
                 onFail = onFail
             )
         } else {
-            errorMessage = "Please fill out all the fields"
+            errorMessage = "Udfyld venligst alle felterne"
         }
 
     }

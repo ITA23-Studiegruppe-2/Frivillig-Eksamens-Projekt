@@ -68,18 +68,17 @@ fun HomeScreen(
                 onMarkAsReadButtonClick = {
                     viewModel.markNotificationsAsRead()
                     viewModel.dialogShow = false
-
                 }
             )
         }
-/*
+
         //Dialog for hours
         if (viewModel.showHoursDialog) {
             HoursDialog(onDismiss = { viewModel.showHoursDialog = false},
                 title = "Tak for dig!", text = "Du har brugt ${viewModel.totalHours} timer på at være frivillig. Det kan du godt være stolt af!")
         }
 
- */
+
 
         Column() {
             Box(

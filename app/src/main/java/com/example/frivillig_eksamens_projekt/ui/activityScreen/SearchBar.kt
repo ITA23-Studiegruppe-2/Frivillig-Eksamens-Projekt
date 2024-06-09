@@ -58,7 +58,7 @@ fun SearchBar(
                 onValueChange = onValueChange,
                 modifier = Modifier,
                 label = {
-                    Text(text = "Søg efter organisation", color = secondaryColor)
+                    Text(text = "Søg efter aktivitet", color = secondaryColor)
                 },
                 shape = RoundedCornerShape(20.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -87,8 +87,6 @@ fun SearchBar(
                         .size(58.dp)
                         .clickable {
                             viewModel.showFilterDialog = true
-                            println(viewModel.showFilterDialog)
-
                         }
                 )
             }

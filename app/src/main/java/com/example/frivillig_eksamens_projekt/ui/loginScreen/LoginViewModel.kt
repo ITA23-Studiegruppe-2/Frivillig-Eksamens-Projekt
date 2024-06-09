@@ -42,7 +42,7 @@ class LoginViewModel : ViewModel() {
             )
         } else {
             // Tell the user to fill all the fields
-            errorMessage = "Please fill all the fields"
+            errorMessage = "Vær sød at udfylde alle felter!"
         }
 
 

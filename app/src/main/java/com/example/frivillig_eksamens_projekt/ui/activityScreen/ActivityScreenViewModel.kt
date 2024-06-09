@@ -71,6 +71,7 @@ class ActivityScreenViewModel: ViewModel() {
     fun searchForActivitiesByTitle() {
         viewModelScope.launch {
             val newListOfActivities: MutableList<Activity> = activitesRepository.searchActivityTitle(searchBar)
+            println(newListOfActivities)
             // If the new list isn't empty - good request
             if (newListOfActivities.isNotEmpty()) {
                 // get the list of userIDs
